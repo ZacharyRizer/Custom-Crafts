@@ -2,4 +2,4 @@
 
 Below is a representation of all of the tables and their relations:
 
-![](/documentation/Custom_Crafts.pdf)
+![](/documentation/Custom_Crafts.png)
