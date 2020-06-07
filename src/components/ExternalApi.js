@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '../react-auth0-spa';
+const axios = require('axios');
 
 const ExternalApi = () => {
   const [showResult, setShowResult] = useState(false);
@@ -10,16 +11,26 @@ const ExternalApi = () => {
     try {
       const token = await getTokenSilently();
 
-      const response = await fetch('http://localhost:5000/api/private', {
+      const res = await axios({
+        url: 'http://localhost:5000/graphql',
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        method: 'post',
+        data: {
+          query: `
+        {
+          ship(shipId:1){
+            name
+            price
+          }
+        }
+        `,
+        },
       });
 
-      const responseData = await response.json();
-
       setShowResult(true);
-      setApiMessage(responseData);
+      setApiMessage(res.data);
     } catch (error) {
       console.error(error);
     }
