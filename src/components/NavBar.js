@@ -1,33 +1,25 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import auth0Client from '../Auth';
+import { useAuth0 } from '../react-auth0-spa';
+import { Link } from 'react-router-dom';
 
-function NavBar(props) {
-  const signOut = () => {
-    console.log(auth0Client.getProfile());
-
-    auth0Client.signOut();
-    props.history.replace('/');
-  };
+const NavBar = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
-    <nav>
-      {!auth0Client.isAuthenticated() && (
-        <button onClick={auth0Client.signIn}>Sign In</button>
+    <div>
+      {!isAuthenticated && (
+        <button onClick={() => loginWithRedirect({})}>Log in</button>
       )}
-      {auth0Client.isAuthenticated() && (
-        <div>
-          <label>{auth0Client.getProfile().name}</label>
-          <button
-            onClick={() => {
-              signOut();
-            }}>
-            Sign Out
-          </button>
-        </div>
-      )}
-    </nav>
-  );
-}
 
-export default withRouter(NavBar);
+      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+      {isAuthenticated && (
+        <span>
+          <Link to="/">Home</Link>&nbsp;
+          <Link to="/profile">Profile</Link>
+        </span>
+      )}
+    </div>
+  );
+};
+
+export default NavBar;

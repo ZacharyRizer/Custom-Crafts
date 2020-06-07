@@ -1,15 +1,24 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import MainPage from './components/MainPage';
-import Callback from './Callback'; // where Auth0 returns to after login
+import PrivateRoute from './components/PrivateRoute';
+
+import { Router, Route, Switch } from 'react-router-dom';
+import Profile from './components/Profile';
+import history from './utils/history';
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <MainPage />
-      <Route exact path="/callback" component={Callback} />
+      {/* Don't forget to include the history module */}
+      <Router history={history}>
+        <header>
+          <NavBar />
+        </header>
+        <Switch>
+          <Route path="/" exact />
+          <PrivateRoute path="/profile" component={Profile} />
+        </Switch>
+      </Router>
     </div>
   );
 }

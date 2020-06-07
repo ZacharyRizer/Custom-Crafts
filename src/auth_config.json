@@ -1,5 +1,5 @@
 {
   "domain": "custom-crafts.auth0.com",
-  "clientId": "GQyx0ACPnb47m3MjLyWKWDez9a454QvR",
-  "audience": "https://custom-crafts.auth0.com/api/v2/"
+  "clientId": "n2B75E6UND6FZW6bwUYW2B11hIprA8Sg",
+  "audience": "custom-crafts-api"
 }
