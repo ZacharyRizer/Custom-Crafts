@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
+import ExternalApi from './components/ExternalApi';
 
 import { Router, Route, Switch } from 'react-router-dom';
 import Profile from './components/Profile';
@@ -13,6 +14,7 @@ function App() {
       <Router history={history}>
         <header>
           <NavBar />
+          <ExternalApi />
         </header>
         <Switch>
           <Route path="/" exact />
