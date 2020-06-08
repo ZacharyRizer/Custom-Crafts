@@ -1,15 +1,14 @@
 import React from "react";
-import Spaceship from "./Spaceships/test_ship.glb";
+import { Route } from "react-router-dom";
+import Splash from "./components/Splash";
+import ShipList from "./components/ShipList";
 
 function App() {
   return (
-    <model-viewer
-      style={{ backgroundColor: "black", height: "400px", width: "100%" }}
-      src={Spaceship}
-      alt="A 3D model of an astronaut"
-      auto-rotate
-      camera-controls
-    ></model-viewer>
+    <>
+      <Route exact path="/" component={Splash} />
+      <Route path="/ships" component={ShipList} />
+    </>
   );
 }
 
