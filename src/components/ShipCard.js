@@ -1,5 +1,5 @@
 import React from "react";
-import { Frame, Line, Heading, Paragraph } from "arwes";
+import { Frame, Line, Content, Button, Animation } from "arwes";
 
 const ShipCard = (props) => (
   <Frame layer={"primary"} animate level={0} corners={4} style={{ marginBottom: 20 }}>
@@ -12,7 +12,12 @@ const ShipCard = (props) => (
       interaction-prompt="none"
     ></model-viewer>
     <Line animate />
-    <Heading>Test Ship Craft</Heading>
+    <Content style={{ margin: "20px" }}>
+      <h1>Test Ship Craft</h1>
+      <blockquote data-layer="disabled">Manufacturure: Test Manu</blockquote>
+      <blockquote data-layer="disabled">Craft Type: Test</blockquote>
+      <Button animate>Buy Now</Button>
+    </Content>
   </Frame>
 );
 
