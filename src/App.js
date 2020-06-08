@@ -4,11 +4,10 @@ import ShipList from "./components/ShipList";
 import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import ExternalApi from "./components/ExternalApi";
-
+import { Logo } from "arwes";
 import { Router, Route, Switch } from "react-router-dom";
 import Profile from "./components/Profile";
 import history from "./utils/history";
-
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
@@ -24,6 +23,7 @@ function App() {
             <NavBar />
             <ExternalApi />
           </header>
+          <Logo className="logo"  animate size={300} />
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/ships" component={ShipList} />
