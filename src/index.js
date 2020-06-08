@@ -9,6 +9,7 @@ import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "./react-auth0-spa";
 import config from "./auth_config.json";
 import history from "./utils/history";
+import { Router } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -18,20 +19,22 @@ const onRedirectCallback = (appState) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Arwes animate background={image1} pattern={image2}>
-        <Auth0Provider
-          domain={config.domain}
-          client_id={config.clientId}
-          redirect_uri={window.location.origin}
-          audience={config.audience}
-          onRedirectCallback={onRedirectCallback}
-        >
-          <App />
-        </Auth0Provider>
-        ,
-      </Arwes>
-    </ThemeProvider>
+    <Auth0Provider
+      domain={config.domain}
+      client_id={config.clientId}
+      redirect_uri={window.location.origin}
+      audience={config.audience}
+      onRedirectCallback={onRedirectCallback}
+    >
+      <ThemeProvider theme={theme}>
+        <Arwes animate background={image1} pattern={image2}>
+          {/* Don't forget to include the history module */}
+          <Router history={history}>
+            <App />
+          </Router>
+        </Arwes>
+      </ThemeProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
