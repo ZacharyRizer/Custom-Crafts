@@ -3,13 +3,11 @@ import { Route, Switch } from 'react-router-dom';
 import { ContextProvider } from './Context';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import { Logo } from "arwes";
 
-import Splash from './components/Splash';
 import NavBar from './components/NavBar';
+import Splash from './components/Splash';
 import Shop from './components/Shop';
 import PrivateRoute from './components/PrivateRoute';
-import ExternalApi from './components/ExternalApi';
 import Profile from './components/Profile';
 
 const App = () => {
@@ -19,14 +17,10 @@ const App = () => {
     <ApolloProvider client={client}>
       <ContextProvider>
         <>
-          <header>
-            <NavBar />
-            <ExternalApi />
-          </header>
-          <Logo className="logo"  animate size={300} />
+          <NavBar />
           <Switch>
             <Route exact path="/" component={Splash} />
-            <Route path="/ships" component={Shop} />
+            <Route path="/shop" component={Shop} />
             <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </>
