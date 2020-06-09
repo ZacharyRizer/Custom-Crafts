@@ -27,10 +27,17 @@ const ShipCard = ({ ship: { id, stock, name, category, manufacturer, price, mode
           <div>
             <h1>{name}</h1>
           </div>
+<<<<<<< HEAD
           <p style={{ display: "inline" }}>Manufacturer:</p>
           <blockquote>{manufacturer.name}</blockquote>
           <p style={{ display: "inline" }}>Craft Type:</p>
           <blockquote>{category.name}</blockquote>
+=======
+          <p style={{ display: "inline" }}>Craft Type:</p>
+          <blockquote>{props.type}</blockquote>
+          <p style={{ display: "inline" }}>Manufacturer:</p>
+          <blockquote>{props.manufacturer}</blockquote>
+>>>>>>> 612cefda4d4d8f2d8bbbd82821fb2c7a71d5c9f7
         </Appear>
       </Content>
       <Line animate />
