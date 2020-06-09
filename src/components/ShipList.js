@@ -6,16 +6,48 @@ const ShipList = () => (
   <>
     <Row>
       <Col s={6} xl={3}>
-        <ShipCard stock={6} ship="/spaceships/test_ship.glb" />
+        <ShipCard
+          stock={6}
+          name="ISV Rimward Gold"
+          type="Performance"
+          manufacturer="Corellian Engineering Corporation"
+          price={100000}
+          link="/"
+          ship="/spaceships/test_ship.glb"
+        />
       </Col>
       <Col s={6} xl={3}>
-        <ShipCard stock={5} ship="/spaceships/test_ship.glb" />
+        <ShipCard
+          stock={5}
+          name="ISV Rimward Gold"
+          type="Performance"
+          manufacturer="Corellian Engineering Corporation"
+          price={100000}
+          link="/"
+          ship="/spaceships/test_ship.glb"
+        />
       </Col>
       <Col s={6} xl={3}>
-        <ShipCard stock={2} ship="/spaceships/test_ship.glb" />
+        <ShipCard
+          stock={0}
+          name="ISV Rimward Gold"
+          type="Performance"
+          manufacturer="Corellian Engineering Corporation"
+          price={100000}
+          link="/"
+          ship="/spaceships/test_ship.glb"
+        />
       </Col>
       <Col s={6} xl={3}>
-        <ShipCard stock={2} ship="/spaceships/test_ship.glb" />
+        <ShipCard
+          stock={0}
+          name="ISV Rimward Gold"
+          type="Performance"
+          manufacturer="Corellian Engineering Corporation"
+          price={100000}
+          link="/"
+          ship="/spaceships/test_ship.glb"
+        />
       </Col>
     </Row>
   </>

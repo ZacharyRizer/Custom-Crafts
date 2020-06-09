@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Frame, Line, Content, Appear, Button, withStyles, Footer } from "arwes";
 
 const ShipCard = (props) => {
@@ -24,24 +24,24 @@ const ShipCard = (props) => {
       <Content style={{ margin: "20px" }}>
         <Appear animate>
           <div>
-            <h1>ISV Rimward Gold</h1>
+            <h1>{props.name}</h1>
           </div>
           <p style={{ display: "inline" }}>Manufacturer:</p>
-          <blockquote> Corellian Engineering Corporation</blockquote>
+          <blockquote>{props.manufacturer}</blockquote>
           <p style={{ display: "inline" }}>Craft Type:</p>
-          <blockquote>Performance</blockquote>
+          <blockquote>{props.type}</blockquote>
         </Appear>
       </Content>
       <Line animate />
       <div style={{ display: "flex", justifyContent: "space-around", margin: "0px 20px 20px 20px" }}>
         <Button corners={0} level={3} style={{ pointerEvents: "none" }} layer="primary">
-          $1000
+          {"$" + props.price}
         </Button>
         {props.stock > 5 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">
             In Stock
           </Button>
-        ) : props.stock > 2 ? (
+        ) : props.stock > 0 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="alert">
             Limited Stock
           </Button>
@@ -50,7 +50,9 @@ const ShipCard = (props) => {
             Out of Stock
           </Button>
         )}
-        <Button layer="secondary">View Details</Button>
+        <Button onClick={() => (window.location.href = props.link)} layer="secondary">
+          View Details
+        </Button>
       </div>
     </Frame>
   );
