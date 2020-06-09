@@ -76,7 +76,7 @@ const ShipList = () => {
 
 // return (
 //   <>
-
+//
 //     <Row>
 //       <Col s={6} xl={3}>
 //         <ShipCard
