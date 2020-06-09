@@ -12,6 +12,8 @@ import config from './auth_config.json';
 import history from './utils/history';
 
 const theme = createTheme();
+theme.animTime = 750;
+console.log(theme);
 
 const onRedirectCallback = (appState) => {
   history.push(
