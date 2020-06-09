@@ -12,6 +12,8 @@ import history from "./utils/history";
 import { Router } from "react-router-dom";
 
 const theme = createTheme();
+theme.animTime = 750;
+console.log(theme);
 
 const onRedirectCallback = (appState) => {
   history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
