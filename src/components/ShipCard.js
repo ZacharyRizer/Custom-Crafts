@@ -1,7 +1,8 @@
 import React from "react";
 import { Frame, Line, Content, Appear, Button, withStyles, Footer } from "arwes";
 
-const ShipCard = (props) => {
+const ShipCard = ({ ship: { id, stock, name, category, manufacturer, price, modelLink } }) => {
+
   return (
     <Frame layer={"primary"} animate level={0} corners={4} style={{ marginBottom: 20 }}>
       <model-viewer
@@ -14,7 +15,7 @@ const ShipCard = (props) => {
           "--progress-bar-color": "transparent",
           "--progress-mask": "transparent",
         }}
-        src={props.ship}
+        src={modelLink}
         alt="A 3D model of a spaceship"
         auto-rotate
         camera-controls
@@ -24,33 +25,40 @@ const ShipCard = (props) => {
       <Content style={{ margin: "20px" }}>
         <Appear animate>
           <div>
-            <h1>{props.name}</h1>
+            <h1>{name}</h1>
           </div>
+<<<<<<< HEAD
+          <p style={{ display: "inline" }}>Manufacturer:</p>
+          <blockquote>{manufacturer.name}</blockquote>
+          <p style={{ display: "inline" }}>Craft Type:</p>
+          <blockquote>{category.name}</blockquote>
+=======
           <p style={{ display: "inline" }}>Craft Type:</p>
           <blockquote>{props.type}</blockquote>
           <p style={{ display: "inline" }}>Manufacturer:</p>
           <blockquote>{props.manufacturer}</blockquote>
+>>>>>>> 612cefda4d4d8f2d8bbbd82821fb2c7a71d5c9f7
         </Appear>
       </Content>
       <Line animate />
       <div style={{ display: "flex", justifyContent: "space-around", margin: "0px 20px 20px 20px" }}>
         <Button corners={0} level={3} style={{ pointerEvents: "none" }} layer="primary">
-          {"$" + props.price}
+          {"$" + price}
         </Button>
-        {props.stock > 5 ? (
+        {stock > 5 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">
             In Stock
           </Button>
-        ) : props.stock > 0 ? (
+        ) : stock > 0 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="alert">
             Limited Stock
           </Button>
         ) : (
-          <Button corners={0} style={{ pointerEvents: "none" }} layer="disabled">
-            Out of Stock
-          </Button>
-        )}
-        <Button onClick={() => (window.location.href = props.link)} layer="secondary">
+              <Button corners={0} style={{ pointerEvents: "none" }} layer="disabled">
+                Out of Stock
+              </Button>
+            )}
+        <Button onClick={() => (window.location.href = '/')} layer="secondary">
           View Details
         </Button>
       </div>
