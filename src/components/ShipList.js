@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from "react";
-import { Row, Col, Loading } from "arwes";
+import React, { useEffect, useContext } from 'react';
+import { Row, Col, Loading } from 'arwes';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Box from '@material-ui/core/Box';
 
 import { Context } from '../Context';
 import ShipCard from './ShipCard';
-import Axios from "axios";
+import Axios from 'axios';
 
 let data;
 
@@ -36,10 +36,9 @@ const ShipList = () => {
         }
       }
     }
-`
+`;
     return qs;
-  }
-
+  };
 
   useEffect(() => {
     (async () => {
@@ -48,30 +47,31 @@ const ShipList = () => {
         url: 'http://localhost:5000/graphql',
         method: 'post',
         data: {
-          query: qs
-        }
+          query: qs,
+        },
       });
 
-      console.log('res', res)
-      data = res.data.data
-      console.log('data nest', data)
-    })()
+      console.log('res', res);
+      data = res.data.data;
+      console.log('data nest', data);
+    })();
   }, [filters]);
 
-
-  return (<>{
-    data ?
-      <Row>
-        {
-          data.ships.edges.map((shipNode) => (
+  return (
+    <>
+      {data ? (
+        <Row>
+          {data.ships.edges.map((shipNode) => (
             <Col>
               <ShipCard key={shipNode.node.id} ship={shipNode.node} />
             </Col>
-          ))
-        }
-      </Row >
-      : <Loading animate full />}
-  </>)
+          ))}
+        </Row>
+      ) : (
+          <Loading animate full />
+        )}
+    </>
+  );
 };
 
 // return (
@@ -125,6 +125,5 @@ const ShipList = () => {
 //     </Row>
 //   </>
 // );
-
 
 export default ShipList;

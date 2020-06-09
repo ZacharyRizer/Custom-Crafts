@@ -8,7 +8,15 @@ export const ContextProvider = (props) => {
   const [numItems, setNumItems] = useState(0);
 
   return (
-    <Context.Provider value={{ filters, setFilters, cartItems, setCartItems, numItems, setNumItems }}>
+    <Context.Provider
+      value={{
+        filters,
+        setFilters,
+        cartItems,
+        setCartItems,
+        numItems,
+        setNumItems,
+      }}>
       {props.children}
     </Context.Provider>
   );
