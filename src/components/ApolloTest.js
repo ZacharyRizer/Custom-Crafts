@@ -14,7 +14,7 @@ const SHIPS_QUERY = gql`
   }
 `;
 
-export default function ApolloTest({}) {
+export default function ApolloTest({ }) {
   return (
     <div>
       <h1>Spacecraft </h1>

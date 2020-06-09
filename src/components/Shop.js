@@ -7,10 +7,16 @@ import ShipList from './ShipList'
 const Shop = () => {
 
     return (
-        <div className="shop-grid-container">
-            <Sidebar />
-            <ShipList />     
-        </div>
+        // <div className="shop-grid-container">
+        <Row>
+            <Col s={3}>
+                <Sidebar />
+            </Col>
+            <Col s={9}>
+                <ShipList />
+            </Col>
+        </Row>
+        // </div>
     )
 };
 
