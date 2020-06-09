@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import createAuth0Client from '@auth0/auth0-spa-js';
+import axios from 'axios';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -36,7 +37,25 @@ export const Auth0Provider = ({
 
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
+        const token = await auth0FromHook.getTokenSilently();
         setUser(user);
+        const res = await axios({
+          url: 'http://localhost:5000/graphql',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: 'post',
+          data: {
+            query: `
+            mutation {
+              addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}"){
+                name
+                email
+              }
+            }`
+          }
+        });
+        console.log('res', res);
       }
 
       setLoading(false);
