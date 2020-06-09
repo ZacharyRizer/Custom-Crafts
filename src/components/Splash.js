@@ -30,6 +30,22 @@ const Splash = () => (
     </div>
 
     {/* Parallax */}
+  <div>
+    <div>
+      {/* <Image className="homeIMG" animate resources='https://cdn.suwalls.com/wallpapers/fantasy/giant-spaceship-passing-the-planet-53912-1920x1200.jpg' /> */}
+      <Paragraph className="plax">
+        Welcome to Cruising Crafts! Check out our great Summer Sale! Prices half off all SpaceShips!
+      </Paragraph>
+    </div>
+    <div className="parallax"></div>
+    <div>
+      {/* <Image className="homeIMG" animate resources='https://www.sciencealert.com/images/2019-02/processed/GettyImages-861460116_1_1024.jpg' /> */}
+      <Paragraph className="plax">
+        We've got Luxury spacecrafts, Combat Shuttles, and Performance Racers for those with a little fast and furious
+        in their genes!
+      </Paragraph>
+    </div>
+    <div className="parallaxTwo"></div>
     <div>
       <div>
         {/* <Image className="homeIMG" animate src='https://cdn.suwalls.com/wallpapers/fantasy/giant-spaceship-passing-the-planet-53912-1920x1200.jpg' /> */}
@@ -51,6 +67,8 @@ const Splash = () => (
       </div> 
     </div>
   </>
+    <div className="parallaxThree"></div>
+  </div>
 );
 
 export default Splash;

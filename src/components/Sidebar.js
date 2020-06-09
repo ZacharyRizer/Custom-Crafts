@@ -17,7 +17,7 @@ const Sidebar = () => {
 
     const handleClickVal = (e) => {
         const [key, val] = e.target.id.split(' ')
-        let newFilters = {...filters}
+        let newFilters = { ...filters }
         newFilters[key] = val
         setFilters(newFilters)
         console.log(newFilters)
@@ -25,8 +25,8 @@ const Sidebar = () => {
 
     const handleClickRange = (e) => {
         const [key, begin, end] = e.target.id.split(' ')
-        let newFilters = {...filters}
-        newFilters[key] = {begin, end}
+        let newFilters = { ...filters }
+        newFilters[key] = { begin, end }
         setFilters(newFilters)
         console.log(newFilters)
     }
@@ -34,7 +34,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <Button className="sidebar-buttons" onClick={() => setCatDrop(!catDrop)}>
-              <Heading node='h3'>Craft Type</Heading>
+                <Heading node='h3'>Craft Type</Heading>
             </Button>
             {catDrop && (
                 <div>
@@ -48,7 +48,7 @@ const Sidebar = () => {
                 </div>
             )}
             <Button className="sidebar-buttons" onClick={() => setManDrop(!manDrop)}>
-              <Heading node='h3'>Manufacturer</Heading>
+                <Heading node='h3'>Manufacturer</Heading>
             </Button>
             {manDrop && (
                 <div>
@@ -62,7 +62,7 @@ const Sidebar = () => {
                 </div>
             )}
             <Button className="sidebar-buttons" onClick={() => setCrewDrop(!crewDrop)}>
-              <Heading node='h3'>Crew Capacity</Heading>
+                <Heading node='h3'>Crew Capacity</Heading>
             </Button>
             {crewDrop && (
                 <div>
@@ -76,7 +76,7 @@ const Sidebar = () => {
                 </div>
             )}
             <Button className="sidebar-buttons" onClick={() => setSizeDrop(!sizeDrop)}>
-              <Heading node='h3'>Ship Size (meters)</Heading>
+                <Heading node='h3'>Ship Size (meters)</Heading>
             </Button>
             {sizeDrop && (
                 <div>
@@ -90,7 +90,7 @@ const Sidebar = () => {
                 </div>
             )}
             <Button className="sidebar-buttons" onClick={() => setRangeDrop(!rangeDrop)}>
-              <Heading node='h3'>Range (parsecs)</Heading>
+                <Heading node='h3'>Range (parsecs)</Heading>
             </Button>
             {rangeDrop && (
                 <div>
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 </div>
             )}
             <Button className="sidebar-buttons" onClick={() => setPriceDrop(!priceDrop)}>
-              <Heading node='h3'>Price (credits)</Heading>
+                <Heading node='h3'>Price (credits)</Heading>
             </Button>
             {priceDrop && (
                 <div>

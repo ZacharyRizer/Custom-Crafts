@@ -1,9 +1,5 @@
 /* TODO Add site wide styles */
-@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@500;900&family=Quantico&family=Rajdhani:wght@700&display=swap');
-
-body {
-  background-color: #000000;
-}
+@import url("https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@500;900&family=Quantico&family=Rajdhani:wght@700&display=swap");
 
 .homeIMG {
   width: 600px;
@@ -135,17 +131,17 @@ body {
 /* parallax */
 
 .intro {
-    font-family: Didot sans-serif;
-    font-size: 70px;
-    color: #bccad6;
-    text-align: center;
+  font-family: Didot sans-serif;
+  font-size: 70px;
+  color: #bccad6;
+  text-align: center;
 }
 
 .parallax {
   /* background-image: url('https://i.pinimg.com/originals/7c/60/dc/7c60dc8d361a6202a0fb980dd2de6a7e.jpg'); */
-  background-image: url('https://cdn.suwalls.com/wallpapers/fantasy/giant-spaceship-passing-the-planet-53912-1920x1200.jpg');
+  background-image: url("https://cdn.suwalls.com/wallpapers/fantasy/giant-spaceship-passing-the-planet-53912-1920x1200.jpg");
   /* Set a specific height */
-  min-height: 500px; 
+  min-height: 500px;
 
   /* Create the parallax scrolling effect */
   background-attachment: fixed;
@@ -155,9 +151,9 @@ body {
 }
 
 .parallaxTwo {
-  background-image: url('https://img5.goodfon.com/wallpaper/nbig/2/91/korabl-kosmos-art-star-trek-kosmicheskii-korabl-fan-art-zvez.jpg');
+  background-image: url("https://img5.goodfon.com/wallpaper/nbig/2/91/korabl-kosmos-art-star-trek-kosmicheskii-korabl-fan-art-zvez.jpg");
   /* Set a specific height */
-  min-height: 500px; 
+  min-height: 500px;
 
   /* Create the parallax scrolling effect */
   background-attachment: fixed;
@@ -168,9 +164,9 @@ body {
 
 .parallaxThree {
   /* background-image: url('https://i.insider.com/5c798c64262898699c79c134?width=1100&format=jpeg&auto=webp'); */
-  background-image: url('https://wallpaperaccess.com/full/500417.jpg');
+  background-image: url("https://wallpaperaccess.com/full/500417.jpg");
   /* Set a specific height */
-  min-height: 500px; 
+  min-height: 500px;
 
   /* Create the parallax scrolling effect */
   background-attachment: fixed;
@@ -184,7 +180,7 @@ body {
   font-size: 55px;
   /* font-family: 'Orbitron', sans-serif; */
   /* font-family: 'Monoton', cursive; */
-  font-family: 'Quantico', sans-serif;
+  font-family: "Quantico", sans-serif;
 }
 
 .shop-grid-container {
