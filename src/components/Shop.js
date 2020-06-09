@@ -7,7 +7,7 @@ import ShipList from './ShipList'
 const Shop = () => {
 
     return (
-        <div>
+        <div className="shop-grid-container">
             <Sidebar />
             <ShipList />     
         </div>

@@ -22,9 +22,9 @@ const NavBar = () => {
           {'    '}
           {isAuthenticated && (
             <span>
-              <Button animate layer='success'><Link to="/">Home</Link>&nbsp;</Button>
+            <Button onClick={() => (window.location.href = "/")} animate layer='success'><Link to="/">Home</Link>&nbsp;</Button>
             {'    '}
-              <Button animate layer='success'><Link to="/profile">Profile</Link></Button>
+            <Button onClick={() => (window.location.href = "/")} animate layer='success'><Link to="/profile">Profile</Link></Button>
             </span>
           )}
         </Heading>

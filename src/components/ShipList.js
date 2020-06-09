@@ -1,15 +1,22 @@
 import React from "react";
-import Spaceship from "../spaceships/test_ship.glb";
+import ShipCard from "./ShipCard";
+import { Row, Col } from "arwes";
 
 const ShipList = () => (
-  <>
-    <model-viewer
-      style={{ backgroundColor: "black", height: "400px", width: "50%" }}
-      src={Spaceship}
-      alt="A 3D model of a spaceship"
-      auto-rotate
-      camera-controls></model-viewer>
-  </>
+  <Row>
+    <Col s={12} xl={3}>
+      <ShipCard ship="/spaceships/test_ship.glb" />
+    </Col>
+    <Col s={12} xl={3}>
+      <ShipCard ship="/spaceships/test_ship.glb" />
+    </Col>
+    <Col s={12} xl={3}>
+      <ShipCard ship="/spaceships/test_ship.glb" />
+    </Col>
+    <Col s={12} xl={3}>
+      <ShipCard ship="/spaceships/test_ship.glb" />
+    </Col>
+  </Row>
 );
 
 export default ShipList;

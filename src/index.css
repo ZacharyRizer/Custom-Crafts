@@ -75,3 +75,22 @@ body {
   /* font-family: 'Monoton', cursive; */
   font-family: 'Quantico', sans-serif;
 }
+
+.shop-grid-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+.sidebar {
+  border: 5px solid white;
+  width: 300px;
+  height: 100%;
+}
+
+.sidebar-options {
+  display: none;
+}
+
+.sidebar-optionsr {
+  display: none;
+}
