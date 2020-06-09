@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Row, Col } from "arwes";
+import { Row, Col, Loading } from "arwes";
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Box from '@material-ui/core/Box';
@@ -61,16 +61,16 @@ const ShipList = () => {
 
   return (<>{
     data ?
-      <Box component="span" s={9}>
+      <Row>
         {
           data.ships.edges.map((shipNode) => (
-            <>
+            <Col>
               <ShipCard key={shipNode.node.id} ship={shipNode.node} />
-            </>
+            </Col>
           ))
         }
-      </Box >
-      : <div>Loading...</div>}
+      </Row >
+      : <Loading animate full />}
   </>)
 };
 

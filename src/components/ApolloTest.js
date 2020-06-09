@@ -36,3 +36,23 @@ export default function ApolloTest({ }) {
     </div>
   );
 }
+
+
+
+const res = await axios({
+  url: 'http://localhost:5000/graphql',
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+  method: 'post',
+  data: {
+    query: `
+  {
+    ship(shipId:1){
+      name
+      price
+    }
+  }
+  `,
+  },
+});

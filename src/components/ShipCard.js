@@ -2,22 +2,14 @@ import React from "react";
 import { Frame, Line, Content, Appear, Button, withStyles, Footer } from "arwes";
 
 const ShipCard = ({ ship: { id, stock, name, category, manufacturer, price, modelLink } }) => {
-  console.log('id ', id)
-  console.log('stock ', stock)
-  console.log('name ', name)
-  console.log('category ', category)
-  console.log('manufacturer ', manufacturer)
-  console.log('price ', price)
-  console.log('modelLink ', modelLink)
-
 
   return (
-    <Frame layer={"primary"} animate level={0} corners={4} style={{ maxWidth: "33%", marginBottom: 20 }}>
+    <Frame layer={"primary"} animate level={0} corners={4} style={{ marginBottom: 20 }}>
       <model-viewer
         style={{
           backgroundColor: "transparent",
           height: "400px",
-          maxWidth: "100%",
+          width: "100%",
           margin: "auto",
           "--poster-color": "transparent",
           "--progress-bar-color": "transparent",
