@@ -1,6 +1,6 @@
-import React from "react";
-import ShipCard from "./ShipCard";
-import { Row, Col } from "arwes";
+import React from 'react';
+import ShipCard from './ShipCard';
+import { Row, Col } from 'arwes';
 
 const ShipList = () => (
   <Row>
