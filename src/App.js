@@ -1,6 +1,6 @@
 import React from "react";
 import Splash from "./components/Splash";
-import ShipList from "./components/ShipList";
+import Shop from "./components/Shop";
 import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import ExternalApi from "./components/ExternalApi";
@@ -26,7 +26,7 @@ function App() {
           <Logo className="logo"  animate size={300} />
           <Switch>
             <Route exact path="/" component={Splash} />
-            <Route path="/ships" component={ShipList} />
+            <Route path="/ships" component={Shop} />
             <PrivateRoute path="/profile" component={Profile} />
             <Route path="/apollo-test" component={ApolloTest} />
           </Switch>
