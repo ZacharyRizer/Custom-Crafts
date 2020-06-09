@@ -6,8 +6,8 @@ import { ApolloProvider } from 'react-apollo';
 import { Logo } from "arwes";
 
 import Splash from './components/Splash';
-import ShipList from './components/ShipList';
 import NavBar from './components/NavBar';
+import Shop from './components/Shop';
 import PrivateRoute from './components/PrivateRoute';
 import ExternalApi from './components/ExternalApi';
 import Profile from './components/Profile';
@@ -26,7 +26,7 @@ const App = () => {
           <Logo className="logo"  animate size={300} />
           <Switch>
             <Route exact path="/" component={Splash} />
-            <Route path="/ships" component={ShipList} />
+            <Route path="/ships" component={Shop} />
             <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </>
