@@ -26,10 +26,10 @@ const ShipCard = (props) => {
           <div>
             <h1>{props.name}</h1>
           </div>
-          <p style={{ display: "inline" }}>Manufacturer:</p>
-          <blockquote>{props.manufacturer}</blockquote>
           <p style={{ display: "inline" }}>Craft Type:</p>
           <blockquote>{props.type}</blockquote>
+          <p style={{ display: "inline" }}>Manufacturer:</p>
+          <blockquote>{props.manufacturer}</blockquote>
         </Appear>
       </Content>
       <Line animate />
