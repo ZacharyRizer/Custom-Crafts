@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '../react-auth0-spa';
+import { Button } from "arwes";
 const axios = require('axios');
 
 const ExternalApi = () => {
@@ -38,8 +39,7 @@ const ExternalApi = () => {
 
   return (
     <>
-      <h1>External API</h1>
-      <button onClick={callApi}>Ping API</button>
+      <Button onClick={callApi}>Ping External API</Button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
     </>
   );
