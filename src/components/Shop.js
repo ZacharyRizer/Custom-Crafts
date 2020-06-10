@@ -1,11 +1,10 @@
 import React from 'react';
-import { Row, Col, Item } from 'arwes';
+import { Row, Col } from 'arwes';
 import Sidebar from './Sidebar';
 import ShipList from './ShipList';
 
 const Shop = () => {
   return (
-    // <div className="shop-grid-container">
     <Row>
       <Col s={3}>
         <Sidebar />
@@ -14,7 +13,6 @@ const Shop = () => {
         <ShipList />
       </Col>
     </Row>
-    // </div>
   );
 };
 
