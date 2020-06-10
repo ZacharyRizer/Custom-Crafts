@@ -1,7 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Frame, Line, Content, Appear, Button, withStyles, Footer } from "arwes";
 
-const ShipCard = ({ ship: { id, stock, name, category, manufacturer, price, modelLink } }) => {
+const ShipCard = ({ ship }) => {
+  const { id, stock, name, category, manufacturer, price, modelLink } = ship;
+
   return (
     <Frame layer={"primary"} animate level={0} corners={4} style={{ marginBottom: 20 }}>
       <model-viewer
@@ -43,7 +46,7 @@ const ShipCard = ({ ship: { id, stock, name, category, manufacturer, price, mode
         <Button corners={0} level={3} style={{ pointerEvents: "none" }} layer="primary">
           {"$" + price}
         </Button>
-        {stock > 5 ? (
+        {stock > 2 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">
             In Stock
           </Button>
@@ -56,9 +59,9 @@ const ShipCard = ({ ship: { id, stock, name, category, manufacturer, price, mode
             Out of Stock
           </Button>
         )}
-        <Button onClick={() => (window.location.href = "/")} layer="secondary">
-          View Details
-        </Button>
+        <Link to={`/ships/${id}`}>
+          <Button layer="secondary">View Details</Button>
+        </Link>
       </div>
     </Frame>
   );

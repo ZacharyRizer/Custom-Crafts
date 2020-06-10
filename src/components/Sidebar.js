@@ -34,6 +34,8 @@ const Sidebar = () => {
 
     let newFilters = { ...filters };
     newFilters[key] = { begin, end };
+    // newFilters[`${key}Begin`] = begin;
+    // newFilters[`${key}End`] = end;
     setFilters(newFilters);
 
     let newFilterChips = { ...filterChips };
@@ -71,19 +73,19 @@ const Sidebar = () => {
       {catDrop && (
         <div>
           <List node="ul" onClick={handleClickVal}>
-            <li id="category_id 1" className="Craft Type">
+            <li id="categoryId 1" className="Craft Type">
               Military
             </li>
-            <li id="category_id 2" className="Craft Type">
+            <li id="categoryId 2" className="Craft Type">
               Transport
             </li>
-            <li id="category_id 3" className="Craft Type">
+            <li id="categoryId 3" className="Craft Type">
               Cargo
             </li>
-            <li id="category_id 4" className="Craft Type">
+            <li id="categoryId 4" className="Craft Type">
               Performance
             </li>
-            <li id="category_id 5" className="Craft Type">
+            <li id="categoryId 5" className="Craft Type">
               Luxury
             </li>
           </List>
@@ -95,19 +97,19 @@ const Sidebar = () => {
       {manDrop && (
         <div>
           <List node="ul" onClick={handleClickVal}>
-            <li id="manufactuer_id 1" className="Manufacturer">
+            <li id="manufacturerId 1" className="Manufacturer">
               Imperial Galactic Government
             </li>
-            <li id="manufactuer_id 2" className="Manufacturer">
+            <li id="manufacturerId 2" className="Manufacturer">
               Spacing Guild
             </li>
-            <li id="manufactuer_id 3" className="Manufacturer">
+            <li id="manufacturerId 3" className="Manufacturer">
               Corellian Engineering Corporation
             </li>
-            <li id="manufactuer_id 4" className="Manufacturer">
+            <li id="manufacturerId 4" className="Manufacturer">
               Cybertronian Technologies
             </li>
-            <li id="manufactuer_id 5" className="Manufacturer">
+            <li id="manufacturerId 5" className="Manufacturer">
               Weyland-Yutani Corporation
             </li>
           </List>
@@ -199,20 +201,20 @@ const Sidebar = () => {
       {priceDrop && (
         <div>
           <List node="ul" onClick={handleClickRange}>
-            <li className="Price" id="priceRange 0 10000">
-              less than 10,000
+            <li className="Price" id="priceRange 0 100">
+              less than 100
+            </li>
+            <li className="Price" id="priceRange 100 1000">
+              100 - 1,000
+            </li>
+            <li className="Price" id="priceRange 1000 10000">
+              1,000 - 10,000
             </li>
             <li className="Price" id="priceRange 10000 100000">
               10,000 - 100,000
             </li>
-            <li className="Price" id="priceRange 100000 500000">
-              100,000 - 500,000
-            </li>
-            <li className="Price" id="priceRange 500000 1000000">
-              500,000 - 1,000,000
-            </li>
-            <li className="Price" id="priceRange 1000000 10000000">
-              1,000,000+
+            <li className="Price" id="priceRange 100000 1000000">
+              100,000+
             </li>
           </List>
         </div>
