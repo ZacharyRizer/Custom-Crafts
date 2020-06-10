@@ -70,13 +70,13 @@ const ShipCard = ({ ship }) => {
             Limited Stock
           </Button>
         ) : (
-              <Button
-                corners={0}
-                style={{ pointerEvents: 'none' }}
-                layer="disabled">
-                Out of Stock
-              </Button>
-            )}
+          <Button
+            corners={0}
+            style={{ pointerEvents: 'none' }}
+            layer="disabled">
+            Out of Stock
+          </Button>
+        )}
         <Link to={`/ships/${id}`}>
           <Button layer="secondary">View Details</Button>
         </Link>
