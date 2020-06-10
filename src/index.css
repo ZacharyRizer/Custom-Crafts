@@ -175,6 +175,45 @@
   background-size: cover;
 }
 
+.parallaxFour {
+  /* background-image: url('https://i.insider.com/5c798c64262898699c79c134?width=1100&format=jpeg&auto=webp'); */
+  background-image: url("https://i.pinimg.com/originals/7c/60/dc/7c60dc8d361a6202a0fb980dd2de6a7e.jpg");
+  /* Set a specific height */
+  min-height: 500px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallaxFive {
+  /* background-image: url('https://i.insider.com/5c798c64262898699c79c134?width=1100&format=jpeg&auto=webp'); */
+  background-image: url("https://www.sciencealert.com/images/2019-02/processed/GettyImages-861460116_1_1024.jpg");
+  /* Set a specific height */
+  min-height: 500px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallaxSix {
+  /* background-image: url('https://i.insider.com/5c798c64262898699c79c134?width=1100&format=jpeg&auto=webp'); */
+  background-image: url("https://i.insider.com/5c798c64262898699c79c134?width=1100&format=jpeg&auto=webp");
+  /* Set a specific height */
+  min-height: 500px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .plax {
   padding: 10px;
   font-size: 55px;
