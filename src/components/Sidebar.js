@@ -201,20 +201,20 @@ const Sidebar = () => {
       {priceDrop && (
         <div>
           <List node="ul" onClick={handleClickRange}>
-            <li className="Price" id="priceRange 0 10000">
-              less than 10,000
+            <li className="Price" id="priceRange 0 100">
+              less than 100
+            </li>
+            <li className="Price" id="priceRange 100 1000">
+              100 - 1,000
+            </li>
+            <li className="Price" id="priceRange 1000 10000">
+              1,000 - 10,000
             </li>
             <li className="Price" id="priceRange 10000 100000">
               10,000 - 100,000
             </li>
-            <li className="Price" id="priceRange 100000 500000">
-              100,000 - 500,000
-            </li>
-            <li className="Price" id="priceRange 500000 1000000">
-              500,000 - 1,000,000
-            </li>
-            <li className="Price" id="priceRange 1000000 10000000">
-              1,000,000+
+            <li className="Price" id="priceRange 100000 1000000">
+              100,000+
             </li>
           </List>
         </div>
