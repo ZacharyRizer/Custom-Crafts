@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useContext, useState } from 'react';
+=======
+import React, { useContext, useEffect, useState } from 'react';
+>>>>>>> master
 import { Row, Col, Loading } from 'arwes';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -9,9 +13,14 @@ import ShipCard from './ShipCard';
 import Axios from 'axios';
 
 const ShipList = () => {
+<<<<<<< HEAD
   let [data, setData] = useState()
   let { filters } = useContext(Context);
   console.log('filters: ', filters)
+=======
+  let [data, setData] = useState();
+  const { filters } = useContext(Context);
+>>>>>>> master
 
   const buildQueryString = () => {
     let gs = `
@@ -117,10 +126,14 @@ const ShipList = () => {
         },
       });
 
+<<<<<<< HEAD
       data = res.data.data;
       console.log('data: ', data)
       setData(data)
 
+=======
+      setData(res.data.data);
+>>>>>>> master
     })();
   }, [filters]);
 
@@ -135,8 +148,15 @@ const ShipList = () => {
           ))}
         </Row>
       ) : (
+<<<<<<< HEAD
           <Loading animate full />
         )}
+=======
+        <div>
+          <Loading animate full />
+        </div>
+      )}
+>>>>>>> 96f7c0c94dd82ee675020ca027347d0e1e6a0565
     </>
   );
 };
