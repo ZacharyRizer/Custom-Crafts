@@ -6,7 +6,13 @@ const ShipCard = ({ ship }) => {
   const { id, stock, name, category, manufacturer, price, modelLink } = ship;
 
   return (
-    <Frame layer={"primary"} animate level={0} corners={4} style={{ marginBottom: 20 }}>
+    <Frame
+      layer={"primary"}
+      animate
+      level={0}
+      corners={4}
+      style={{ margin: "20px 0 20px 0", width: 450, maxWidth: 450 }}
+    >
       <model-viewer
         style={{
           backgroundColor: "transparent",
@@ -29,10 +35,10 @@ const ShipCard = ({ ship }) => {
           <div>
             <h1>{name}</h1>
           </div>
-          <p style={{ display: "inline" }}>Manufacturer:</p>
-          <blockquote>{manufacturer.name}</blockquote>
           <p style={{ display: "inline" }}>Craft Type:</p>
           <blockquote>{category.name}</blockquote>
+          <p style={{ display: "inline" }}>Manufacturer:</p>
+          <blockquote>{manufacturer.name}</blockquote>
         </Appear>
       </Content>
       <Line animate />
@@ -46,7 +52,7 @@ const ShipCard = ({ ship }) => {
         <Button corners={0} level={3} style={{ pointerEvents: "none" }} layer="primary">
           {"$" + price}
         </Button>
-        {stock > 2 ? (
+        {stock > 5 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">
             In Stock
           </Button>

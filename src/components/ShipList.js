@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Row, Col, Loading } from 'arwes';
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import Box from '@material-ui/core/Box';
+import React, { useContext, useEffect, useState } from "react";
+import { Row, Col, Loading } from "arwes";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import Box from "@material-ui/core/Box";
 
-import { Context } from '../Context';
-import ShipCard from './ShipCard';
-import Axios from 'axios';
+import { Context } from "../Context";
+import ShipCard from "./ShipCard";
+import Axios from "axios";
 
 const ShipList = () => {
-  let [data, setData] = useState()
+  let [data, setData] = useState();
   let { filters } = useContext(Context);
-  console.log('filters: ', filters)
+  console.log("filters: ", filters);
 
   let queryVariables = {};
 
@@ -38,19 +38,17 @@ const ShipList = () => {
     }
 `;
 
-
     let ts = `
       query shipsQuery($
     `;
 
     ts += buildQueryParams(); //101
-    console.log('ts after buildQueryParams: ', ts);
+    console.log("ts after buildQueryParams: ", ts);
     ts += `) {
-      ships(filters: {  
+      ships(filters: {
     `;
 
     ts += buildFiltersString(); //127
-
 
     ts += `}) {
       edges {
@@ -94,10 +92,9 @@ const ShipList = () => {
     }
 `;
     if (Object.keys(filters).length === 0) return qs;
-    console.log('ts sent to axios: ', ts)
-    return ts;//140
+    console.log("ts sent to axios: ", ts);
+    return ts; //140
   };
-
 
   const buildQueryParams = () => {
     let ps = ``;
@@ -115,30 +112,30 @@ const ShipList = () => {
           break;
         case `priceRange`:
           ps += `priceRangeBegin: Int!, $priceRangeEnd: Int!`;
-          queryVariables['priceRangeBegin'] = filters['priceRange'].begin;
-          queryVariables['priceRangeEnd'] = filters['priceRange'].end;
+          queryVariables["priceRangeBegin"] = filters["priceRange"].begin;
+          queryVariables["priceRangeEnd"] = filters["priceRange"].end;
           break;
         case `sizeRange`:
           ps += `sizeRangeBegin: Int!, $sizeRangeEnd: Int!`;
-          queryVariables['sizeRangeBegin'] = filters['sizeRange'].begin;
-          queryVariables['sizeRangeEnd'] = filters['sizeRange'].end;
+          queryVariables["sizeRangeBegin"] = filters["sizeRange"].begin;
+          queryVariables["sizeRangeEnd"] = filters["sizeRange"].end;
           break;
         case `crewCapRange`:
           ps += `crewCapRangeBegin: Int!, $crewCapRangeEnd: Int!`;
-          queryVariables['crewCapRangeBegin'] = filters['crewCapRange'].begin;
-          queryVariables['crewCapRangeEnd'] = filters['crewCapRange'].end;
+          queryVariables["crewCapRangeBegin"] = filters["crewCapRange"].begin;
+          queryVariables["crewCapRangeEnd"] = filters["crewCapRange"].end;
           break;
         case `travelRangeRange`:
           ps += `travelRangeRangeBegin: Int!, $travelRangeRangeEnd: Int!`;
-          queryVariables['travelRangeRangeBegin'] = filters['travelRangeRange'].begin;
-          queryVariables['travelRangeRangeEnd'] = filters['travelRangeRange'].end;
+          queryVariables["travelRangeRangeBegin"] = filters["travelRangeRange"].begin;
+          queryVariables["travelRangeRangeEnd"] = filters["travelRangeRange"].end;
           break;
       }
-      if (i !== filterKeys.length - 1) ps += `, $`
+      if (i !== filterKeys.length - 1) ps += `, $`;
     }
-    console.log('ps: ', ps);
+    console.log("ps: ", ps);
     return ps; //44
-  }
+  };
 
   const buildFiltersString = () => {
     let fs = ``;
@@ -154,64 +151,78 @@ const ShipList = () => {
           fs += `$manufacturerId`;
           break;
         case `priceRange`:
-          fs += `{begin: $priceRangeBegin, end: $priceRangeEnd}`
+          fs += `{begin: $priceRangeBegin, end: $priceRangeEnd}`;
           break;
         case `sizeRange`:
-          fs += `{begin: $sizeRangeBegin, end: $sizeRangeEnd}`
+          fs += `{begin: $sizeRangeBegin, end: $sizeRangeEnd}`;
           break;
         case `crewCapRange`:
-          fs += `{begin: $crewCapRangeBegin, end: $crewCapRangeEnd}`
+          fs += `{begin: $crewCapRangeBegin, end: $crewCapRangeEnd}`;
           break;
         case `travelRangeRange`:
-          fs += `{begin: $travelRangeRangeBegin, end: $travelRangeRangeEnd}`
+          fs += `{begin: $travelRangeRangeBegin, end: $travelRangeRangeEnd}`;
           break;
       }
-      if (i !== filterKeys.length - 1) fs += `, `
+      if (i !== filterKeys.length - 1) fs += `, `;
     }
 
-    console.log('fs after buildFilterString: ', fs)
+    console.log("fs after buildFilterString: ", fs);
     return fs; //50
-  }
-
+  };
 
   useEffect(() => {
     (async () => {
-      const qs = buildQueryString();//16
-      console.log('qs before axios: ', qs)
-      console.log('filters before axios: ', filters)
+      const qs = buildQueryString(); //16
+      console.log("qs before axios: ", qs);
+      console.log("filters before axios: ", filters);
       const res = await Axios({
-        url: 'http://localhost:5000/graphql',
-        method: 'post',
+        url: "http://localhost:5000/graphql",
+        method: "post",
         data: {
           query: qs,
-          variables: queryVariables
+          variables: queryVariables,
         },
       });
 
       data = res.data.data;
-      console.log('data: ', data)
-      setData(data)
-
+      console.log("data: ", data);
+      setData(data);
     })();
   }, [filters]);
 
   return (
     <>
       {data ? (
-        <Row>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {data.ships.edges.map((shipNode) => (
             <Col>
               <ShipCard key={shipNode.node.id} ship={shipNode.node} />
             </Col>
           ))}
-        </Row>
+        </div>
       ) : (
-          <div>
-            <Loading animate full />
-          </div>
-        )}
+        <div style={{ width: "100%", height: "100%" }}>
+          <Loading animate full />
+        </div>
+      )}
     </>
   );
 };
 
 export default ShipList;
+
+// {
+//   data ? (
+//     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+//       {data.ships.edges.map((shipNode) => (
+//         <div style={{ flexGrow: 1, Width: 475, maxWidth: 450 }}>
+//           <ShipCard key={shipNode.node.id} ship={shipNode.node} />
+//         </div>
+//       ))}
+//     </div>
+//   ) : (
+//     <div style={{ width: "100%", height: "100%" }}>
+//       <Loading animate full />
+//     </div>
+//   );
+// }
