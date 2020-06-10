@@ -12,7 +12,7 @@ import Profile from "./components/Profile";
 import Cart from "./components/Cart";
 
 const App = () => {
-  const client = new ApolloClient({ uri: "http://localhost:5000/graphql" });
+  const client = new ApolloClient({ uri: 'http://localhost:5000/graphql' });
 
   return (
     <ApolloProvider client={client}>
@@ -23,7 +23,10 @@ const App = () => {
             <Route exact path="/" component={Splash} />
             <Route path="/shop" component={Shop} />
             <Route path="/cart" component={Cart} />
-            <Route path="/ships/:shipId" component={ShipPage} />
+            <Route
+              path="/ships/:shipId"
+              render={(props) => <ShipPage {...props} />}
+            />
             <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </>
