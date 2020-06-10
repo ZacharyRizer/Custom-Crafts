@@ -52,7 +52,7 @@ const ShipCard = ({ ship }) => {
         <Button corners={0} level={3} style={{ pointerEvents: "none" }} layer="primary">
           {"$" + price}
         </Button>
-        {stock > 5 ? (
+        {stock > 2 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">
             In Stock
           </Button>
