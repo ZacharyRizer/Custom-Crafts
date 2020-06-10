@@ -19,6 +19,7 @@ const onRedirectCallback = (appState) => {
   history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
 };
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider

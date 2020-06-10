@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../Context';
 import { Link } from 'react-router-dom';
-import { Frame, Heading, Button, Table } from 'arwes';
+import { Frame, Heading, Button, Table, Line } from 'arwes';
 
 
 const Cart = () => {
@@ -34,6 +34,8 @@ const Cart = () => {
                 headers={['Product Name', 'Type', 'Quantity', 'Color', 'Price', 'Modify']} 
                 dataset={entries} />
           </div>
+          <Line animate layer='success' />
+          <Heading node='h4'>Subtotal :</Heading>
                 <Link to='/shop'><Button animate layer='success' style={{ marginRight: 25 }}>Continue Shopping</Button></Link>
           <Link to='/checkout'><Button animate layer='secondary'>Proceed to Checkout</Button></Link>
         </Frame>
