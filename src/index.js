@@ -23,6 +23,7 @@ const onRedirectCallback = (appState) => {
   );
 };
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
