@@ -4,6 +4,8 @@ import { useAuth0 } from '../react-auth0-spa';
 import { Link } from 'react-router-dom';
 import { Frame, Heading, Button } from "arwes";
 import {TextField} from '@material-ui/core';
+import Icon from '@mdi/react'
+import { mdiCart } from '@mdi/js';
 
 
 const NavBar = () => {
@@ -21,7 +23,7 @@ const NavBar = () => {
         <div className='navbar_buttons'>
           <Button onClick={() => loginWithRedirect({})} animate layer='success' >Login</Button>
           <Link to="/cart">
-            <Button animate disabled >Cart: {numItems}</Button>
+              <Button animate disabled ><Icon path={mdiCart} /> Cart: {numItems}</Button>
           </Link>
         </div>
         )}
@@ -31,7 +33,7 @@ const NavBar = () => {
             <Button animate layer='success'>Profile</Button>
           </Link>
           <Link to="/cart">
-            <Button animate disabled >Cart: {numItems}</Button>
+              <Button animate disabled ><Icon path={mdiCart} /> Cart: {numItems}</Button>
           </Link>
           <Button onClick={() => logout()} animate layer='alert'>Log-out</Button>
         </div>
