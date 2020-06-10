@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useEffect, useContext, useState } from 'react';
-=======
 import React, { useContext, useEffect, useState } from 'react';
->>>>>>> master
 import { Row, Col, Loading } from 'arwes';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -13,14 +9,9 @@ import ShipCard from './ShipCard';
 import Axios from 'axios';
 
 const ShipList = () => {
-<<<<<<< HEAD
   let [data, setData] = useState()
   let { filters } = useContext(Context);
   console.log('filters: ', filters)
-=======
-  let [data, setData] = useState();
-  const { filters } = useContext(Context);
->>>>>>> master
 
   const buildQueryString = () => {
     let gs = `
@@ -50,23 +41,14 @@ const ShipList = () => {
       query shipsQuery($
     `;
 
-    // filter key switch statement
+    ts += buildQueryParams(); //101
+    console.log('ts after buildQueryParams: ', ts);
+    ts += `) {
+      ships(filters: {  
+    `;
 
-    for (let filter in filters) {
-      ts += `${filter}:`;
-      ts += filters[filter];
-    }
+    ts += buildFiltersString(); //
 
-    ts += `
-      categoryId: Int!){
-      ships(filters: {
-    `
-
-
-    for (let filter in filters) {
-      ts += `${filter}:`;
-      ts += filters[filter];
-    }
 
     ts += `}) {
       edges {
@@ -109,14 +91,55 @@ const ShipList = () => {
       }
     }
 `;
-    console.log('ts: ', ts)
-    return ts;
+    if (Object.keys(filters).length === 0) return qs;
+    console.log('ts sent to axios: ', ts)
+    return ts;//140
   };
+
+
+  const buildQueryParams = () => {
+    let ps = ``;
+    const filterKeys = Object.keys(filters);
+    for (let i = 0; i < filterKeys.length; i++) {
+      const filter = filterKeys[i];
+      ps += `${filter}: `;
+      switch (filter) {
+        case `categoryId`:
+          ps += `Int!`
+          break;
+        default:
+          if (i !== filterKeys.length - 1) ps += `, $`
+      }
+    }
+    console.log('ps: ', ps);
+    return ps; //44
+  }
+
+  const buildFiltersString = () => {
+    let fs = ``;
+    const filterKeys = Object.keys(filters);
+    for (let i = 0; i < filterKeys.length; i++) {
+      const filter = filterKeys[i];
+      fs += `${filter}: `;
+      switch (filter) {
+        case `categoryId`:
+          fs += `$categoryId`
+          break;
+        default:
+          if (i !== filterKeys.length - 1) fs += `, `
+      }
+    }
+
+    console.log('fs after buildFilterString: ', fs)
+    return fs; //50
+  }
+
 
   useEffect(() => {
     (async () => {
-      const qs = buildQueryString();
-      console.log('qs: ', qs)
+      const qs = buildQueryString();//16
+      console.log('qs before axios: ', qs)
+      console.log('filters before axios: ', filters)
       const res = await Axios({
         url: 'http://localhost:5000/graphql',
         method: 'post',
@@ -126,14 +149,10 @@ const ShipList = () => {
         },
       });
 
-<<<<<<< HEAD
       data = res.data.data;
       console.log('data: ', data)
       setData(data)
 
-=======
-      setData(res.data.data);
->>>>>>> master
     })();
   }, [filters]);
 
@@ -148,15 +167,10 @@ const ShipList = () => {
           ))}
         </Row>
       ) : (
-<<<<<<< HEAD
-          <Loading animate full />
+          <div>
+            <Loading animate full />
+          </div>
         )}
-=======
-        <div>
-          <Loading animate full />
-        </div>
-      )}
->>>>>>> 96f7c0c94dd82ee675020ca027347d0e1e6a0565
     </>
   );
 };
