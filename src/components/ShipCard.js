@@ -70,7 +70,6 @@ const ShipCard = ({ ship }) => {
             Limited Stock
           </Button>
         ) : (
-<<<<<<< HEAD
               <Button
                 corners={0}
                 style={{ pointerEvents: 'none' }}
@@ -78,21 +77,9 @@ const ShipCard = ({ ship }) => {
                 Out of Stock
               </Button>
             )}
-        <Button onClick={() => (window.location.href = '/')} layer="secondary">
-          View Details
-        </Button>
-=======
-          <Button
-            corners={0}
-            style={{ pointerEvents: 'none' }}
-            layer="disabled">
-            Out of Stock
-          </Button>
-        )}
         <Link to={`/ships/${id}`}>
           <Button layer="secondary">View Details</Button>
         </Link>
->>>>>>> 54745b2b01ec0011cfec13db60ff35097c6ce4ea
       </div>
     </Frame>
   );
