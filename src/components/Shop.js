@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Item } from "arwes";
+import { Row, Col } from "arwes";
 import Sidebar from "./Sidebar";
 import ShipList from "./ShipList";
 

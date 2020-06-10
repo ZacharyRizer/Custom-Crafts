@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Row, Col, Loading } from "arwes";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import Box from "@material-ui/core/Box";
+import { Col, Loading } from "arwes";
 
 import { Context } from "../Context";
 import ShipCard from "./ShipCard";
@@ -11,39 +8,15 @@ import Axios from "axios";
 const ShipList = () => {
   let [data, setData] = useState();
   let { filters } = useContext(Context);
-  console.log("filters: ", filters);
 
   let queryVariables = {};
 
   const buildQueryString = () => {
-    let gs = `
-    query shipQuery($categoryId: Int!){
-      ships(filters: {categoryId: $categoryId}) {
-        edges {
-          node {
-            id
-            stock
-            name
-            manufacturer {
-              name
-            }
-            category {
-              name
-            }
-            price
-            modelLink
-          }
-        }
-      }
-    }
-`;
-
     let ts = `
       query shipsQuery($
     `;
 
     ts += buildQueryParams(); //101
-    console.log("ts after buildQueryParams: ", ts);
     ts += `) {
       ships(filters: {
     `;
@@ -92,7 +65,6 @@ const ShipList = () => {
     }
 `;
     if (Object.keys(filters).length === 0) return qs;
-    console.log("ts sent to axios: ", ts);
     return ts; //140
   };
 
@@ -133,7 +105,6 @@ const ShipList = () => {
       }
       if (i !== filterKeys.length - 1) ps += `, $`;
     }
-    console.log("ps: ", ps);
     return ps; //44
   };
 
@@ -165,16 +136,12 @@ const ShipList = () => {
       }
       if (i !== filterKeys.length - 1) fs += `, `;
     }
-
-    console.log("fs after buildFilterString: ", fs);
     return fs; //50
   };
 
   useEffect(() => {
     (async () => {
       const qs = buildQueryString(); //16
-      console.log("qs before axios: ", qs);
-      console.log("filters before axios: ", filters);
       const res = await Axios({
         url: "http://localhost:5000/graphql",
         method: "post",
@@ -185,7 +152,6 @@ const ShipList = () => {
       });
 
       data = res.data.data;
-      console.log("data: ", data);
       setData(data);
     })();
   }, [filters]);
