@@ -13,6 +13,8 @@ const ShipList = () => {
   let { filters } = useContext(Context);
   console.log('filters: ', filters)
 
+  let queryVariables = {};
+
   const buildQueryString = () => {
     let gs = `
     query shipQuery($categoryId: Int!){
@@ -47,7 +49,7 @@ const ShipList = () => {
       ships(filters: {  
     `;
 
-    ts += buildFiltersString(); //
+    ts += buildFiltersString(); //127
 
 
     ts += `}) {
@@ -102,13 +104,34 @@ const ShipList = () => {
     const filterKeys = Object.keys(filters);
     for (let i = 0; i < filterKeys.length; i++) {
       const filter = filterKeys[i];
-      ps += `${filter}: `;
       switch (filter) {
         case `categoryId`:
-          ps += `Int!`
+          ps += `${filter}: Int!`;
+          queryVariables[filter] = filters[filter];
           break;
         case `manufacturerId`:
-          ps += `Int!`
+          ps += `${filter}: Int!`;
+          queryVariables[filter] = filters[filter];
+          break;
+        case `priceRange`:
+          ps += `priceRangeBegin: Int!, $priceRangeEnd: Int!`;
+          queryVariables['priceRangeBegin'] = filters['priceRange'].begin;
+          queryVariables['priceRangeEnd'] = filters['priceRange'].end;
+          break;
+        case `sizeRange`:
+          ps += `sizeRangeBegin: Int!, $sizeRangeEnd: Int!`;
+          queryVariables['sizeRangeBegin'] = filters['sizeRange'].begin;
+          queryVariables['sizeRangeEnd'] = filters['sizeRange'].end;
+          break;
+        case `crewCapRange`:
+          ps += `crewCapRangeBegin: Int!, $crewCapRangeEnd: Int!`;
+          queryVariables['crewCapRangeBegin'] = filters['crewCapRange'].begin;
+          queryVariables['crewCapRangeEnd'] = filters['crewCapRange'].end;
+          break;
+        case `travelRangeRange`:
+          ps += `travelRangeRangeBegin: Int!, $travelRangeRangeEnd: Int!`;
+          queryVariables['travelRangeRangeBegin'] = filters['travelRangeRange'].begin;
+          queryVariables['travelRangeRangeEnd'] = filters['travelRangeRange'].end;
           break;
       }
       if (i !== filterKeys.length - 1) ps += `, $`
@@ -130,6 +153,18 @@ const ShipList = () => {
         case `manufacturerId`:
           fs += `$manufacturerId`;
           break;
+        case `priceRange`:
+          fs += `{begin: $priceRangeBegin, end: $priceRangeEnd}`
+          break;
+        case `sizeRange`:
+          fs += `{begin: $sizeRangeBegin, end: $sizeRangeEnd}`
+          break;
+        case `crewCapRange`:
+          fs += `{begin: $crewCapRangeBegin, end: $crewCapRangeEnd}`
+          break;
+        case `travelRangeRange`:
+          fs += `{begin: $travelRangeRangeBegin, end: $travelRangeRangeEnd}`
+          break;
       }
       if (i !== filterKeys.length - 1) fs += `, `
     }
@@ -149,7 +184,7 @@ const ShipList = () => {
         method: 'post',
         data: {
           query: qs,
-          variables: filters
+          variables: queryVariables
         },
       });
 

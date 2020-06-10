@@ -34,6 +34,8 @@ const Sidebar = () => {
 
     let newFilters = { ...filters };
     newFilters[key] = { begin, end };
+    // newFilters[`${key}Begin`] = begin;
+    // newFilters[`${key}End`] = end;
     setFilters(newFilters);
 
     let newFilterChips = { ...filterChips };
