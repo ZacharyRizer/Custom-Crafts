@@ -52,10 +52,9 @@ export const Auth0Provider = ({
                 name
                 email
               }
-            }`
-          }
+            }`,
+          },
         });
-        console.log('res', res);
       }
 
       setLoading(false);
