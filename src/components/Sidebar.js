@@ -39,11 +39,11 @@ const Sidebar = () => {
             {catDrop && (
                 <div>
                     <List node='ul' onClick={handleClickVal}>
-                        <li id='category_id 1'>Military</li>
-                        <li id='category_id 2'>Transport</li>
-                        <li id='category_id 3'>Cargo</li>
-                        <li id='category_id 4'>Performance</li>
-                        <li id='category_id 5'>Luxury</li>
+                        <li id='categoryId 1'>Military</li>
+                        <li id='categoryId 2'>Transport</li>
+                        <li id='categoryId 3'>Cargo</li>
+                        <li id='categoryId 4'>Performance</li>
+                        <li id='categoryId 5'>Luxury</li>
                     </List>
                 </div>
             )}
@@ -53,11 +53,11 @@ const Sidebar = () => {
             {manDrop && (
                 <div>
                     <List node='ul' onClick={handleClickVal}>
-                        <li id='manufactuer_id 1'>Imperial Galactic Government</li>
-                        <li id='manufactuer_id 2'>Spacing Guild</li>
-                        <li id='manufactuer_id 3'>Corellian Engineering Corporation</li>
-                        <li id='manufactuer_id 4'>Cybertronian Technologies</li>
-                        <li id='manufactuer_id 5'>Weyland-Yutani Corporation</li>
+                        <li id='manufacturerId 1'>Imperial Galactic Government</li>
+                        <li id='manufacturerId 2'>Spacing Guild</li>
+                        <li id='manufacturerId 3'>Corellian Engineering Corporation</li>
+                        <li id='manufacturerId 4'>Cybertronian Technologies</li>
+                        <li id='manufacturerId 5'>Weyland-Yutani Corporation</li>
                     </List>
                 </div>
             )}

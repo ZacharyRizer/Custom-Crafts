@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Row, Col, Loading } from 'arwes';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -7,16 +7,73 @@ import Box from '@material-ui/core/Box';
 import { Context } from '../Context';
 import ShipCard from './ShipCard';
 import Axios from 'axios';
+const { createApolloFetch } = require('apollo-fetch');
 
-let data;
+const fetch = createApolloFetch({
+  uri: 'http://localhost5000/graphql'
+});
 
 const ShipList = () => {
-  const { filters } = useContext(Context);
+  let [data, setData] = useState()
+  let { filters } = useContext(Context);
+  console.log('filters: ', filters)
 
   const buildQueryString = () => {
-    let qs = ``;
+    let gs = `
+    query TestQuery($manufacturerId: Int!){
+      ships(filters: {manufacturerId: $manufacturerId}) {
+        edges {
+          node {
+            id
+            stock
+            name
+            category {
+              name
+            }
+            manufacturer {
+              name
+            }
+            price
+            modelLink
+          }
+        }
+      }
+    }
+`;
 
-    qs = `
+
+    let ts = `
+    {
+      ships (filters: {
+    `
+
+
+    for (let filter in filters) {
+      ts += `${filter}:`;
+      ts += `"${filters[filter]}"`;
+    }
+
+    ts += `}) {
+      edges {
+        node {
+          id
+          stock
+          name
+          category{
+            name
+          }
+          manufacturer{
+            name
+          }
+          price
+          modelLink
+        }
+      }
+    }
+  }
+`;
+
+    const qs = `
     {
       ships {
         edges {
@@ -37,23 +94,26 @@ const ShipList = () => {
       }
     }
 `;
-    return qs;
+    console.log('ts: ', ts)
+    return gs;
   };
 
   useEffect(() => {
     (async () => {
       const qs = buildQueryString();
+      console.log('qs: ', qs)
       const res = await Axios({
         url: 'http://localhost:5000/graphql',
         method: 'post',
         data: {
-          query: qs,
+          query: qs, variables: { "manufacturerId": 1 }
         },
       });
 
-      console.log('res', res);
       data = res.data.data;
-      console.log('data nest', data);
+      console.log('data: ', data)
+      setData(data)
+
     })();
   }, [filters]);
 
@@ -73,57 +133,5 @@ const ShipList = () => {
     </>
   );
 };
-
-// return (
-//   <>
-//
-//     <Row>
-//       <Col s={6} xl={3}>
-//         <ShipCard
-//           stock={6}
-//           name="ISV Rimward Gold"
-//           type="Performance"
-//           manufacturer="Corellian Engineering Corporation"
-//           price={100000}
-//           link="/"
-//           ship="/spaceships/test_ship.glb"
-//         />
-//       </Col>
-//       <Col s={6} xl={3}>
-//         <ShipCard
-//           stock={5}
-//           name="ISV Rimward Gold"
-//           type="Performance"
-//           manufacturer="Corellian Engineering Corporation"
-//           price={100000}
-//           link="/"
-//           ship="/spaceships/test_ship.glb"
-//         />
-//       </Col>
-//       <Col s={6} xl={3}>
-//         <ShipCard
-//           stock={0}
-//           name="ISV Rimward Gold"
-//           type="Performance"
-//           manufacturer="Corellian Engineering Corporation"
-//           price={100000}
-//           link="/"
-//           ship="/spaceships/test_ship.glb"
-//         />
-//       </Col>
-//       <Col s={6} xl={3}>
-//         <ShipCard
-//           stock={0}
-//           name="ISV Rimward Gold"
-//           type="Performance"
-//           manufacturer="Corellian Engineering Corporation"
-//           price={100000}
-//           link="/"
-//           ship="/spaceships/test_ship.glb"
-//         />
-//       </Col>
-//     </Row>
-//   </>
-// );
 
 export default ShipList;
