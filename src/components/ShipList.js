@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from 'react';
-import { Row, Col, Loading } from 'arwes';
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import Box from '@material-ui/core/Box';
+import React, { useEffect, useContext } from "react";
+import { Row, Col, Loading } from "arwes";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import Box from "@material-ui/core/Box";
 
-import { Context } from '../Context';
-import ShipCard from './ShipCard';
-import Axios from 'axios';
+import { Context } from "../Context";
+import ShipCard from "./ShipCard";
+import Axios from "axios";
 
 let data;
 
@@ -44,16 +44,16 @@ const ShipList = () => {
     (async () => {
       const qs = buildQueryString();
       const res = await Axios({
-        url: 'http://localhost:5000/graphql',
-        method: 'post',
+        url: "http://localhost:5000/graphql",
+        method: "post",
         data: {
           query: qs,
         },
       });
 
-      console.log('res', res);
+      console.log("res", res);
       data = res.data.data;
-      console.log('data nest', data);
+      console.log("data nest", data);
     })();
   }, [filters]);
 
@@ -68,7 +68,9 @@ const ShipList = () => {
           ))}
         </Row>
       ) : (
-        <Loading animate full />
+        <div>
+          <Loading animate full />
+        </div>
       )}
     </>
   );
