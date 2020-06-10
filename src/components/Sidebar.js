@@ -34,6 +34,8 @@ const Sidebar = () => {
 
     let newFilters = { ...filters };
     newFilters[key] = { begin, end };
+    // newFilters[`${key}Begin`] = begin;
+    // newFilters[`${key}End`] = end;
     setFilters(newFilters);
 
     let newFilterChips = { ...filterChips };
@@ -71,19 +73,19 @@ const Sidebar = () => {
       {catDrop && (
         <div>
           <List node="ul" onClick={handleClickVal}>
-            <li id="category_id 1" className="Craft Type">
+            <li id="categoryId 1" className="Craft Type">
               Military
             </li>
-            <li id="category_id 2" className="Craft Type">
+            <li id="categoryId 2" className="Craft Type">
               Transport
             </li>
-            <li id="category_id 3" className="Craft Type">
+            <li id="categoryId 3" className="Craft Type">
               Cargo
             </li>
-            <li id="category_id 4" className="Craft Type">
+            <li id="categoryId 4" className="Craft Type">
               Performance
             </li>
-            <li id="category_id 5" className="Craft Type">
+            <li id="categoryId 5" className="Craft Type">
               Luxury
             </li>
           </List>
@@ -95,19 +97,19 @@ const Sidebar = () => {
       {manDrop && (
         <div>
           <List node="ul" onClick={handleClickVal}>
-            <li id="manufactuer_id 1" className="Manufacturer">
+            <li id="manufacturerId 1" className="Manufacturer">
               Imperial Galactic Government
             </li>
-            <li id="manufactuer_id 2" className="Manufacturer">
+            <li id="manufacturerId 2" className="Manufacturer">
               Spacing Guild
             </li>
-            <li id="manufactuer_id 3" className="Manufacturer">
+            <li id="manufacturerId 3" className="Manufacturer">
               Corellian Engineering Corporation
             </li>
-            <li id="manufactuer_id 4" className="Manufacturer">
+            <li id="manufacturerId 4" className="Manufacturer">
               Cybertronian Technologies
             </li>
-            <li id="manufactuer_id 5" className="Manufacturer">
+            <li id="manufacturerId 5" className="Manufacturer">
               Weyland-Yutani Corporation
             </li>
           </List>
