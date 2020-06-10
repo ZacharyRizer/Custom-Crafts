@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Frame,
   Line,
@@ -9,9 +10,9 @@ import {
   Footer,
 } from 'arwes';
 
-const ShipCard = ({
-  ship: { id, stock, name, category, manufacturer, price, modelLink },
-}) => {
+const ShipCard = ({ ship }) => {
+  const { id, stock, name, category, manufacturer, price, modelLink } = ship;
+
   return (
     <Frame
       layer={'primary'}
@@ -60,7 +61,7 @@ const ShipCard = ({
           layer="primary">
           {'$' + price}
         </Button>
-        {stock > 5 ? (
+        {stock > 2 ? (
           <Button corners={0} style={{ pointerEvents: 'none' }} layer="success">
             In Stock
           </Button>
@@ -76,9 +77,9 @@ const ShipCard = ({
             Out of Stock
           </Button>
         )}
-        <Button onClick={() => (window.location.href = '/')} layer="secondary">
-          View Details
-        </Button>
+        <Link to={`/ships/${id}`}>
+          <Button layer="secondary">View Details</Button>
+        </Link>
       </div>
     </Frame>
   );
