@@ -1,16 +1,15 @@
-import React, { useEffect, useContext } from "react";
-import { Row, Col, Loading } from "arwes";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import Box from "@material-ui/core/Box";
+import React, { useContext, useEffect, useState } from 'react';
+import { Row, Col, Loading } from 'arwes';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import Box from '@material-ui/core/Box';
 
-import { Context } from "../Context";
-import ShipCard from "./ShipCard";
-import Axios from "axios";
-
-let data;
+import { Context } from '../Context';
+import ShipCard from './ShipCard';
+import Axios from 'axios';
 
 const ShipList = () => {
+  let [data, setData] = useState();
   const { filters } = useContext(Context);
 
   const buildQueryString = () => {
@@ -44,16 +43,14 @@ const ShipList = () => {
     (async () => {
       const qs = buildQueryString();
       const res = await Axios({
-        url: "http://localhost:5000/graphql",
-        method: "post",
+        url: 'http://localhost:5000/graphql',
+        method: 'post',
         data: {
           query: qs,
         },
       });
 
-      console.log("res", res);
-      data = res.data.data;
-      console.log("data nest", data);
+      setData(res.data.data);
     })();
   }, [filters]);
 
