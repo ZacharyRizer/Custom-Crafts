@@ -107,9 +107,11 @@ const ShipList = () => {
         case `categoryId`:
           ps += `Int!`
           break;
-        default:
-          if (i !== filterKeys.length - 1) ps += `, $`
+        case `manufacturerId`:
+          ps += `Int!`
+          break;
       }
+      if (i !== filterKeys.length - 1) ps += `, $`
     }
     console.log('ps: ', ps);
     return ps; //44
@@ -123,11 +125,13 @@ const ShipList = () => {
       fs += `${filter}: `;
       switch (filter) {
         case `categoryId`:
-          fs += `$categoryId`
+          fs += `$categoryId`;
           break;
-        default:
-          if (i !== filterKeys.length - 1) fs += `, `
+        case `manufacturerId`:
+          fs += `$manufacturerId`;
+          break;
       }
+      if (i !== filterKeys.length - 1) fs += `, `
     }
 
     console.log('fs after buildFilterString: ', fs)
