@@ -7,11 +7,6 @@ import Box from '@material-ui/core/Box';
 import { Context } from '../Context';
 import ShipCard from './ShipCard';
 import Axios from 'axios';
-const { createApolloFetch } = require('apollo-fetch');
-
-const fetch = createApolloFetch({
-  uri: 'http://localhost5000/graphql'
-});
 
 const ShipList = () => {
   let [data, setData] = useState()
@@ -20,17 +15,17 @@ const ShipList = () => {
 
   const buildQueryString = () => {
     let gs = `
-    query TestQuery($manufacturerId: Int!){
-      ships(filters: {manufacturerId: $manufacturerId}) {
+    query shipQuery($categoryId: Int!){
+      ships(filters: {categoryId: $categoryId}) {
         edges {
           node {
             id
             stock
             name
-            category {
+            manufacturer {
               name
             }
-            manufacturer {
+            category {
               name
             }
             price
@@ -43,14 +38,25 @@ const ShipList = () => {
 
 
     let ts = `
-    {
-      ships (filters: {
+      query shipsQuery($
+    `;
+
+    // filter key switch statement
+
+    for (let filter in filters) {
+      ts += `${filter}:`;
+      ts += filters[filter];
+    }
+
+    ts += `
+      categoryId: Int!){
+      ships(filters: {
     `
 
 
     for (let filter in filters) {
       ts += `${filter}:`;
-      ts += `"${filters[filter]}"`;
+      ts += filters[filter];
     }
 
     ts += `}) {
@@ -95,7 +101,7 @@ const ShipList = () => {
     }
 `;
     console.log('ts: ', ts)
-    return gs;
+    return ts;
   };
 
   useEffect(() => {
@@ -106,7 +112,8 @@ const ShipList = () => {
         url: 'http://localhost:5000/graphql',
         method: 'post',
         data: {
-          query: qs, variables: { "manufacturerId": 1 }
+          query: qs,
+          variables: filters
         },
       });
 
