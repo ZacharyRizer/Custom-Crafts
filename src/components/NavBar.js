@@ -62,7 +62,7 @@ const NavBar = () => {
                 cursor: "text",
                 zIndex: 0,
               }}
-              class="mdi mdi-magnify"
+              className="mdi mdi-magnify"
             ></i>
           </Appear>
         </Frame>
@@ -74,7 +74,7 @@ const NavBar = () => {
               </Button>
               <Link to="/cart">
                 <Button style={{ marginRight: 25 }} animate>
-                  <i class="mdi mdi-cart" />: {numItems}
+                  <i className="mdi mdi-cart" />: {numItems}
                 </Button>
               </Link>
             </>
@@ -87,7 +87,7 @@ const NavBar = () => {
               </Link>
               <Link to="/cart">
                 <Button animate style={{ marginRight: 25 }}>
-                  <i class="mdi mdi-cart"> </i>
+                  <i className="mdi mdi-cart"> </i>
                   {numItems}
                 </Button>
               </Link>

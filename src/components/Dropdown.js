@@ -1,45 +1,55 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "arwes";
 
 const Dropdown = (props) => {
-  const node = useRef(null);
+  const [open, setOpen] = useState(true);
+  const [optionState, setOptionState] = useState(props.options ? props.options.map(() => false) : [false]);
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOutside = (e) => {
-    if (node.current.contains(e.target)) {
-      // inside click
-      return;
+  const handleOptionClick = (e, option, index) => {
+    e.preventDefault();
+    let newState = optionState;
+    newState[index] = !optionState[index];
+    setOptionState(newState);
+    if (optionState[index]) {
+      e.currentTarget.innerHTML = option + '<i class="mdi mdi-checkbox-blank-circle"/>';
     }
-    setOpen(false);
-  };
-
-  const handleChange = (selectedValue) => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+    if (optionState[index] === false) {
+      e.currentTarget.innerHTML = option;
     }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
+  };
 
   return (
-    <div ref={node} style={{ display: "flex", flexDirection: "column", position: "absolute" }}>
-      <Button onClick={() => setOpen(!open)} buttonProps={props.buttonProps}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <Button
+        onClick={() => setOpen(!open)}
+        buttonProps={{
+          style: {
+            ...props.buttonProps,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          },
+        }}
+      >
         {props.title}
         {!open ? <i className="mdi mdi-chevron-down" /> : <i className="mdi mdi-chevron-up" />}
       </Button>
-      {open && (
-        <div style={{ display: "inline-flex", flexDirection: "column" }}>
-          {props.options.map((option) => (
-            <Button layer="primary">{option}</Button>
+      {open && props.options && (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {props.options.map((option, index) => (
+            <Button
+              key={option}
+              corners={0}
+              layer="primary"
+              buttonProps={{
+                key: { option },
+                style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" },
+                onClick: (e) => handleOptionClick(e, option, index),
+              }}
+            >
+              {option}
+            </Button>
           ))}
         </div>
       )}

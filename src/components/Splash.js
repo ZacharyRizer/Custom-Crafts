@@ -122,11 +122,11 @@ const Splash = () => {
                   }}
                 >
                   "
-                  <i class="mdi mdi-star" />
-                  <i class="mdi mdi-star" />
-                  <i class="mdi mdi-star" />
-                  <i class="mdi mdi-star" />
-                  <i class="mdi mdi-star" />"
+                  <i className="mdi mdi-star" />
+                  <i className="mdi mdi-star" />
+                  <i className="mdi mdi-star" />
+                  <i className="mdi mdi-star" />
+                  <i className="mdi mdi-star" />"
                 </div>
                 <p
                   style={{
