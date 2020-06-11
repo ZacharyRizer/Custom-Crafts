@@ -163,7 +163,7 @@ const ShipList = () => {
       {data ? (
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {data.ships.edges.map((shipNode) => (
-            <Col>
+            <Col key={shipNode.node.id}>
               <ShipCard key={shipNode.node.id} ship={shipNode.node} />
             </Col>
           ))}
