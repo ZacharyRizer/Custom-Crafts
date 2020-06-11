@@ -7,7 +7,7 @@ import Sidebar2 from "./Sidebar2";
 const Shop = () => {
   return (
     <Row>
-      <Col s={6} m={3}>
+      <Col style={{ paddingRight: 0, paddingLeft: 20 }} s={6} m={3}>
         <Sidebar2 />
       </Col>
       <Col s={6} m={9}>

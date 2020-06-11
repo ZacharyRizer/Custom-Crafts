@@ -16,6 +16,19 @@ function keyChecker(e) {
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
+  const { filters, setFilters } = useContext(Context);
+
+  const keyChecker = (ev) => {
+    if (ev.key === 'Enter') {
+      const searchFilters = { nameIlike: ev.target.value };
+
+      let newFilters = { ...filters };
+      // newFilters[]
+      // Render search term as a chip?
+
+      window.location.href = `/shop`;
+    }
+  };
 
   useEffect(() => {
     if (localStorage.getItem('itemNum')) {
