@@ -50,7 +50,8 @@ const ShipCard = ({ ship }) => {
         }}
       >
         <Button corners={0} level={3} style={{ pointerEvents: "none" }} layer="primary">
-          {"$" + price}
+          <i className="mdi mdi-currency-jpy" />
+          {price}
         </Button>
         {stock > 2 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">

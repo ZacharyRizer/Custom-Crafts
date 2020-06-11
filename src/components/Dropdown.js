@@ -1,12 +1,22 @@
-import React, { useState, useRef, createRef, useContext } from "react";
+import React, { useState, useRef, createRef, useContext, useEffect } from "react";
 import { Button } from "arwes";
 import { Context } from "../Context";
 
 const Dropdown = (props) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(props.flip ? false : true);
   const [optionState, setOptionState] = useState(props.options ? props.options.map(() => false) : [false]);
   const node = useRef([]);
   const { filters, setFilters } = useContext(Context);
+
+  useEffect(() => {
+    if (Object.keys(filters).length === 0) {
+      for (let i = 0; i < props.options.length; i++) {
+        node.current[i].current.innerHTML = props.options[i];
+      }
+      let newState = optionState.map(() => false);
+      setOptionState(newState);
+    }
+  }, [filters]);
 
   if (node.current.length !== props.options.length) {
     // add or remove refs
@@ -66,7 +76,7 @@ const Dropdown = (props) => {
         }}
       >
         {props.title}
-        {open ? <i className="mdi mdi-chevron-down" /> : <i className="mdi mdi-chevron-up" />}
+        {open ? <i style={{}} className="mdi mdi-chevron-down" /> : <i style={{}} className="mdi mdi-chevron-up" />}
       </Button>
       <div style={{ display: !open ? "flex" : "none", flexDirection: "column" }}>
         {props.options &&

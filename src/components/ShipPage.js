@@ -101,7 +101,10 @@ const ShipPage = (props) => {
                       margin: "20px",
                     }}
                   >
-                    <blockquote style={{ margin: "0 0 0 0" }}>${ship.price}</blockquote>
+                    <blockquote style={{ margin: "0 0 0 0" }}>
+                      <i className="mdi mdi-currency-jpy" />
+                      {ship.price}
+                    </blockquote>
                     {ship.used ? (
                       <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
                         Used
