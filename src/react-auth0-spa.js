@@ -56,7 +56,7 @@ export const Auth0Provider = ({
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            method: 'patch',
+            method: 'post',
             data: {
               query: `
               mutation {
