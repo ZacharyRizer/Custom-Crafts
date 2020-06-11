@@ -34,8 +34,6 @@ const Sidebar = () => {
 
     let newFilters = { ...filters };
     newFilters[key] = { begin, end };
-    // newFilters[`${key}Begin`] = begin;
-    // newFilters[`${key}End`] = end;
     setFilters(newFilters);
 
     let newFilterChips = { ...filterChips };
@@ -59,10 +57,11 @@ const Sidebar = () => {
       <div className="filter_container">
         <List node="ul">
           {Object.keys(filterChips).map((key) => (
-            <Button key={key}>
-              <span id={key} onClick={handleChipClick}>
-                {filterChips[key][0]}: {filterChips[key][1]}
-              </span>
+            <Button
+              key={key}
+              buttonProps={{ id: `${key}` }}
+              onClick={handleChipClick}>
+              {filterChips[key][0]}: {filterChips[key][1]}
             </Button>
           ))}
         </List>
