@@ -16,6 +16,19 @@ function keyChecker(e) {
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
+  const { filters, setFilters } = useContext(Context);
+
+  const keyChecker = (ev) => {
+    if (ev.key === "Enter") {
+      const searchFilters = { nameIlike: ev.target.value };
+
+      let newFilters = { ...filters };
+      // newFilters[]
+      // Render search term as a chip?
+
+      window.location.href = `/shop`;
+    }
+  };
 
   useEffect(() => {
     if (localStorage.getItem("itemNum")) {
@@ -23,6 +36,12 @@ const NavBar = () => {
       setNumItems(num);
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("custom_crafts_userObj");
+    localStorage.removeItem("custom_crafts_userTWJ");
+    logout();
+  };
 
   return (
     <Frame
@@ -85,7 +104,7 @@ const NavBar = () => {
             <>
               <Button
                 style={{ marginRight: 25 }}
-                onClick={() => loginWithRedirect({})}
+                onClick={() => loginWithRedirect()}
                 animate
                 layer="secondary"
               >
@@ -114,7 +133,7 @@ const NavBar = () => {
                 animate
                 layer="alert"
                 style={{ marginRight: 25 }}
-                onClick={() => logout()}
+                onClick={handleLogout}
               >
                 Log-out <i className="mdi mdi-exit-run" />
               </Button>
