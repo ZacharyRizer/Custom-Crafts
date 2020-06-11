@@ -191,7 +191,7 @@ const Cart = () => {
           </Button>
         </Link>
         <Link to="/checkout">
-          <Button onClick={handleCheckout} animate layer="secondary">
+          <Button animate layer="secondary">
             Checkout
           </Button>
         </Link>

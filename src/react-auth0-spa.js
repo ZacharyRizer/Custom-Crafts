@@ -47,7 +47,6 @@ export const Auth0Provider = ({
 
         if (storedUser && storedUser !== 'undefined') {
           setUser(storedUser);
-          setLoading(false);
         } else {
           const res = await axios({
             url: 'http://localhost:5000/graphql',
@@ -71,9 +70,9 @@ export const Auth0Provider = ({
             localStorage.setItem('custom_crafts_userTWJ', token);
           }
           setUser(user);
-          setLoading(false);
         }
       }
+      setLoading(false);
     };
     initAuth0();
   }, []);
