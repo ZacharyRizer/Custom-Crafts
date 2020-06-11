@@ -9,7 +9,10 @@ const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
-  let [quantity, setQuantity] = useState(1);
+  const showModal = () => {
+    let modal = document.getElementById('modal');
+    modal.style.display = 'block';
+  };
 
   const handleCheckout = async () => {
     const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
@@ -183,13 +186,33 @@ const Cart = () => {
             Continue Shopping
           </Button>
         </Link>
-        <Link to="/shop">
-          <Button onClick={handleCheckout} animate layer="secondary">
-            Proceed to Checkout
-          </Button>
-        </Link>
+        <Button onClick={handleCheckout} animate layer="secondary">
+          Checkout
+        </Button>
+        <div id="modal">
+          <div id="modal-content">
+            <Frame style={{ width: 350, height: 350 }}>
+              <Heading node="h4">ORDER SUMMARY</Heading>
+              <div style={{ padding: 20 }}>
+                <Table headers={['ITEM', 'QTY', 'PRICE']} dataset={entries} />
+                <Line animate layer="success" />
+                <Button
+                  animate
+                  layer="secondary"
+                  buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
+                  CHANGE YOUR ORDER
+                </Button>
+                <p style={{ fontSize: 12 }}>Standard Shipping:</p>
+                <p style={{ fontSize: 12 }}>Universe Taxes:</p>
+                <Line animate layer="secondary" />
+                <Heading node="h5">ORDER TOTAL :</Heading>
+              </div>
+            </Frame>
+          </div>
+        </div>
       </Frame>
     </>
   );
 };
+
 export default Cart;
