@@ -3,7 +3,6 @@ import { Context } from "../Context";
 import { Link } from "react-router-dom";
 import { Frame, Content, Heading, Header, Row, Col, Button } from "arwes";
 import Axios from "axios";
-import Dropdown from "./Dropdown";
 
 const ShipPage = (props) => {
   let [ship, setShip] = useState();
@@ -48,11 +47,24 @@ const ShipPage = (props) => {
   }, [ship]);
 
   const addToCart = () => {
-    setNumItems((numItems += 1));
-    let newCart = [...cartItems];
-    newCart.push(ship);
+    let newCart;
+    let found = cartItems.find((item) => item.name === ship.name);
+    if (!found) {
+      ship.quantity = 1;
+      setNumItems((numItems += 1));
+      newCart = [...cartItems, ship];
+    } else {
+      newCart = [...cartItems];
+      newCart.forEach((item) => {
+        if (item.name === ship.name && item.quantity < item.stock) {
+          item.quantity = item.quantity + 1;
+          setNumItems((numItems += 1));
+        }
+      });
+    }
     setCartItems(newCart);
-    console.log(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem("itemNum", JSON.stringify(numItems));
   };
 
   return (

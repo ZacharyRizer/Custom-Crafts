@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../Context";
 import { useAuth0 } from "../react-auth0-spa";
@@ -12,7 +12,14 @@ function keyChecker(e) {
 
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  const { numItems } = useContext(Context);
+  const { numItems, setNumItems } = useContext(Context);
+
+  useEffect(() => {
+    if (localStorage.getItem("itemNum")) {
+      let num = parseInt(localStorage.getItem("itemNum"));
+      setNumItems(num);
+    }
+  }, []);
 
   return (
     <Frame animate level={1} corners={6} layer="primary" style={{ marginBottom: 20 }}>

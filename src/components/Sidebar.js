@@ -57,10 +57,11 @@ const Sidebar = () => {
       <div className="filter_container">
         <List node="ul">
           {Object.keys(filterChips).map((key) => (
-            <Button key={key}>
-              <span id={key} onClick={handleChipClick}>
-                {filterChips[key][0]}: {filterChips[key][1]}
-              </span>
+            <Button
+              key={key}
+              buttonProps={{ id: `${key}` }}
+              onClick={handleChipClick}>
+              {filterChips[key][0]}: {filterChips[key][1]}
             </Button>
           ))}
         </List>
