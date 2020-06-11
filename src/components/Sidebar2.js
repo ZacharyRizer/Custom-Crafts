@@ -1,9 +1,11 @@
 import React from "react";
 import Dropdown from "./Dropdown";
+import ClearFilters from "./ClearFilters";
 
 const Sidebar2 = () => {
   return (
     <div style={{ paddingTop: 20, position: "fixed", width: "23.7vw" }}>
+      <ClearFilters />
       <Dropdown
         idList={["categoryId 1", "categoryId 2", "categoryId 3", "categoryId 4", "categoryId 5"]}
         options={["Military", "Transport", "Cargo", "Performance", "Luxury"]}
@@ -54,6 +56,7 @@ const Sidebar2 = () => {
         title="Range (Parsecs)"
       />
       <Dropdown
+        flip
         idList={[
           "priceRange 0 100",
           "priceRange 100 1000",
@@ -62,7 +65,7 @@ const Sidebar2 = () => {
           "priceRange 100000 1000000",
         ]}
         options={["< 100", "100 - 1,000", "1,000 - 10,000", "10,000 - 100,000", "100,000 +"]}
-        title="Price (Credits)"
+        title="Price (Yen)"
       />
     </div>
   );
