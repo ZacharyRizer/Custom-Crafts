@@ -9,12 +9,10 @@ const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
-  let [quantity, setQuantity] = useState(1);
-
   const showModal = () => {
     let modal = document.getElementById('modal');
     modal.style.display = 'block';
-  }
+  };
 
   const handleCheckout = async () => {
     if (!cartItems || cartItems.length === 0) return;
@@ -29,7 +27,7 @@ const Cart = () => {
           id
         }
       }
-    `
+    `;
 
     // post order to db
     const res = await Axios({
@@ -37,8 +35,8 @@ const Cart = () => {
       method: 'post',
       data: {
         query: os,
-        variables: { customerId: user.id }
-      }
+        variables: { customerId: user.id },
+      },
     });
 
     const order = res.data.data.addOrder;
@@ -52,6 +50,7 @@ const Cart = () => {
           }
         }
       `;
+<<<<<<< HEAD
 
     // create updateShip string
 
@@ -63,6 +62,8 @@ const Cart = () => {
           }
         }
     `;
+=======
+>>>>>>> master
 
     cartItems.forEach(async (item) => {
       const res = await Axios({
@@ -101,7 +102,8 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('cart')) {//save to variable?
+    if (localStorage.getItem('cart')) {
+      //save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
@@ -216,15 +218,13 @@ const Cart = () => {
           </Button>
         </Link>
         <Link to="/checkout">
-          <Button onClick={handleCheckout} animate layer='secondary'>Checkout</Button>
+          <Button onClick={handleCheckout} animate layer="secondary">
+            Checkout
+          </Button>
         </Link>
       </Frame>
     </>
-  )
-}
+  );
+};
 
 export default Cart;
-
-
-
-
