@@ -13,16 +13,6 @@ const Cart = () => {
   let [quantity, setQuantity] = useState(1);
   console.log(`cartItems: `, cartItems)
 
-
-  // const increment = () => {
-
-  // }
-
-  // const decrement = () => {
-
-  // }
-
-
   const handleCheckout = async () => {
     // const user = await auth0FromHook.getUser();
     // const token = await auth0FromHook.getTokenSilently();
@@ -51,12 +41,32 @@ const Cart = () => {
       }
     });
 
-    const data = res.data.data;
-    console.log('order data: ', data);
+    const order = res.data.data.addOrder;
+    console.log('order data: ', order);
 
 
     //   // add isAuthenticated logic ???
-    //   cartItems.forEach((item => console.log('Im an item: ', item)))
+
+    // create order items
+
+    let is = `
+        mutation addOrderItem($orderId: Int!, $shipId: Int!, $quantity: Int!){
+          addOrderItem(orderId: $orderId, shipId: $shipId, quantity: $quantity){
+            id
+          }
+        }
+      `
+
+    cartItems.forEach(async (item) => {
+      const res = await Axios({
+        url: 'http://localhost:5000/graphql',
+        method: 'post',
+        data: {
+          query: is,
+          variables: { orderId: order.id, shipId: item.id, quantity: item.quantity }
+        }
+      });
+    })
   }
 
   let entries = cartItems.map(item => {
