@@ -44,6 +44,11 @@ const ShipPage = (props) => {
       });
       setShip(res.data.data.ship);
     })();
+    if (localStorage.getItem('cart')) {
+      //save to variable?
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      setCartItems(cart);
+    }
   }, []);
 
   const addToCart = () => {
@@ -63,6 +68,8 @@ const ShipPage = (props) => {
       });
     }
     setCartItems(newCart);
+    console.log(newCart);
+
     localStorage.setItem('cart', JSON.stringify(newCart));
     localStorage.setItem('itemNum', JSON.stringify(numItems));
   };
