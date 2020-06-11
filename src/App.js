@@ -10,6 +10,7 @@ import Shop from "./components/Shop";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/Profile";
 import Cart from "./components/Cart";
+import Checkout from './components/Checkout'
 
 const App = () => {
   const client = new ApolloClient({ uri: "http://localhost:5000/graphql" });
