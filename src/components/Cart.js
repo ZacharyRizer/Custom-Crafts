@@ -50,6 +50,20 @@ const Cart = () => {
           }
         }
       `;
+<<<<<<< HEAD
+
+    // create updateShip string
+
+    let ss = `
+        mutation($id: Int!, $decQuantity: Int!){
+          decrementShipStock(id: $id, decQuantity: $decQuantity){
+            id
+            stock
+          }
+        }
+    `;
+=======
+>>>>>>> master
 
     cartItems.forEach(async (item) => {
       const res = await Axios({
@@ -66,6 +80,19 @@ const Cart = () => {
       });
 
       // Update db to reduce ship stock based on associated order-item post
+
+      const stockRes = await Axios({
+        url: 'http://localhost:5000/graphql',
+        method: 'post',
+        data: {
+          query: ss,
+          variables: {
+            id: item.id,
+            decQuantity: item.quantity
+          }
+        }
+      });
+
     });
 
     localStorage.removeItem('cart');
