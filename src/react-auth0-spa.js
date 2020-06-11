@@ -36,25 +36,37 @@ export const Auth0Provider = ({
       setIsAuthenticated(isAuthenticated);
 
       if (isAuthenticated) {
-        const user = await auth0FromHook.getUser();
+        let user = await auth0FromHook.getUser();
         const token = await auth0FromHook.getTokenSilently();
+
+        console.log('user: ', user)
+        console.log('user.user_metadata: ', user.user_metadata)
+        // console.log('user.user_metadata.id: ', user.user_metadata.id)
+        if (user && !user.id) {
+          console.log('inside conditional!!!!!')
+          const res = await axios({
+            url: 'http://localhost:5000/graphql',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            method: 'post',
+            data: {
+              query: `
+              mutation {
+                addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}"){
+                  id
+                }
+              }`,
+            },
+          });
+          console.log('res, ', res)
+          if (res.data.data.addCustomer) {
+            const id = res.data.data.addCustomer.id;
+            user.id = id;
+          }
+          console.log('user59: ', user)
+        }
         setUser(user);
-        const res = await axios({
-          url: 'http://localhost:5000/graphql',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          method: 'post',
-          data: {
-            query: `
-            mutation {
-              addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}"){
-                name
-                email
-              }
-            }`,
-          },
-        });
       }
 
       setLoading(false);
