@@ -1,24 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Context } from '../Context';
-import { Frame, Heading, Button, Table, Line } from 'arwes';
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Context } from "../Context";
+import { Frame, Heading, Button, Table, Line } from "arwes";
 
-import Axios from 'axios';
+import Axios from "axios";
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
   let [quantity, setQuantity] = useState(1);
-  
+
   const showModal = () => {
-        let modal = document.getElementById('modal');
-        modal.style.display = 'block';
-   }
+    let modal = document.getElementById("modal");
+    modal.style.display = "block";
+  };
 
   const handleCheckout = async () => {
-    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
-    
+    const user = JSON.parse(localStorage.getItem("custom_crafts_userObj"));
+
     // order creation query string
     let os = `
       mutation addOrder($customerId: Int!) {
@@ -27,18 +27,18 @@ const Cart = () => {
           id
         }
       }
-    `
+    `;
 
     // post order to db
     const res = await Axios({
-      url: 'http://localhost:5000/graphql',
-      method: 'post',
+      url: "http://localhost:5000/graphql",
+      method: "post",
       data: {
         query: os,
-        variables: { customerId: user.id }
-      }
+        variables: { customerId: user.id },
+      },
     });
-    
+
     const order = res.data.data.addOrder;
     //   // add isAuthenticated logic ???
 
@@ -49,12 +49,12 @@ const Cart = () => {
             id
           }
         }
-      `
+      `;
 
     cartItems.forEach(async (item) => {
       const res = await Axios({
-        url: 'http://localhost:5000/graphql',
-        method: 'post',
+        url: "http://localhost:5000/graphql",
+        method: "post",
         data: {
           query: is,
           variables: {
@@ -66,15 +66,16 @@ const Cart = () => {
       });
     });
 
-    localStorage.removeItem('cart');
-    localStorage.removeItem('itemNum');
+    localStorage.removeItem("cart");
+    localStorage.removeItem("itemNum");
     setNumItems(0);
     setCartItems([]);
   };
 
   useEffect(() => {
-    if (localStorage.getItem('cart')) {//save to variable?
-      let cart = JSON.parse(localStorage.getItem('cart'));
+    if (localStorage.getItem("cart")) {
+      //save to variable?
+      let cart = JSON.parse(localStorage.getItem("cart"));
       setCartItems(cart);
     }
     let total = cartItems.reduce((accum, item) => {
@@ -92,9 +93,9 @@ const Cart = () => {
         setNumItems((numItems += 1));
       }
     });
-    localStorage.setItem('itemNum', JSON.stringify(numItems));
+    localStorage.setItem("itemNum", JSON.stringify(numItems));
     setCartItems(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
+    localStorage.setItem("cart", JSON.stringify(newCart));
   };
 
   const decrement = (e) => {
@@ -106,9 +107,9 @@ const Cart = () => {
         setNumItems((numItems -= 1));
       }
     });
-    localStorage.setItem('itemNum', JSON.stringify(numItems));
+    localStorage.setItem("itemNum", JSON.stringify(numItems));
     setCartItems(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
+    localStorage.setItem("cart", JSON.stringify(newCart));
   };
 
   const removeItem = (e) => {
@@ -116,21 +117,22 @@ const Cart = () => {
     let itemToRemove = cartItems.find((item) => item.id === id);
     let numToRemove = itemToRemove.quantity;
     setNumItems((numItems -= numToRemove));
-    localStorage.setItem('itemNum', JSON.stringify(numItems));
+    localStorage.setItem("itemNum", JSON.stringify(numItems));
 
     let newCart = cartItems.filter((item) => item.id !== id);
     setCartItems(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
+    localStorage.setItem("cart", JSON.stringify(newCart));
   };
- 
+
   let entries = cartItems.map((item) => {
     return [
       <Link
         to={`/ships/${item.id}`}
         style={{
-          textDecoration: 'none',
-          color: '#26dafd',
-        }}>
+          textDecoration: "none",
+          color: "#26dafd",
+        }}
+      >
         {item.name}
       </Link>,
       item.category.name,
@@ -140,15 +142,17 @@ const Cart = () => {
           animate
           layer="success"
           buttonProps={{ style: { padding: 5 }, id: `${item.id}` }}
-          onClick={increment}>
+          onClick={increment}
+        >
           +
         </Button>
-        <span style={{ padding: '10px', width: '50px' }}>{item.quantity}</span>
+        <span style={{ padding: "10px", width: "50px" }}>{item.quantity}</span>
         <Button
           animate
           layer="alert"
           buttonProps={{ style: { padding: 5 }, id: `${item.id}` }}
-          onClick={decrement}>
+          onClick={decrement}
+        >
           -
         </Button>
       </>,
@@ -157,7 +161,8 @@ const Cart = () => {
         animate
         layer="alert"
         buttonProps={{ style: { padding: 5, fontSize: 15 }, id: `${item.id}` }}
-        onClick={removeItem}>
+        onClick={removeItem}
+      >
         Remove
       </Button>,
     ];
@@ -170,12 +175,12 @@ const Cart = () => {
         <div style={{ padding: 20 }}>
           <Table
             headers={[
-              'Product Name',
-              'Type',
-              'Manufactuer',
-              'Quantity',
-              'Price',
-              'Modify',
+              "Product Name",
+              "Type",
+              "Manufactuer",
+              "Quantity",
+              "Price",
+              "Modify",
             ]}
             dataset={entries}
           />
@@ -187,27 +192,34 @@ const Cart = () => {
             Continue Shopping
           </Button>
         </Link>
-        <Link to="/checkout">
-          <Button onClick={handleCheckout} animate layer='secondary'>Checkout</Button>
-                <div id='modal'>
-                  <div id='modal-content'>
-                    <Frame style={{width:350, height:350}}>
-                      <Heading node='h4'>ORDER SUMMARY</Heading>
-                      <div style={{padding:20}}>
-                        <Table headers={['ITEM', 'QTY', 'PRICE']} dataset={entries} />
-                        <Line animate layer='success' />
-                        <Button animate layer='secondary' buttonProps={{ style: { padding: 5, fontSize: 10 } }}>CHANGE YOUR ORDER</Button>
-                        <p style={{fontSize:12}}>Standard Shipping:</p>
-                        <p style={{ fontSize: 12 }}>Universe Taxes:</p>
-                        <Line animate layer='secondary' />
-                        <Heading node='h5'>ORDER TOTAL :</Heading>
-                      </div>
-                    </Frame>
-                  </div>
-                </div>
-        </Frame>
-      </>
-    )
-  })
+        <Button onClick={handleCheckout} animate layer="secondary">
+          Checkout
+        </Button>
+        <div id="modal">
+          <div id="modal-content">
+            <Frame style={{ width: 350, height: 350 }}>
+              <Heading node="h4">ORDER SUMMARY</Heading>
+              <div style={{ padding: 20 }}>
+                <Table headers={["ITEM", "QTY", "PRICE"]} dataset={entries} />
+                <Line animate layer="success" />
+                <Button
+                  animate
+                  layer="secondary"
+                  buttonProps={{ style: { padding: 5, fontSize: 10 } }}
+                >
+                  CHANGE YOUR ORDER
+                </Button>
+                <p style={{ fontSize: 12 }}>Standard Shipping:</p>
+                <p style={{ fontSize: 12 }}>Universe Taxes:</p>
+                <Line animate layer="secondary" />
+                <Heading node="h5">ORDER TOTAL :</Heading>
+              </div>
+            </Frame>
+          </div>
+        </div>
+      </Frame>
+    </>
+  );
+};
 
 export default Cart;
