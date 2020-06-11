@@ -3,6 +3,7 @@ import { Context } from "../Context";
 import { Link } from "react-router-dom";
 import { Frame, Content, Heading, Header, Row, Col, Button } from "arwes";
 import Axios from "axios";
+import Dropdown from "./Dropdown";
 
 const ShipPage = (props) => {
   let [ship, setShip] = useState();
@@ -61,18 +62,20 @@ const ShipPage = (props) => {
           <Header animate style={{ backgroundColor: "transparent" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Heading style={{ margin: "0 0 0 10px", fontSize: "32px" }}>{ship.name}</Heading>
-              {ship.stock > 0 ? (
-                <Button layer="secondary" style={{ marginRight: 10 }} onClick={addToCart}>
-                  Add to Cart
-                </Button>
-              ) : (
-                <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                  Out of Stock
-                </Button>
-              )}
-              <Link to="/shop">
-                <Button style={{ marginRight: 10 }}>Continue Shopping</Button>
-              </Link>
+              <div style={{ display: "flex", width: "300px", justifyContent: "space-between" }}>
+                <Link to="/shop">
+                  <Button layer="primary">Return to Shop</Button>
+                </Link>
+                {ship.stock > 0 ? (
+                  <Button layer="secondary" style={{ marginRight: 10 }} onClick={addToCart}>
+                    Add to Cart
+                  </Button>
+                ) : (
+                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                    Out of Stock
+                  </Button>
+                )}
+              </div>
             </div>
           </Header>
           <Content>
@@ -105,7 +108,7 @@ const ShipPage = (props) => {
                         No FTL Drive
                       </blockquote>
                     )}
-                    {ship.stock > 5 ? (
+                    {ship.stock > 2 ? (
                       <blockquote data-layer="" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
                       </blockquote>

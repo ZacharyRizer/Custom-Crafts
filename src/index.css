@@ -1,5 +1,5 @@
 /* TODO Add site wide styles */
-@import url("https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@500;900&family=Quantico&family=Rajdhani:wght@700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@500;900&family=Quantico&family=Rajdhani:wght@700&display=swap"); */
 
 .shop-grid-container {
   display: grid;
@@ -14,3 +14,5 @@
 .sidebar-buttons {
   width: 100%;
 }
+
+/* Dropdown classes */
