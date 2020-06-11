@@ -5,22 +5,21 @@ import { Frame, Heading, Button, Table, Line } from 'arwes';
 
 import Axios from 'axios';
 
-
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
   let [quantity, setQuantity] = useState(1);
-  console.log(`cartItems: `, cartItems)
+  
+  const showModal = () => {
+        let modal = document.getElementById('modal');
+        modal.style.display = 'block';
+   }
 
   const handleCheckout = async () => {
-    // const user = await auth0FromHook.getUser();
-    // const token = await auth0FromHook.getTokenSilently();
-
     const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
-    console.log('user in checkout: ', user)
+    
     // order creation query string
-
     let os = `
       mutation addOrder($customerId: Int!) {
         addOrder(customerId: $customerId){
@@ -31,7 +30,6 @@ const Cart = () => {
     `
 
     // post order to db
-
     const res = await Axios({
       url: 'http://localhost:5000/graphql',
       method: 'post',
@@ -40,15 +38,11 @@ const Cart = () => {
         variables: { customerId: user.id }
       }
     });
-
+    
     const order = res.data.data.addOrder;
-    console.log('order data: ', order);
-
-
     //   // add isAuthenticated logic ???
 
     // create order items
-
     let is = `
         mutation addOrderItem($orderId: Int!, $shipId: Int!, $quantity: Int!){
           addOrderItem(orderId: $orderId, shipId: $shipId, quantity: $quantity){
@@ -63,18 +57,21 @@ const Cart = () => {
         method: 'post',
         data: {
           query: is,
-          variables: { orderId: order.id, shipId: item.id, quantity: item.quantity }
-        }
+          variables: {
+            orderId: order.id,
+            shipId: item.id,
+            quantity: item.quantity,
+          },
+        },
       });
-    })
-  }
+    });
 
-  let entries = cartItems.map(item => {
+    localStorage.removeItem('cart');
+    localStorage.removeItem('itemNum');
+    setNumItems(0);
+    setCartItems([]);
+  };
 
-    return (
-      [item.name, item.category.name, <><Button onClick={() => setQuantity(quantity += 1)} animate layer='success' buttonProps={{ style: { padding: 5 } }}>+</Button><span style={{ padding: "10px", width: "50px" }}>{item.quantity}</span><Button onClick={() => setQuantity(quantity -= 1)} animate layer='alert' buttonProps={{ style: { padding: 5 } }}>-</Button></>, 'red', item.price, <><Link to='/shop'><Button animate layer='primary' style={{ marginRight: 10 }} buttonProps={{ style: { padding: 5, fontSize: 10 } }}>Edit</Button></Link> <Button animate layer='alert' buttonProps={{ style: { padding: 5, fontSize: 10 } }}>Remove</Button></>]
-    )
-  })
   useEffect(() => {
     if (localStorage.getItem('cart')) {//save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
@@ -125,8 +122,8 @@ const Cart = () => {
     setCartItems(newCart);
     localStorage.setItem('cart', JSON.stringify(newCart));
   };
-
-  entries = cartItems.map((item) => {
+ 
+  let entries = cartItems.map((item) => {
     return [
       <Link
         to={`/ships/${item.id}`}
@@ -191,12 +188,26 @@ const Cart = () => {
           </Button>
         </Link>
         <Link to="/checkout">
-          <Button onClick={handleCheckout} animate layer="secondary">
-            Proceed to Checkout
-          </Button>
-        </Link>
-      </Frame>
-    </>
-  );
-};
+          <Button onClick={handleCheckout} animate layer='secondary'>Checkout</Button>
+                <div id='modal'>
+                  <div id='modal-content'>
+                    <Frame style={{width:350, height:350}}>
+                      <Heading node='h4'>ORDER SUMMARY</Heading>
+                      <div style={{padding:20}}>
+                        <Table headers={['ITEM', 'QTY', 'PRICE']} dataset={entries} />
+                        <Line animate layer='success' />
+                        <Button animate layer='secondary' buttonProps={{ style: { padding: 5, fontSize: 10 } }}>CHANGE YOUR ORDER</Button>
+                        <p style={{fontSize:12}}>Standard Shipping:</p>
+                        <p style={{ fontSize: 12 }}>Universe Taxes:</p>
+                        <Line animate layer='secondary' />
+                        <Heading node='h5'>ORDER TOTAL :</Heading>
+                      </div>
+                    </Frame>
+                  </div>
+                </div>
+        </Frame>
+      </>
+    )
+  })
+
 export default Cart;
