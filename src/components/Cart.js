@@ -27,9 +27,32 @@ const Cart = () => {
     // const user = await auth0FromHook.getUser();
     // const token = await auth0FromHook.getTokenSilently();
 
-    // // order creation query string
+    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
+    console.log('user in checkout: ', user)
+    // order creation query string
 
-    // let os =
+    let os = `
+      mutation addOrder($customerId: Int!) {
+        addOrder(customerId: $customerId){
+          customerId
+          id
+        }
+      }
+    `
+
+    // post order to db
+
+    const res = await Axios({
+      url: 'http://localhost:5000/graphql',
+      method: 'post',
+      data: {
+        query: os,
+        variables: { customerId: user.id }
+      }
+    });
+
+    const data = res.data.data;
+    console.log('order data: ', data);
 
 
     //   // add isAuthenticated logic ???
@@ -43,7 +66,7 @@ const Cart = () => {
     )
   })
   useEffect(() => {
-    if (localStorage.getItem('cart')) {
+    if (localStorage.getItem('cart')) {//save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
@@ -93,7 +116,7 @@ const Cart = () => {
     localStorage.setItem('cart', JSON.stringify(newCart));
   };
 
-  let entries = cartItems.map((item) => {
+  entries = cartItems.map((item) => {
     return [
       <Link
         to={`/ships/${item.id}`}
@@ -158,7 +181,7 @@ const Cart = () => {
           </Button>
         </Link>
         <Link to="/checkout">
-          <Button animate layer="secondary">
+          <Button onClick={handleCheckout} animate layer="secondary">
             Proceed to Checkout
           </Button>
         </Link>
