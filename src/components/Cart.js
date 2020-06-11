@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { Frame, Heading, Button, Table, Line } from 'arwes';
 
 
+
 const Cart = () => {
 
     let [quantity, setQuantity] = useState(1);
+    const { cartItems } = useContext(Context);
 
     // const increment = () => {
 
@@ -15,8 +17,11 @@ const Cart = () => {
     // const decrement = () => {
 
     // }
-    
-    const { cartItems } = useContext(Context);
+
+    const handleCheckout = async () => {
+        let modal = document.getElementById('modal');
+        modal.style.display = 'block';
+    }
 
     let entries = cartItems.map(item => {
 
@@ -37,9 +42,26 @@ const Cart = () => {
           <Line animate layer='success' />
           <Heading node='h4'>Subtotal :</Heading>
                 <Link to='/shop'><Button animate layer='success' style={{ marginRight: 25 }}>Continue Shopping</Button></Link>
-          <Link to='/checkout'><Button animate layer='secondary'>Proceed to Checkout</Button></Link>
+                <Button onClick={handleCheckout} animate layer='secondary'>Checkout</Button>
+                <div id='modal'>
+                  <div id='modal-content'>
+                    <Frame style={{width:350, height:350}}>
+                      <Heading node='h4'>ORDER SUMMARY</Heading>
+                      <div style={{padding:20}}>
+                        <Table headers={['ITEM', 'QTY', 'PRICE']} dataset={entries} />
+                        <Line animate layer='success' />
+                        <Button animate layer='secondary' buttonProps={{ style: { padding: 5, fontSize: 10 } }}>CHANGE YOUR ORDER</Button>
+                        <p style={{fontSize:12}}>Standard Shipping:</p>
+                        <p style={{ fontSize: 12 }}>Universe Taxes:</p>
+                        <Line animate layer='secondary' />
+                        <Heading node='h5'>ORDER TOTAL :</Heading>
+                      </div>
+                    </Frame>
+                  </div>
+                </div>
         </Frame>
       </>
     )
 };
+
 export default Cart;
