@@ -5,22 +5,16 @@ import { Frame, Heading, Button, Table, Line } from 'arwes';
 
 import Axios from 'axios';
 
-
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
   let [quantity, setQuantity] = useState(1);
-  console.log(`cartItems: `, cartItems)
 
   const handleCheckout = async () => {
-    // const user = await auth0FromHook.getUser();
-    // const token = await auth0FromHook.getTokenSilently();
-
     const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
-    console.log('user in checkout: ', user)
-    // order creation query string
 
+    // order creation query string
     let os = `
       mutation addOrder($customerId: Int!) {
         addOrder(customerId: $customerId){
@@ -28,34 +22,29 @@ const Cart = () => {
           id
         }
       }
-    `
+    `;
 
     // post order to db
-
     const res = await Axios({
       url: 'http://localhost:5000/graphql',
       method: 'post',
       data: {
         query: os,
-        variables: { customerId: user.id }
-      }
+        variables: { customerId: user.id },
+      },
     });
 
     const order = res.data.data.addOrder;
-    console.log('order data: ', order);
-
-
     //   // add isAuthenticated logic ???
 
     // create order items
-
     let is = `
         mutation addOrderItem($orderId: Int!, $shipId: Int!, $quantity: Int!){
           addOrderItem(orderId: $orderId, shipId: $shipId, quantity: $quantity){
             id
           }
         }
-      `
+      `;
 
     cartItems.forEach(async (item) => {
       const res = await Axios({
@@ -63,20 +52,66 @@ const Cart = () => {
         method: 'post',
         data: {
           query: is,
-          variables: { orderId: order.id, shipId: item.id, quantity: item.quantity }
-        }
+          variables: {
+            orderId: order.id,
+            shipId: item.id,
+            quantity: item.quantity,
+          },
+        },
       });
-    })
-  }
+    });
 
-  let entries = cartItems.map(item => {
+    localStorage.removeItem('cart');
+    localStorage.removeItem('itemNum');
+    setNumItems(0);
+    setCartItems([]);
+  };
 
-    return (
-      [item.name, item.category.name, <><Button onClick={() => setQuantity(quantity += 1)} animate layer='success' buttonProps={{ style: { padding: 5 } }}>+</Button><span style={{ padding: "10px", width: "50px" }}>{item.quantity}</span><Button onClick={() => setQuantity(quantity -= 1)} animate layer='alert' buttonProps={{ style: { padding: 5 } }}>-</Button></>, 'red', item.price, <><Link to='/shop'><Button animate layer='primary' style={{ marginRight: 10 }} buttonProps={{ style: { padding: 5, fontSize: 10 } }}>Edit</Button></Link> <Button animate layer='alert' buttonProps={{ style: { padding: 5, fontSize: 10 } }}>Remove</Button></>]
-    )
-  })
+  let entries = cartItems.map((item) => {
+    return [
+      item.name,
+      item.category.name,
+      <>
+        <Button
+          onClick={() => setQuantity((quantity += 1))}
+          animate
+          layer="success"
+          buttonProps={{ style: { padding: 5 } }}>
+          +
+        </Button>
+        <span style={{ padding: '10px', width: '50px' }}>{item.quantity}</span>
+        <Button
+          onClick={() => setQuantity((quantity -= 1))}
+          animate
+          layer="alert"
+          buttonProps={{ style: { padding: 5 } }}>
+          -
+        </Button>
+      </>,
+      'red',
+      item.price,
+      <>
+        <Link to="/shop">
+          <Button
+            animate
+            layer="primary"
+            style={{ marginRight: 10 }}
+            buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
+            Edit
+          </Button>
+        </Link>{' '}
+        <Button
+          animate
+          layer="alert"
+          buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
+          Remove
+        </Button>
+      </>,
+    ];
+  });
   useEffect(() => {
-    if (localStorage.getItem('cart')) {//save to variable?
+    if (localStorage.getItem('cart')) {
+      //save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
@@ -190,7 +225,7 @@ const Cart = () => {
             Continue Shopping
           </Button>
         </Link>
-        <Link to="/checkout">
+        <Link to="/shop">
           <Button onClick={handleCheckout} animate layer="secondary">
             Proceed to Checkout
           </Button>
