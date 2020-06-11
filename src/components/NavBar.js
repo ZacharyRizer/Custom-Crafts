@@ -5,8 +5,13 @@ import { useAuth0 } from "../react-auth0-spa";
 import { Frame, Heading, Button, Appear } from "arwes";
 
 function keyChecker(e) {
-  if (e.key === "Enter") {
+  if (e.key === 'Enter') {
+
+    // set filter for iLike?
+    // Render search term as a chip?
+
     window.location.href = `/shop`;
+
   }
 }
 
@@ -79,23 +84,23 @@ const NavBar = () => {
               </Link>
             </>
           ) : (
-            <>
-              <Link to="/profile">
-                <Button animate style={{ marginRight: 25 }} layer="secondary">
-                  Profile
+              <>
+                <Link to="/profile">
+                  <Button animate style={{ marginRight: 25 }} layer="secondary">
+                    Profile
                 </Button>
-              </Link>
-              <Link to="/cart">
-                <Button animate style={{ marginRight: 25 }}>
-                  <i className="mdi mdi-cart"> </i>
-                  {numItems}
-                </Button>
-              </Link>
-              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={() => logout()}>
-                Log-out
+                </Link>
+                <Link to="/cart">
+                  <Button animate style={{ marginRight: 25 }}>
+                    <i className="mdi mdi-cart"> </i>
+                    {numItems}
+                  </Button>
+                </Link>
+                <Button animate layer="alert" style={{ marginRight: 25 }} onClick={() => logout()}>
+                  Log-out
               </Button>
-            </>
-          )}
+              </>
+            )}
         </div>
       </div>
     </Frame>
