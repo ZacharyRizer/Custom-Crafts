@@ -67,48 +67,6 @@ const Cart = () => {
     setCartItems([]);
   };
 
-  let entries = cartItems.map((item) => {
-    return [
-      item.name,
-      item.category.name,
-      <>
-        <Button
-          onClick={() => setQuantity((quantity += 1))}
-          animate
-          layer="success"
-          buttonProps={{ style: { padding: 5 } }}>
-          +
-        </Button>
-        <span style={{ padding: '10px', width: '50px' }}>{item.quantity}</span>
-        <Button
-          onClick={() => setQuantity((quantity -= 1))}
-          animate
-          layer="alert"
-          buttonProps={{ style: { padding: 5 } }}>
-          -
-        </Button>
-      </>,
-      'red',
-      item.price,
-      <>
-        <Link to="/shop">
-          <Button
-            animate
-            layer="primary"
-            style={{ marginRight: 10 }}
-            buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
-            Edit
-          </Button>
-        </Link>{' '}
-        <Button
-          animate
-          layer="alert"
-          buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
-          Remove
-        </Button>
-      </>,
-    ];
-  });
   useEffect(() => {
     if (localStorage.getItem('cart')) {
       //save to variable?
@@ -161,7 +119,7 @@ const Cart = () => {
     localStorage.setItem('cart', JSON.stringify(newCart));
   };
 
-  entries = cartItems.map((item) => {
+  let entries = cartItems.map((item) => {
     return [
       <Link
         to={`/ships/${item.id}`}
