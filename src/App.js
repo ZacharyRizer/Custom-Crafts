@@ -10,6 +10,7 @@ import Shop from "./components/Shop";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/Profile";
 import Cart from "./components/Cart";
+import Checkout from './components/Checkout'
 
 
 const App = () => {
@@ -18,19 +19,20 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <ContextProvider>
-          <>
-            <NavBar />
-            <Switch>
-              <Route exact path="/" component={Splash} />
-              <Route path="/shop" component={Shop} />
-              <Route path="/cart" component={Cart} />
-              <Route
-                path="/ships/:shipId"
-                render={(props) => <ShipPage {...props} />}
-              />
-              <PrivateRoute path="/profile" component={Profile} />
-            </Switch>
-          </>
+        <>
+          <NavBar />
+          <Switch>
+            <Route exact path="/" component={Splash} />
+            <Route path="/shop" component={Shop} />
+            <Route path="/cart" component={Cart} />
+            <Route
+              path="/ships/:shipId"
+              render={(props) => <ShipPage {...props} />}
+            />
+            <Route path="/checkout" component={Checkout} />
+            <PrivateRoute path="/profile" component={Profile} />
+          </Switch>
+        </>
       </ContextProvider>
     </ApolloProvider>
   );

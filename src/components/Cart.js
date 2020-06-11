@@ -17,6 +17,8 @@ const Cart = () => {
   }
 
   const handleCheckout = async () => {
+    if (!cartItems || cartItems.length === 0) return;
+
     const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
 
     // order creation query string
@@ -62,8 +64,14 @@ const Cart = () => {
             shipId: item.id,
             quantity: item.quantity,
           },
+
         },
       });
+
+      // Update db to reduce ship stock based on associated order-item post
+
+
+
     });
 
     localStorage.removeItem('cart');
@@ -189,27 +197,14 @@ const Cart = () => {
         </Link>
         <Link to="/checkout">
           <Button onClick={handleCheckout} animate layer='secondary'>Checkout</Button>
-          <div id='modal'>
-            <div id='modal-content'>
-              <Frame style={{ width: 350, height: 350 }}>
-                <Heading node='h4'>ORDER SUMMARY</Heading>
-                <div style={{ padding: 20 }}>
-                  <Table headers={['ITEM', 'QTY', 'PRICE']} dataset={entries} />
-                  <Line animate layer='success' />
-                  <Button animate layer='secondary' buttonProps={{ style: { padding: 5, fontSize: 10 } }}>CHANGE YOUR ORDER</Button>
-                  <p style={{ fontSize: 12 }}>Standard Shipping:</p>
-                  <p style={{ fontSize: 12 }}>Universe Taxes:</p>
-                  <Line animate layer='secondary' />
-                  <Heading node='h5'>ORDER TOTAL :</Heading>
-                </div>
-              </Frame>
-            </div>
-          </div>
-        </Link >
+        </Link>
       </Frame>
     </>
   )
 }
 
 export default Cart;
+
+
+
 
