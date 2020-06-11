@@ -43,6 +43,7 @@ const Sidebar = () => {
 
   const handleChipClick = (e) => {
     const key = e.target.id;
+    console.log(key);
     let newFilters = { ...filters };
     delete newFilters[key];
     setFilters(newFilters);
