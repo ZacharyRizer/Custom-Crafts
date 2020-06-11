@@ -9,7 +9,6 @@ const Shop = () => {
     <Row>
       <Col s={6} m={3}>
         <Sidebar2 />
-        <Sidebar />
       </Col>
       <Col s={6} m={9}>
         <ShipList />
