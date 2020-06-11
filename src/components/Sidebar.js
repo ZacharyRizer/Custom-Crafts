@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
-import { Heading, List, Button } from 'arwes';
-import { Context } from '../Context';
+import React, { useState, useContext } from "react";
+import { Heading, List, Button } from "arwes";
+import { Context } from "../Context";
 
 const Sidebar = () => {
   const [catDrop, setCatDrop] = useState(false);
@@ -16,7 +16,7 @@ const Sidebar = () => {
   const handleClickVal = (e) => {
     const cat = e.target.className;
     const detail = e.target.innerHTML;
-    const [key, val] = e.target.id.split(' ');
+    const [key, val] = e.target.id.split(" ");
 
     let newFilters = { ...filters };
     newFilters[key] = val;
@@ -30,7 +30,7 @@ const Sidebar = () => {
   const handleClickRange = (e) => {
     const cat = e.target.className;
     const detail = e.target.innerHTML;
-    const [key, begin, end] = e.target.id.split(' ');
+    const [key, begin, end] = e.target.id.split(" ");
 
     let newFilters = { ...filters };
     newFilters[key] = { begin, end };
@@ -43,6 +43,7 @@ const Sidebar = () => {
 
   const handleChipClick = (e) => {
     const key = e.target.id;
+    console.log(key);
     let newFilters = { ...filters };
     delete newFilters[key];
     setFilters(newFilters);
@@ -53,14 +54,12 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
-      <div className="filter_container">
+    <div>
+      <div style={{ paddingTop: 20 }} className="filter_container">
         <List node="ul">
           {Object.keys(filterChips).map((key) => (
-            <Button key={key}>
-              <span id={key} onClick={handleChipClick}>
-                {filterChips[key][0]}: {filterChips[key][1]}
-              </span>
+            <Button layer="primary" key={key} buttonProps={{ id: `${key}` }} onClick={handleChipClick}>
+              {filterChips[key][0]}: {filterChips[key][1]}
             </Button>
           ))}
         </List>
@@ -113,9 +112,7 @@ const Sidebar = () => {
           </List>
         </div>
       )}
-      <Button
-        className="sidebar-buttons"
-        onClick={() => setCrewDrop(!crewDrop)}>
+      <Button className="sidebar-buttons" onClick={() => setCrewDrop(!crewDrop)}>
         <Heading node="h3">Crew Capacity</Heading>
       </Button>
       {crewDrop && (
@@ -134,14 +131,12 @@ const Sidebar = () => {
               1,000
             </li>
             <li className="Crew Capacity" id="crewCapRange 1000 10000">
-              1,000 +{' '}
+              1,000 +{" "}
             </li>
           </List>
         </div>
       )}
-      <Button
-        className="sidebar-buttons"
-        onClick={() => setSizeDrop(!sizeDrop)}>
+      <Button className="sidebar-buttons" onClick={() => setSizeDrop(!sizeDrop)}>
         <Heading node="h3">Ship Size (meters)</Heading>
       </Button>
       {sizeDrop && (
@@ -165,9 +160,7 @@ const Sidebar = () => {
           </List>
         </div>
       )}
-      <Button
-        className="sidebar-buttons"
-        onClick={() => setRangeDrop(!rangeDrop)}>
+      <Button className="sidebar-buttons" onClick={() => setRangeDrop(!rangeDrop)}>
         <Heading node="h3">Range (parsecs)</Heading>
       </Button>
       {rangeDrop && (
@@ -191,9 +184,7 @@ const Sidebar = () => {
           </List>
         </div>
       )}
-      <Button
-        className="sidebar-buttons"
-        onClick={() => setPriceDrop(!priceDrop)}>
+      <Button className="sidebar-buttons" onClick={() => setPriceDrop(!priceDrop)}>
         <Heading node="h3">Price (credits)</Heading>
       </Button>
       {priceDrop && (

@@ -47,11 +47,24 @@ const ShipPage = (props) => {
   }, [ship]);
 
   const addToCart = () => {
-    setNumItems((numItems += 1));
-    let newCart = [...cartItems];
-    newCart.push(ship);
+    let newCart;
+    let found = cartItems.find((item) => item.name === ship.name);
+    if (!found) {
+      ship.quantity = 1;
+      setNumItems((numItems += 1));
+      newCart = [...cartItems, ship];
+    } else {
+      newCart = [...cartItems];
+      newCart.forEach((item) => {
+        if (item.name === ship.name && item.quantity < item.stock) {
+          item.quantity = item.quantity + 1;
+          setNumItems((numItems += 1));
+        }
+      });
+    }
     setCartItems(newCart);
-    console.log(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem("itemNum", JSON.stringify(numItems));
   };
 
   return (
@@ -61,18 +74,20 @@ const ShipPage = (props) => {
           <Header animate style={{ backgroundColor: "transparent" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Heading style={{ margin: "0 0 0 10px", fontSize: "32px" }}>{ship.name}</Heading>
-              {ship.stock > 0 ? (
-                <Button layer="secondary" style={{ marginRight: 10 }} onClick={addToCart}>
-                  Add to Cart
-                </Button>
-              ) : (
-                <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                  Out of Stock
-                </Button>
-              )}
-              <Link to="/shop">
-                <Button style={{ marginRight: 10 }}>Continue Shopping</Button>
-              </Link>
+              <div style={{ display: "flex", width: "300px", justifyContent: "space-between" }}>
+                <Link to="/shop">
+                  <Button layer="primary">Return to Shop</Button>
+                </Link>
+                {ship.stock > 0 ? (
+                  <Button layer="secondary" style={{ marginRight: 10 }} onClick={addToCart}>
+                    Add to Cart
+                  </Button>
+                ) : (
+                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                    Out of Stock
+                  </Button>
+                )}
+              </div>
             </div>
           </Header>
           <Content>
@@ -105,7 +120,7 @@ const ShipPage = (props) => {
                         No FTL Drive
                       </blockquote>
                     )}
-                    {ship.stock > 5 ? (
+                    {ship.stock > 2 ? (
                       <blockquote data-layer="" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
                       </blockquote>
