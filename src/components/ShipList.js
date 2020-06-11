@@ -12,37 +12,6 @@ const ShipList = () => {
   let queryVariables = {};
 
   const buildQueryString = () => {
-    let ts = `
-      query shipsQuery($
-    `;
-
-    ts += buildQueryParams(); //101
-    ts += `) {
-      ships(filters: {
-    `;
-
-    ts += buildFiltersString(); //127
-
-    ts += `}) {
-      edges {
-        node {
-          id
-          stock
-          name
-          category{
-            name
-          }
-          manufacturer{
-            name
-          }
-          price
-          modelLink
-        }
-      }
-    }
-  }
-`;
-
     const qs = `
     {
       ships {
@@ -63,9 +32,42 @@ const ShipList = () => {
         }
       }
     }
-`;
+  `;
+
     if (Object.keys(filters).length === 0) return qs;
-    return ts; //140
+
+    let fs = `
+  query shipsQuery($
+    `;
+
+    fs += buildQueryParams(); //101
+    fs += `) {
+    ships(filters: {
+  `;
+
+    fs += buildFiltersString(); //127
+
+    fs += `}) {
+      edges {
+        node {
+          id
+          stock
+          name
+          category{
+            name
+          }
+          manufacturer{
+            name
+          }
+          price
+          modelLink
+        }
+      }
+    }
+  }
+`;
+
+    return fs; //140
   };
 
   const buildQueryParams = () => {
@@ -167,10 +169,10 @@ const ShipList = () => {
           ))}
         </div>
       ) : (
-        <div style={{ width: "100%", height: "100%" }}>
-          <Loading animate full />
-        </div>
-      )}
+          <div style={{ width: "100%", height: "100%" }}>
+            <Loading animate full />
+          </div>
+        )}
     </>
   );
 };
