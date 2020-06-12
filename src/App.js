@@ -21,7 +21,7 @@ const App = () => {
           <div style={{ position: "fixed", width: "100%", "z-index": "100" }}>
             <NavBar />
           </div>
-          <div style={{ marginTop: 100 }}>
+          <div style={{ marginTop: 120 }}>
             <Switch>
               <Route exact path="/" component={Splash} />
               <Route path="/shop" component={Shop} />
