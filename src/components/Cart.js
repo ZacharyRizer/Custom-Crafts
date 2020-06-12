@@ -101,7 +101,7 @@ const Cart = () => {
             <div
               style={{
                 display: "flex",
-                width: "300px",
+                width: "285px",
                 justifyContent: "space-between",
               }}
             >
