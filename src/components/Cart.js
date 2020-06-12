@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 import { Frame, Heading, Button, Table, Line } from 'arwes';
+import Axios from 'axios';
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
-<<<<<<< HEAD
   const showModal = () => {
     let modal = document.getElementById('modal');
     modal.style.display = 'block';
@@ -97,8 +97,6 @@ const Cart = () => {
     setCartItems([]);
   };
 
-=======
->>>>>>> master
   useEffect(() => {
     if (localStorage.getItem('cart')) {
       let cart = JSON.parse(localStorage.getItem('cart'));
