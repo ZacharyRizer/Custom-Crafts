@@ -9,7 +9,6 @@ const Cart = () => {
 
   useEffect(() => {
     if (localStorage.getItem('cart')) {
-      //save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
