@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ContextProvider } from './Context';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+
 import ShipPage from './components/ShipPage';
 import NavBar from './components/NavBar';
 import Splash from './components/Splash';
@@ -22,7 +23,7 @@ const App = () => {
           <div style={{ position: 'fixed', width: '100%', 'z-index': '100' }}>
             <NavBar />
           </div>
-          <div style={{ marginTop: 100 }}>
+          <div style={{ marginTop: 120 }}>
             <Switch>
               <Route exact path="/" component={Splash} />
               <Route path="/shop" component={Shop} />

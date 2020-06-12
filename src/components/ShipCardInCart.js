@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Frame, Line, Content, Appear, Button } from 'arwes';
+import { Frame, Line, Content, Appear } from 'arwes';
 
 const ShipCardInCart = ({ ship }) => {
   const { name, modelLink } = ship;

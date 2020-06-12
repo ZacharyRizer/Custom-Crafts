@@ -45,7 +45,6 @@ const ShipPage = (props) => {
       setShip(res.data.data.ship);
     })();
     if (localStorage.getItem('cart')) {
-      //save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
@@ -219,7 +218,9 @@ const ShipPage = (props) => {
                     src={ship.modelLink}
                     alt="A 3D model of a spaceship"
                     auto-rotate
+                    auto-rotate-delay={1000}
                     camera-controls
+                    exposure={0.75}
                     camera-orbit="0deg 90deg 75%"
                     interaction-prompt="none"></model-viewer>
                 </Frame>
