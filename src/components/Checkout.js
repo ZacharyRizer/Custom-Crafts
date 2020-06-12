@@ -1,7 +1,7 @@
-import React from 'react';
-import { Row, Col } from 'arwes';
-import OrderSummary from './OrderSummary';
-import ShipsInCart from './ShipsInCart';
+import React from "react";
+import { Row, Col } from "arwes";
+import OrderSummary from "./OrderSummary";
+import ShipsInCart from "./ShipsInCart";
 
 const Checkout = (props) => {
   return (
