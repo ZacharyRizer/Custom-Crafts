@@ -122,8 +122,8 @@ const Cart = () => {
             Continue Shopping
           </Button>
         </Link>
-        <Link to="/checkout">
-          <Button animate layer="secondary">
+        <Link to={numItems > 0 ? '/checkout' : '#'}>
+          <Button animate layer={numItems > 0 ? 'secondary' : 'disabled'}>
             Checkout
           </Button>
         </Link>

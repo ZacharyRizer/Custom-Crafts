@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { Frame, Heading, Line, Table, Button } from 'arwes';
@@ -25,7 +25,7 @@ const Profile = () => {
   `;
 
   useEffect(() => {
-    (async () => {
+    const fetchOrders = async () => {
       const res = await Axios({
         url: 'http://localhost:5000/graphql',
         method: 'post',
@@ -33,8 +33,10 @@ const Profile = () => {
           query,
         },
       });
+
       setOrders(res.data.data.customer.orders);
-    })();
+    };
+    fetchOrders();
   }, []);
 
   let entries = orders.map((order) => {
@@ -42,7 +44,7 @@ const Profile = () => {
       order.id,
       `${order.orderItems
         .map((item) => `${item.ship.name} ( x ${item.quantity} )`)
-        .join(' , ')}`,
+        .join(' --- ')}`,
       order.orderItems.reduce((accum, item) => {
         return accum + item.ship.price * item.quantity;
       }, 0),
@@ -50,7 +52,7 @@ const Profile = () => {
   });
 
   return (
-    <Fragment>
+    <>
       <div
         style={{
           display: 'flex',
@@ -90,7 +92,7 @@ const Profile = () => {
           </Button>
         </Link>
       </div>
-    </Fragment>
+    </>
   );
 };
 
