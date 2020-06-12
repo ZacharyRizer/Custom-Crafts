@@ -179,6 +179,7 @@ const Splash = () => {
             auto-rotate-delay={10}
             auto-rotate
             camera-controls
+            exposure={0.75}
             interaction-prompt="none"
           ></model-viewer>
         </Frame>
