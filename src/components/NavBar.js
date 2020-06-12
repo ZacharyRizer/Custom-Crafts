@@ -104,7 +104,7 @@ const NavBar = () => {
             <>
               <Button
                 style={{ marginRight: 25 }}
-                onClick={() => loginWithRedirect()}
+                onClick={() => loginWithRedirect({})}
                 animate
                 layer="secondary"
               >
