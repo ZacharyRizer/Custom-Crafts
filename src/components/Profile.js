@@ -8,8 +8,6 @@ const Profile = () => {
   let [orders, setOrders] = useState([]);
 
   const { user } = useAuth0();
-  console.log(user);
-
   const query = `
   {
     customer(customerId: ${user.id}) {
