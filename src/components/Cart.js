@@ -80,7 +80,10 @@ const Cart = () => {
           <i onClick={decrement} id={item.id} className="mdi mdi-minus" />
         </Button>
       </>,
-      item.price,
+      <>
+        <i className="mdi mdi-currency-jpy" />
+        {item.price}
+      </>,
       <Button
         animate
         layer="alert"
