@@ -1,32 +1,27 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../Context";
 import { useAuth0 } from "../react-auth0-spa";
 import { Frame, Heading, Button, Appear } from "arwes";
 
-function keyChecker(e) {
-  if (e.key === "Enter") {
-    // set filter for iLike?
-    // Render search term as a chip?
-
-    window.location.href = `/shop`;
-  }
-}
 
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
   const { filters, setFilters } = useContext(Context);
+  const history = useHistory();
 
   const keyChecker = (ev) => {
-    if (ev.key === "Enter") {
-      const searchFilters = { nameIlike: ev.target.value };
+    if (ev.key === 'Enter') {
+      const searchFilters = { nameIlike: `%${ev.target.value}%` };
 
-      let newFilters = { ...filters };
+      let newFilters = { ...filters, ...searchFilters };
       // newFilters[]
       // Render search term as a chip?
 
-      window.location.href = `/shop`;
+      // window.location.href = `/shop`;
+      setFilters(newFilters);
+      history.push('/shop');
     }
   };
 
@@ -101,23 +96,23 @@ const NavBar = () => {
               </Link>
             </>
           ) : (
-            <>
-              <Link to="/profile">
-                <Button animate style={{ marginRight: 25 }} layer="secondary">
-                  <i className="mdi mdi-account-circle" /> Profile
+              <>
+                <Link to="/profile">
+                  <Button animate style={{ marginRight: 25 }} layer="secondary">
+                    <i className="mdi mdi-account-circle" /> Profile
                 </Button>
-              </Link>
-              <Link to="/cart">
-                <Button animate style={{ marginRight: 25 }}>
-                  <i className="mdi mdi-cart"> </i>
-                  {numItems}
-                </Button>
-              </Link>
-              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
-                <i className="mdi mdi-exit-run" /> Log-Out
+                </Link>
+                <Link to="/cart">
+                  <Button animate style={{ marginRight: 25 }}>
+                    <i className="mdi mdi-cart"> </i>
+                    {numItems}
+                  </Button>
+                </Link>
+                <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
+                  <i className="mdi mdi-exit-run" /> Log-Out
               </Button>
-            </>
-          )}
+              </>
+            )}
         </div>
       </div>
     </Frame>

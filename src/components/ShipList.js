@@ -84,6 +84,10 @@ const ShipList = () => {
           ps += `${filter}: Int!`;
           queryVariables[filter] = filters[filter];
           break;
+        case `nameIlike`:
+          ps += `${filter}: String!`;
+          queryVariables[filter] = filters[filter];
+          break;
         case `priceRange`:
           ps += `priceRangeBegin: Int!, $priceRangeEnd: Int!`;
           queryVariables["priceRangeBegin"] = filters["priceRange"].begin;
@@ -123,6 +127,9 @@ const ShipList = () => {
         case `manufacturerId`:
           fs += `$manufacturerId`;
           break;
+        case `nameIlike`:
+          fs += `$nameIlike`
+          break;
         case `priceRange`:
           fs += `{begin: $priceRangeBegin, end: $priceRangeEnd}`;
           break;
@@ -143,7 +150,8 @@ const ShipList = () => {
 
   useEffect(() => {
     (async () => {
-      const qs = buildQueryString();
+      const qs = buildQueryString(); //16
+      console.log('qs 154: ', qs)
       const res = await Axios({
         url: "http://localhost:5000/graphql",
         method: "post",
@@ -175,10 +183,10 @@ const ShipList = () => {
           ))}
         </div>
       ) : (
-        <div style={{ width: "100%", height: "100%" }}>
-          <Loading animate full />
-        </div>
-      )}
+          <div style={{ width: "100%", height: "100%" }}>
+            <Loading animate full />
+          </div>
+        )}
     </>
   );
 };

@@ -6,6 +6,7 @@ import { Frame, Heading, Line, Table, Button, Image, Header, Appear, Row, Col, C
 
 const Profile = () => {
   let [orders, setOrders] = useState([]);
+  const { getTokenSilently } = useAuth0();
 
   const { user } = useAuth0();
   const query = `
@@ -27,14 +28,17 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const token = await getTokenSilently();
       const res = await Axios({
-        url: "http://localhost:5000/graphql",
-        method: "post",
+        url: 'http://localhost:5000/graphql',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        method: 'post',
         data: {
           query,
         },
       });
-
       setOrders(res.data.data.customer.orders);
     };
     fetchOrders();
