@@ -44,13 +44,7 @@ const NavBar = () => {
   };
 
   return (
-    <Frame
-      animate
-      level={1}
-      corners={6}
-      layer="primary"
-      style={{ marginBottom: 20 }}
-    >
+    <Frame animate level={1} corners={6} layer="primary" style={{ marginBottom: 20 }}>
       <div
         style={{
           display: "flex",
@@ -59,10 +53,7 @@ const NavBar = () => {
         }}
       >
         <div style={{ margin: "10px", padding: "15px", flexGrow: 1 }}>
-          <Heading
-            style={{ fontSize: "32px", margin: 0, maxWidth: "265px" }}
-            node="h1"
-          >
+          <Heading style={{ fontSize: "32px", margin: 0, maxWidth: "271px" }} node="h1">
             <Link to="/" style={{ textDecoration: "none", color: "#a1ecfb" }}>
               Custom Crafts
             </Link>
@@ -97,17 +88,10 @@ const NavBar = () => {
             ></i>
           </Appear>
         </Frame>
-        <div
-          style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
-        >
+        <div style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
           {!isAuthenticated ? (
             <>
-              <Button
-                style={{ marginRight: 25 }}
-                onClick={() => loginWithRedirect({})}
-                animate
-                layer="secondary"
-              >
+              <Button style={{ marginRight: 25 }} onClick={() => loginWithRedirect({})} animate layer="secondary">
                 Login
               </Button>
               <Link to="/cart">
@@ -129,13 +113,8 @@ const NavBar = () => {
                   {numItems}
                 </Button>
               </Link>
-              <Button
-                animate
-                layer="alert"
-                style={{ marginRight: 25 }}
-                onClick={handleLogout}
-              >
-                Log-out <i className="mdi mdi-exit-run" />
+              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
+                <i className="mdi mdi-exit-run" /> Log-Out
               </Button>
             </>
           )}
