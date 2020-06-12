@@ -50,7 +50,6 @@ const Cart = () => {
           }
         }
       `;
-<<<<<<< HEAD
 
     // create updateShip string
 
@@ -62,8 +61,6 @@ const Cart = () => {
           }
         }
     `;
-=======
->>>>>>> master
 
     cartItems.forEach(async (item) => {
       const res = await Axios({

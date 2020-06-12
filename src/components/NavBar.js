@@ -4,14 +4,6 @@ import { Context } from '../Context';
 import { useAuth0 } from '../react-auth0-spa';
 import { Frame, Heading, Button, Appear } from 'arwes';
 
-function keyChecker(e) {
-  if (e.key === 'Enter') {
-    // set filter for iLike?
-    // Render search term as a chip?
-
-    window.location.href = `/shop`;
-  }
-}
 
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -20,13 +12,15 @@ const NavBar = () => {
 
   const keyChecker = (ev) => {
     if (ev.key === 'Enter') {
-      const searchFilters = { nameIlike: ev.target.value };
+      const searchFilters = { nameIlike: `%${ev.target.value}%` };
 
-      let newFilters = { ...filters };
+      let newFilters = { ...filters, ...searchFilters };
       // newFilters[]
       // Render search term as a chip?
 
-      window.location.href = `/shop`;
+      // window.location.href = `/shop`;
+      setFilters(newFilters);
+
     }
   };
 
@@ -110,27 +104,27 @@ const NavBar = () => {
               </Link>
             </>
           ) : (
-            <>
-              <Link to="/profile">
-                <Button animate style={{ marginRight: 25 }} layer="secondary">
-                  Profile
+              <>
+                <Link to="/profile">
+                  <Button animate style={{ marginRight: 25 }} layer="secondary">
+                    Profile
                 </Button>
-              </Link>
-              <Link to="/cart">
-                <Button animate style={{ marginRight: 25 }}>
-                  <i className="mdi mdi-cart"> </i>
-                  {numItems}
-                </Button>
-              </Link>
-              <Button
-                animate
-                layer="alert"
-                style={{ marginRight: 25 }}
-                onClick={handleLogout}>
-                Log-out
+                </Link>
+                <Link to="/cart">
+                  <Button animate style={{ marginRight: 25 }}>
+                    <i className="mdi mdi-cart"> </i>
+                    {numItems}
+                  </Button>
+                </Link>
+                <Button
+                  animate
+                  layer="alert"
+                  style={{ marginRight: 25 }}
+                  onClick={handleLogout}>
+                  Log-out
               </Button>
-            </>
-          )}
+              </>
+            )}
         </div>
       </div>
     </Frame>
