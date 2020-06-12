@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
+import { Col, Loading } from 'arwes';
 import { Context } from '../Context';
+import ShipCardInCart from './ShipCardInCart';
 
 const ShipsInCart = (props) => {
   let { cartItems, setCartItems } = useContext(Context);
@@ -9,7 +11,28 @@ const ShipsInCart = (props) => {
     setCartItems(cart);
   }, []);
 
-  return <h1>check out these ships</h1>;
+  return (
+    <>
+      {cartItems ? (
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}>
+          {cartItems.map((cartItem) => (
+            <Col key={cartItem.id}>
+              <ShipCardInCart key={cartItem.id} ship={cartItem} />
+            </Col>
+          ))}
+        </div>
+      ) : (
+        <div style={{ width: '100%', height: '100%' }}>
+          <Loading animate full />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default ShipsInCart;

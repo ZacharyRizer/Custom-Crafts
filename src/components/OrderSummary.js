@@ -2,10 +2,94 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 import { Frame, Heading, Button, Table, Line } from 'arwes';
+import Axios from 'axios';
 
-const OrderSummary = (props) => {
-  let { cartItems, setCartItems } = useContext(Context);
+const OrderSummary = () => {
+  let { cartItems, setCartItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
+
+  const handleCheckout = async () => {
+    if (!cartItems || cartItems.length === 0) return;
+
+    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
+
+    // order creation query string
+    let os = `
+      mutation addOrder($customerId: Int!) {
+        addOrder(customerId: $customerId){
+          customerId
+          id
+        }
+      }
+    `;
+
+    // post order to db
+    const res = await Axios({
+      url: 'http://localhost:5000/graphql',
+      method: 'post',
+      data: {
+        query: os,
+        variables: { customerId: user.id },
+      },
+    });
+
+    const order = res.data.data.addOrder;
+    //   // add isAuthenticated logic ???
+
+    // create order items
+    let is = `
+        mutation addOrderItem($orderId: Int!, $shipId: Int!, $quantity: Int!){
+          addOrderItem(orderId: $orderId, shipId: $shipId, quantity: $quantity){
+            id
+          }
+        }
+      `;
+
+    // create updateShip string
+
+    let ss = `
+        mutation($id: Int!, $decQuantity: Int!){
+          decrementShipStock(id: $id, decQuantity: $decQuantity){
+            id
+            stock
+          }
+        }
+    `;
+
+    cartItems.forEach(async (item) => {
+      const res = await Axios({
+        url: 'http://localhost:5000/graphql',
+        method: 'post',
+        data: {
+          query: is,
+          variables: {
+            orderId: order.id,
+            shipId: item.id,
+            quantity: item.quantity,
+          },
+        },
+      });
+
+      // Update db to reduce ship stock based on associated order-item post
+
+      const stockRes = await Axios({
+        url: 'http://localhost:5000/graphql',
+        method: 'post',
+        data: {
+          query: ss,
+          variables: {
+            id: item.id,
+            decQuantity: item.quantity,
+          },
+        },
+      });
+    });
+
+    localStorage.removeItem('cart');
+    localStorage.removeItem('itemNum');
+    setNumItems(0);
+    setCartItems([]);
+  };
 
   useEffect(() => {
     let cart = JSON.parse(localStorage.getItem('cart'));
@@ -32,7 +116,16 @@ const OrderSummary = (props) => {
               animate
               layer="secondary"
               buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
-              CHANGE YOUR ORDER
+              BACK TO CART
+            </Button>
+          </Link>
+          {'  '}
+          <Link to="/shop">
+            <Button
+              animate
+              layer="secondary"
+              buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
+              BACK TO SHOP
             </Button>
           </Link>
           <Line animate layer="secondary" />
@@ -40,8 +133,9 @@ const OrderSummary = (props) => {
           <Link to="/shop">
             <Button
               animate
-              layer="secondary"
-              buttonProps={{ style: { padding: 5, fontSize: 10 } }}>
+              layer="success"
+              buttonProps={{ style: { padding: 5, fontSize: 15 } }}
+              onClick={handleCheckout}>
               Confirm Order
             </Button>
           </Link>
