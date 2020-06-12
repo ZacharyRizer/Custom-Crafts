@@ -1,16 +1,9 @@
-<<<<<<< HEAD
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Context } from '../Context';
-import { Frame, Heading, Button, Table, Line } from 'arwes';
-import Axios from 'axios';
-import { useAuth0 } from '../react-auth0-spa'
-=======
 import React, { useContext, useEffect, useState } from "react";
 import { Link as Linky } from "react-router-dom";
 import { Context } from "../Context";
 import { Frame, Heading, Button, Table, Line, Header, Content, Link } from "arwes";
->>>>>>> master
+import Axios from 'axios';
+import { useAuth0 } from '../react-auth0-spa'
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
@@ -227,10 +220,10 @@ const Cart = () => {
                   </Button>
                 </Linky>
               ) : (
-                <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                  Checkout
-                </Button>
-              )}
+                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                    Checkout
+                  </Button>
+                )}
             </div>
           </div>
         </Header>
@@ -245,35 +238,35 @@ const Cart = () => {
           />
         </Frame>
       ) : (
-        <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
-          <Content style={{ padding: 20, textAlign: "center" }}>
-            <h1>Your Cart is Empty</h1>
-            <p
-              style={{
-                margin: 0,
-                textAlign: "center",
-                fontStyle: "italic",
-              }}
-            >
-              "Every moment I wasn't shopping at Custom Crafts, was a moment I regret."
+          <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
+            <Content style={{ padding: 20, textAlign: "center" }}>
+              <h1>Your Cart is Empty</h1>
+              <p
+                style={{
+                  margin: 0,
+                  textAlign: "center",
+                  fontStyle: "italic",
+                }}
+              >
+                "Every moment I wasn't shopping at Custom Crafts, was a moment I regret."
             </p>
-            <p
-              style={{
-                margin: 0,
-                textAlign: "center",
-                fontStyle: "italic",
-              }}
-            >
-              - King Xrule of the Xrulian Empire (Dying Words)
+              <p
+                style={{
+                  margin: 0,
+                  textAlign: "center",
+                  fontStyle: "italic",
+                }}
+              >
+                - King Xrule of the Xrulian Empire (Dying Words)
             </p>
-            {/* <Linky to="/shop">
+              {/* <Linky to="/shop">
               <Button style={{ paddingTop: 20 }} layer="secondary">
                 Return to Shop
               </Button>
             </Linky> */}
-          </Content>
-        </Frame>
-      )}
+            </Content>
+          </Frame>
+        )}
     </>
   );
 };
