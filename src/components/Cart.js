@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 import { Frame, Heading, Button, Table, Line } from 'arwes';
 import Axios from 'axios';
+import { useAuth0 } from '../react-auth0-spa'
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
+  const { getTokenSilently } = useAuth0();
 
   const showModal = () => {
     let modal = document.getElementById('modal');
@@ -16,6 +18,7 @@ const Cart = () => {
   const handleCheckout = async () => {
     if (!cartItems || cartItems.length === 0) return;
 
+    const token = await getTokenSilently();
     const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
 
     // order creation query string
@@ -31,6 +34,9 @@ const Cart = () => {
     // post order to db
     const res = await Axios({
       url: 'http://localhost:5000/graphql',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       method: 'post',
       data: {
         query: os,
@@ -64,6 +70,9 @@ const Cart = () => {
     cartItems.forEach(async (item) => {
       const res = await Axios({
         url: 'http://localhost:5000/graphql',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         method: 'post',
         data: {
           query: is,
@@ -79,6 +88,9 @@ const Cart = () => {
 
       const stockRes = await Axios({
         url: 'http://localhost:5000/graphql',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         method: 'post',
         data: {
           query: ss,

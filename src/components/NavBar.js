@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../Context";
 import { useAuth0 } from "../react-auth0-spa";
 import { Frame, Heading, Button, Appear } from "arwes";
@@ -9,6 +9,7 @@ const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
   const { filters, setFilters } = useContext(Context);
+  const history = useHistory();
 
   const keyChecker = (ev) => {
     if (ev.key === 'Enter') {
@@ -20,7 +21,7 @@ const NavBar = () => {
 
       // window.location.href = `/shop`;
       setFilters(newFilters);
-
+      history.push('/shop');
     }
   };
 

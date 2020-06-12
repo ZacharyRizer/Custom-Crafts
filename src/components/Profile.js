@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { Frame, Heading, Line, Table, Button } from 'arwes';
+import { useAuth0 } from '../react-auth0-spa'
+
 
 const Profile = () => {
   let [orders, setOrders] = useState([]);
+  const { getTokenSilently } = useAuth0();
 
   const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
   const query = `
@@ -26,14 +29,18 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const token = await getTokenSilently();
       const res = await Axios({
         url: 'http://localhost:5000/graphql',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         method: 'post',
         data: {
           query,
         },
       });
-
+      debugger
       setOrders(res.data.data.customer.orders);
     };
     fetchOrders();
