@@ -116,7 +116,7 @@ const Cart = () => {
                 </Linky>
               ) : (
                 <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                  No Items in Cart
+                  Checkout
                 </Button>
               )}
             </div>
@@ -154,11 +154,11 @@ const Cart = () => {
             >
               - King Xrule of the Xrulian Empire (Dying Words)
             </p>
-            <Linky to="/shop">
+            {/* <Linky to="/shop">
               <Button style={{ paddingTop: 20 }} layer="secondary">
                 Return to Shop
               </Button>
-            </Linky>
+            </Linky> */}
           </Content>
         </Frame>
       )}
