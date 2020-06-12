@@ -16,6 +16,7 @@ const Profile = () => {
         orderItems {
           ship {
             name
+            price
           }
           quantity
         }
@@ -44,9 +45,16 @@ const Profile = () => {
   //   return <div>Loading...</div>;
   // }
 
-  console.log(orders);
   let entries = orders.map((order) => {
-    return [order.id, order.orderItems.map((item) => item.id)];
+    return [
+      order.id,
+      `${order.orderItems
+        .map((item) => `${item.ship.name} ( x ${item.quantity} )`)
+        .join(' , ')}`,
+      order.orderItems.reduce((accum, item) => {
+        return accum + item.ship.price * item.quantity;
+      }, 0),
+    ];
   });
 
   return (
@@ -61,7 +69,11 @@ const Profile = () => {
           style={{
             border: '2px dotted',
           }}>
-          <img src={user.picture} alt="Profile" />
+          <img
+            src={user.picture}
+            alt="Profile"
+            style={{ width: '250px', height: '250px' }}
+          />
         </Frame>
       </div>
       <h3 style={{ textAlign: 'center' }}>{user.name}</h3>
@@ -71,8 +83,8 @@ const Profile = () => {
       </Heading>
       <Line animate layer="success" />
       <Table
-        headers={['Order Number', 'Ordered Items', 'Quantity']}
-        dataset={[entries]}
+        headers={['Order Number', 'Ordered Items', 'Order Total']}
+        dataset={entries}
       />
       <div
         style={{
