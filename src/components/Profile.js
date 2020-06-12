@@ -6,7 +6,6 @@ import { Frame, Heading, Line, Table, Button } from 'arwes';
 const Profile = () => {
   let [orders, setOrders] = useState([]);
 
-  // const id = props.match.params.customerId;
   const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
   const query = `
   {
@@ -37,13 +36,6 @@ const Profile = () => {
       setOrders(res.data.data.customer.orders);
     })();
   }, []);
-
-  // const { loading } = useAuth0();
-  // // const { loading, user } = useAuth0();
-
-  // if (loading || !user) {
-  //   return <div>Loading...</div>;
-  // }
 
   let entries = orders.map((order) => {
     return [

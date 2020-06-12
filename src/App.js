@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ContextProvider } from './Context';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+
 import ShipPage from './components/ShipPage';
 import NavBar from './components/NavBar';
 import Splash from './components/Splash';
