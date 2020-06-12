@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import { useAuth0 } from '../react-auth0-spa';
 import { Frame, Heading, Line, Table, Button } from 'arwes';
 
 const Profile = () => {
   let [orders, setOrders] = useState([]);
 
-  const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
+  const { user } = useAuth0();
+  console.log(user);
+
   const query = `
   {
     customer(customerId: ${user.id}) {
