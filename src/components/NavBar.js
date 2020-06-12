@@ -6,6 +6,9 @@ import { Frame, Heading, Button, Appear } from "arwes";
 
 function keyChecker(e) {
   if (e.key === "Enter") {
+    // set filter for iLike?
+    // Render search term as a chip?
+
     window.location.href = `/shop`;
   }
 }
@@ -13,6 +16,19 @@ function keyChecker(e) {
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
+  const { filters, setFilters } = useContext(Context);
+
+  const keyChecker = (ev) => {
+    if (ev.key === "Enter") {
+      const searchFilters = { nameIlike: ev.target.value };
+
+      let newFilters = { ...filters };
+      // newFilters[]
+      // Render search term as a chip?
+
+      window.location.href = `/shop`;
+    }
+  };
 
   useEffect(() => {
     if (localStorage.getItem("itemNum")) {
@@ -21,8 +37,20 @@ const NavBar = () => {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("custom_crafts_userObj");
+    localStorage.removeItem("custom_crafts_userTWJ");
+    logout();
+  };
+
   return (
-    <Frame animate level={1} corners={6} layer="primary" style={{ marginBottom: 20 }}>
+    <Frame
+      animate
+      level={1}
+      corners={6}
+      layer="primary"
+      style={{ marginBottom: 20 }}
+    >
       <div
         style={{
           display: "flex",
@@ -31,7 +59,10 @@ const NavBar = () => {
         }}
       >
         <div style={{ margin: "10px", padding: "15px", flexGrow: 1 }}>
-          <Heading style={{ fontSize: "32px", margin: 0, maxWidth: "265px" }} node="h1">
+          <Heading
+            style={{ fontSize: "32px", margin: 0, maxWidth: "265px" }}
+            node="h1"
+          >
             <Link to="/" style={{ textDecoration: "none", color: "#a1ecfb" }}>
               Custom Crafts
             </Link>
@@ -66,10 +97,17 @@ const NavBar = () => {
             ></i>
           </Appear>
         </Frame>
-        <div style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
+        <div
+          style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+        >
           {!isAuthenticated ? (
             <>
-              <Button style={{ marginRight: 25 }} onClick={() => loginWithRedirect({})} animate layer="secondary">
+              <Button
+                style={{ marginRight: 25 }}
+                onClick={() => loginWithRedirect({})}
+                animate
+                layer="secondary"
+              >
                 Login
               </Button>
               <Link to="/cart">
@@ -82,7 +120,7 @@ const NavBar = () => {
             <>
               <Link to="/profile">
                 <Button animate style={{ marginRight: 25 }} layer="secondary">
-                  Profile
+                  <i className="mdi mdi-account-circle" /> Profile
                 </Button>
               </Link>
               <Link to="/cart">
@@ -91,8 +129,13 @@ const NavBar = () => {
                   {numItems}
                 </Button>
               </Link>
-              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={() => logout()}>
-                Log-out
+              <Button
+                animate
+                layer="alert"
+                style={{ marginRight: 25 }}
+                onClick={handleLogout}
+              >
+                Log-out <i className="mdi mdi-exit-run" />
               </Button>
             </>
           )}

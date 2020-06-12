@@ -35,22 +35,19 @@ export const Auth0Provider = ({
 
       setIsAuthenticated(isAuthenticated);
 
-
       // Does this only run on explicit login???
       if (isAuthenticated) {
         let user = await auth0FromHook.getUser();
         const token = await auth0FromHook.getTokenSilently();
 
-
         // check local storage before posting to db
-        const storedUser = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
-        console.log('storedUser in spa: ', storedUser);
+        const storedUser = JSON.parse(
+          localStorage.getItem('custom_crafts_userObj')
+        );
 
         if (storedUser && storedUser !== 'undefined') {
           setUser(storedUser);
-          setLoading(false);
         } else {
-          console.log('running user fetch')
           const res = await axios({
             url: 'http://localhost:5000/graphql',
             headers: {
@@ -66,18 +63,16 @@ export const Auth0Provider = ({
               }`,
             },
           });
-          console.log('res, ', res)
           if (res.data.data.addCustomer) {
             const id = res.data.data.addCustomer.id;
             user.id = id;
             localStorage.setItem('custom_crafts_userObj', JSON.stringify(user));
             localStorage.setItem('custom_crafts_userTWJ', token);
           }
-          console.log('user59: ', user)
           setUser(user);
-          setLoading(false);
         }
       }
+      setLoading(false);
     };
     initAuth0();
   }, []);
