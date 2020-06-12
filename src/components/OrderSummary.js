@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 import { Frame, Heading, Button, Table, Line } from 'arwes';
 import Axios from 'axios';
@@ -7,8 +7,9 @@ import Axios from 'axios';
 const OrderSummary = () => {
   let { cartItems, setCartItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
+  const history = useHistory();
 
-  const handleCheckout = async () => {
+  const handleCheckout = async (e) => {
     if (!cartItems || cartItems.length === 0) return;
 
     const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
@@ -89,6 +90,8 @@ const OrderSummary = () => {
     localStorage.removeItem('itemNum');
     setNumItems(0);
     setCartItems([]);
+    // use history to wait to redirect until post is complete
+    history.push('/profile');
   };
 
   useEffect(() => {
@@ -130,15 +133,13 @@ const OrderSummary = () => {
           </Link>
           <Line animate layer="secondary" />
           <Heading node="h5">ORDER TOTAL : {subtotal}</Heading>
-          <Link to="/shop">
-            <Button
-              animate
-              layer="success"
-              buttonProps={{ style: { padding: 5, fontSize: 15 } }}
-              onClick={handleCheckout}>
-              Confirm Order
-            </Button>
-          </Link>
+          <Button
+            animate
+            layer="success"
+            buttonProps={{ style: { padding: 5, fontSize: 15 } }}
+            onClick={handleCheckout}>
+            Confirm Order
+          </Button>
         </div>
       </Frame>
     </div>

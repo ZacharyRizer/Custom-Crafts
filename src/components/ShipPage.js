@@ -53,7 +53,7 @@ const ShipPage = (props) => {
   const addToCart = () => {
     let newCart;
     let found = cartItems.find((item) => item.name === ship.name);
-    if (!found) {
+    if (!found && ship.stock > 0) {
       ship.quantity = 1;
       setNumItems((numItems += 1));
       newCart = [...cartItems, ship];
@@ -67,7 +67,6 @@ const ShipPage = (props) => {
       });
     }
     setCartItems(newCart);
-    console.log(newCart);
 
     localStorage.setItem('cart', JSON.stringify(newCart));
     localStorage.setItem('itemNum', JSON.stringify(numItems));
