@@ -56,7 +56,6 @@ const Sidebar = () => {
         title="Range (Parsecs)"
       />
       <Dropdown
-        flip
         idList={[
           "priceRange 0 100",
           "priceRange 100 1000",
