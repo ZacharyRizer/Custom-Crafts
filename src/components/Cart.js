@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 import { Frame, Heading, Button, Table, Line } from 'arwes';
 
-import Axios from 'axios';
-
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
 
+<<<<<<< HEAD
   const showModal = () => {
     let modal = document.getElementById('modal');
     modal.style.display = 'block';
@@ -98,9 +97,10 @@ const Cart = () => {
     setCartItems([]);
   };
 
+=======
+>>>>>>> master
   useEffect(() => {
     if (localStorage.getItem('cart')) {
-      //save to variable?
       let cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
@@ -215,7 +215,7 @@ const Cart = () => {
           </Button>
         </Link>
         <Link to="/checkout">
-          <Button onClick={handleCheckout} animate layer="secondary">
+          <Button animate layer="secondary">
             Checkout
           </Button>
         </Link>

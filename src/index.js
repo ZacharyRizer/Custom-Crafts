@@ -13,7 +13,6 @@ import history from './utils/history';
 
 const theme = createTheme();
 theme.animTime = 750;
-console.log(theme);
 
 const onRedirectCallback = (appState) => {
   history.push(

@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Context } from '../Context';
-import { useAuth0 } from '../react-auth0-spa';
-import { Frame, Heading, Button, Appear } from 'arwes';
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Context } from "../Context";
+import { useAuth0 } from "../react-auth0-spa";
+import { Frame, Heading, Button, Appear } from "arwes";
 
 
 const NavBar = () => {
@@ -25,15 +25,15 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('itemNum')) {
-      let num = parseInt(localStorage.getItem('itemNum'));
+    if (localStorage.getItem("itemNum")) {
+      let num = parseInt(localStorage.getItem("itemNum"));
       setNumItems(num);
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('custom_crafts_userObj');
-    localStorage.removeItem('custom_crafts_userTWJ');
+    localStorage.removeItem("custom_crafts_userObj");
+    localStorage.removeItem("custom_crafts_userTWJ");
     logout();
   };
 
@@ -43,58 +43,65 @@ const NavBar = () => {
       level={1}
       corners={6}
       layer="primary"
-      style={{ marginBottom: 20 }}>
+      style={{ marginBottom: 20 }}
+    >
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <div style={{ margin: '10px', padding: '15px', flexGrow: 1 }}>
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ margin: "10px", padding: "15px", flexGrow: 1 }}>
           <Heading
-            style={{ fontSize: '32px', margin: 0, maxWidth: '265px' }}
-            node="h1">
-            <Link to="/" style={{ textDecoration: 'none', color: '#a1ecfb' }}>
+            style={{ fontSize: "32px", margin: 0, maxWidth: "265px" }}
+            node="h1"
+          >
+            <Link to="/" style={{ textDecoration: "none", color: "#a1ecfb" }}>
               Custom Crafts
             </Link>
           </Heading>
         </div>
         <Frame style={{ flexGrow: 1 }} corners={0}>
-          <Appear style={{ display: 'flex', alignItems: 'center' }}>
+          <Appear style={{ display: "flex", alignItems: "center" }}>
             <input
               style={{
-                position: 'relative',
+                position: "relative",
                 padding: 10,
                 paddingLeft: 40,
-                backgroundColor: 'transparent',
-                outline: 'none',
-                border: 'none',
-                color: '#26dafd',
+                backgroundColor: "transparent",
+                outline: "none",
+                border: "none",
+                color: "#26dafd",
                 zIndex: 1,
-                width: '100%',
+                width: "100%",
               }}
               type="text"
               placeholder="Search for Ships"
-              onKeyDown={keyChecker}></input>
+              onKeyDown={keyChecker}
+            ></input>
             <i
               style={{
-                position: 'absolute',
+                position: "absolute",
                 paddingLeft: 10,
-                cursor: 'text',
+                cursor: "text",
                 zIndex: 0,
               }}
-              className="mdi mdi-magnify"></i>
+              className="mdi mdi-magnify"
+            ></i>
           </Appear>
         </Frame>
         <div
-          style={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+        >
           {!isAuthenticated ? (
             <>
               <Button
                 style={{ marginRight: 25 }}
-                onClick={() => loginWithRedirect()}
+                onClick={() => loginWithRedirect({})}
                 animate
-                layer="secondary">
+                layer="secondary"
+              >
                 Login
               </Button>
               <Link to="/cart">
@@ -107,7 +114,7 @@ const NavBar = () => {
               <>
                 <Link to="/profile">
                   <Button animate style={{ marginRight: 25 }} layer="secondary">
-                    Profile
+                    <i className="mdi mdi-account-circle" /> Profile
                 </Button>
                 </Link>
                 <Link to="/cart">
@@ -120,9 +127,10 @@ const NavBar = () => {
                   animate
                   layer="alert"
                   style={{ marginRight: 25 }}
-                  onClick={handleLogout}>
-                  Log-out
-              </Button>
+                  onClick={handleLogout}
+                >
+                  Log-out <i className="mdi mdi-exit-run" />
+                </Button>
               </>
             )}
         </div>

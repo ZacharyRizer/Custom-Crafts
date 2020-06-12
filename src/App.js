@@ -26,12 +26,12 @@ const App = () => {
             <Switch>
               <Route exact path="/" component={Splash} />
               <Route path="/shop" component={Shop} />
-              <Route path="/cart" component={Cart} />
               <Route
                 path="/ships/:shipId"
                 render={(props) => <ShipPage {...props} />}
               />
-              <Route path="/checkout" component={Checkout} />
+              <Route path="/cart" component={Cart} />
+              <PrivateRoute path="/checkout" component={Checkout} />
               <PrivateRoute path="/profile" component={Profile} />
             </Switch>
           </div>
