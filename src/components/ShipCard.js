@@ -27,6 +27,8 @@ const ShipCard = ({ ship }) => {
         alt="A 3D model of a spaceship"
         auto-rotate
         camera-controls
+        auto-rotate-delay={1000}
+        exposure={0.75}
         interaction-prompt="none"
       ></model-viewer>
       <Line animate />
