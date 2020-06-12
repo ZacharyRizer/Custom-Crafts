@@ -108,14 +108,6 @@ const NavBar = () => {
                     {numItems}
                   </Button>
                 </Link>
-                <Button
-                  animate
-                  layer="alert"
-                  style={{ marginRight: 25 }}
-                  onClick={handleLogout}
-                >
-                  Log-out <i className="mdi mdi-exit-run" />
-                </Button>
                 <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
                   <i className="mdi mdi-exit-run" /> Log-Out
               </Button>

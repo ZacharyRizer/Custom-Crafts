@@ -39,7 +39,6 @@ const Profile = () => {
           query,
         },
       });
-      debugger
       setOrders(res.data.data.customer.orders);
     };
     fetchOrders();
