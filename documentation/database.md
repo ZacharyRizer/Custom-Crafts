@@ -1,4 +1,4 @@
-## Tables and Their Associations
+## Database Models and Their Associations
 
 Below is a representation of all of the tables and their relations:
 
