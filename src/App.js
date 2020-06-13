@@ -15,6 +15,8 @@ import Profile from "./components/Profile";
 import ShipPage from "./components/ShipPage";
 import Shop from "./components/Shop";
 import Splash from "./components/Splash";
+import Review from "./components/Review";
+import AllReviews from "./components/AllReviews";
 
 const App = () => {
   const client = new ApolloClient({ uri: "http://localhost:5000/graphql" });
@@ -32,6 +34,8 @@ const App = () => {
               <Route exact path="/shop" component={Shop} />
               <Route exact path="/ships/:shipId" render={(props) => <ShipPage {...props} />} />
               <Route exact path="/cart" component={Cart} />
+              <Route exact path="/testallreviews" component={AllReviews} />
+              <PrivateRoute exact path="/testmakereview" component={Review} />
               <PrivateRoute exact path="/checkout" component={Checkout} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <AdminRoute exact path="/admin" component={Admin} />
