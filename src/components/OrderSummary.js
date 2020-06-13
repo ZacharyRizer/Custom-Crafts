@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Context } from '../Context';
-import { Frame, Heading, Button, Table, Line, Content } from 'arwes';
-import Axios from 'axios';
-import { useAuth0 } from '../react-auth0-spa';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Context } from "../Context";
+import { Frame, Heading, Button, Table, Line, Content } from "arwes";
+import Axios from "axios";
+import { useAuth0 } from "../react-auth0-spa";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
 const OrderSummary = () => {
   let { cartItems, setCartItems, setNumItems } = useContext(Context);
@@ -16,16 +16,18 @@ const OrderSummary = () => {
   const handleCheckout = async (e) => {
     if (!cartItems || cartItems.length === 0) return;
 
-    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
+    const user = JSON.parse(localStorage.getItem("custom_crafts_userObj"));
     const token = await getTokenSilently();
 
     // serialize cartItems
-    const orderItemsCart = cartItems.map(item => (JSON.stringify({ shipId: parseInt(item.id), quantity: item.quantity })))
+    const orderItemsCart = cartItems.map((item) =>
+      JSON.stringify({ shipId: parseInt(item.id), quantity: item.quantity })
+    );
 
     let jsonCart = JSON.stringify(orderItemsCart);
     jsonCart = jsonCart.replace(/"{/g, "{");
     jsonCart = jsonCart.replace(/}"/g, "}");
-    console.log((jsonCart))
+    console.log(jsonCart);
 
     // order creation query string
     let os = `
@@ -36,18 +38,15 @@ const OrderSummary = () => {
       }
     `;
 
-    console.log('os', os)
-
-
-
+    console.log("os", os);
 
     // post order to db
     const res = await Axios({
-      url: 'http://localhost:5000/graphql',
+      url: "http://localhost:5000/graphql",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      method: 'post',
+      method: "post",
       data: {
         query: os,
         variables: { customerId: user.id },
@@ -77,7 +76,7 @@ const OrderSummary = () => {
         }
     `;
 
-    console.log('cart items 67', cartItems);
+    console.log("cart items 67", cartItems);
     // cartItems.forEach(async (item) => {
     //   const res = await Axios({
     //     url: 'http://localhost:5000/graphql',
@@ -96,7 +95,6 @@ const OrderSummary = () => {
     //   });
     //   console.log('res 80: ', res)
 
-
     //   // Update db to reduce ship stock based on associated order-item post
 
     //   const stockRes = await Axios({
@@ -114,8 +112,8 @@ const OrderSummary = () => {
     //     },
     //   });
     // });
-    localStorage.removeItem('cart');
-    localStorage.removeItem('itemNum');
+    localStorage.removeItem("cart");
+    localStorage.removeItem("itemNum");
     setNumItems(0);
     setCartItems([]);
     // use history to wait to redirect until post is complete
@@ -148,7 +146,7 @@ const OrderSummary = () => {
         <h1>Order Summary</h1>
         <Line animate />
         <Table animate headers={["ITEM", "QTY", "PRICE"]} dataset={entries} />
-        <div style={{ display: "flex", justifyContent: "space-between", padding: 20 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "20px 0" }}>
           <Link to="/cart">
             <Button animate layer="secondary">
               Back to Cart
