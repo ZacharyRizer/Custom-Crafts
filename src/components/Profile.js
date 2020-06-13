@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { apiBaseUrl } from '../config';
@@ -24,6 +24,8 @@ const Profile = () => {
   const { user } = useAuth0();
 
   useEffect(() => {
+    if (!user) return;
+
     const query = `
   {
     customer(customerId: ${user.id}) {
@@ -56,7 +58,7 @@ const Profile = () => {
       setOrders(res.data.data.customer.orders);
     };
     fetchOrders();
-  }, []);
+  }, [user]);
 
   let entries = orders.map((order) => {
     return [
@@ -75,68 +77,70 @@ const Profile = () => {
 
   return (
     <>
-      <div style={{ padding: 20 }}>
-        <Header animate style={{ backgroundColor: 'transparent' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginRight: 10,
-            }}>
-            <Appear>
-              <Heading style={{ margin: '0 0 0 10px', fontSize: '32px' }}>
-                Profile
-              </Heading>
-            </Appear>
+      {user ? (
+        <div style={{ padding: 20 }}>
+          <Header animate style={{ backgroundColor: 'transparent' }}>
             <div
               style={{
                 display: 'flex',
-                width: '300px',
-                justifyContent: 'flex-end',
+                justifyContent: 'space-between',
+                marginRight: 10,
               }}>
-              <Link to="/shop">
-                <Button animate layer="primary">
-                  Return to Shop
-                </Button>
-              </Link>
+              <Appear>
+                <Heading style={{ margin: '0 0 0 10px', fontSize: '32px' }}>
+                  Profile
+                </Heading>
+              </Appear>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '300px',
+                  justifyContent: 'flex-end',
+                }}>
+                <Link to="/shop">
+                  <Button animate layer="primary">
+                    Return to Shop
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </Header>
+          </Header>
 
-        <Row>
-          <Col s={6}>
-            <Frame
-              layer={'primary'}
-              animate
-              level={0}
-              corners={4}
-              style={{ margin: 20 }}>
-              <Content style={{ padding: 20 }}>
-                <h1 style={{ textAlign: 'center' }}>Purchase History</h1>
-                <Line animate />
-                <Table
-                  headers={['Order Number', 'Ordered Items', 'Order Total']}
-                  dataset={entries}
-                />
-              </Content>
-            </Frame>
-          </Col>
-          <Col style={{ display: 'flex', justifyContent: 'center' }} s={6}>
-            <Image
-              style={{ margin: 0, width: '50%', marginTop: 20 }}
-              alt="Profile Picture"
-              animate
-              resources={user.picture}>
-              <p style={{ margin: '10px 0', 'word-wrap': 'break-word' }}>
-                {user.name}
-              </p>
-              <p style={{ margin: '10px 0', 'word-wrap': 'break-word' }}>
-                {user.email}
-              </p>
-            </Image>
-          </Col>
-        </Row>
-      </div>
+          <Row>
+            <Col s={6}>
+              <Frame
+                layer={'primary'}
+                animate
+                level={0}
+                corners={4}
+                style={{ margin: 20 }}>
+                <Content style={{ padding: 20 }}>
+                  <h1 style={{ textAlign: 'center' }}>Purchase History</h1>
+                  <Line animate />
+                  <Table
+                    headers={['Order Number', 'Ordered Items', 'Order Total']}
+                    dataset={entries}
+                  />
+                </Content>
+              </Frame>
+            </Col>
+            <Col style={{ display: 'flex', justifyContent: 'center' }} s={6}>
+              <Image
+                style={{ margin: 0, width: '50%', marginTop: 20 }}
+                alt="Profile Picture"
+                animate
+                resources={user.picture}>
+                <p style={{ margin: '10px 0', 'word-wrap': 'break-word' }}>
+                  {user.name}
+                </p>
+                <p style={{ margin: '10px 0', 'word-wrap': 'break-word' }}>
+                  {user.email}
+                </p>
+              </Image>
+            </Col>
+          </Row>
+        </div>
+      ) : null}
     </>
   );
 };

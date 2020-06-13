@@ -68,7 +68,6 @@ export const Auth0Provider = ({
             const id = res.data.data.addCustomer.id;
             user.id = id;
             localStorage.setItem('custom_crafts_userObj', JSON.stringify(user));
-            localStorage.setItem('custom_crafts_userTWJ', token);
           }
           setUser(user);
         }
