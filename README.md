@@ -78,3 +78,6 @@
 * GitHub version control
 * Model Viewer: [ModelViewer](https://modelviewer.dev/)
 * Blender 3D Modeling: [Blender](https://www.blender.org/)
+* Heroku (app deployment for production)
+
+*end of Readme*
