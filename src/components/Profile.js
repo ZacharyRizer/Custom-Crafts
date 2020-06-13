@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import Axios from "axios";
 import { useAuth0 } from "../react-auth0-spa";
 import { Frame, Heading, Line, Table, Button, Image, Header, Appear, Row, Col, Content } from "arwes";
@@ -9,7 +9,12 @@ const Profile = () => {
   const { getTokenSilently } = useAuth0();
 
   const { user } = useAuth0();
-  const query = `
+
+
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const query = `
   {
     customer(customerId: ${user.id}) {
       orders {
@@ -25,9 +30,6 @@ const Profile = () => {
     }
   }
   `;
-
-  useEffect(() => {
-    const fetchOrders = async () => {
       const token = await getTokenSilently();
       const res = await Axios({
         url: 'http://localhost:5000/graphql',
