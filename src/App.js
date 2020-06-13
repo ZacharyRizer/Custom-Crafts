@@ -8,6 +8,7 @@ import Admin from './components/Admin';
 import AdminRoute from './components/AdminRoute';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import FoF from './components/FourOhFour';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './components/Profile';
@@ -37,6 +38,7 @@ const App = () => {
               <PrivateRoute path="/checkout" component={Checkout} />
               <PrivateRoute path="/profile" component={Profile} />
               <AdminRoute path="/admin" component={Admin} />
+              <Route component={FoF} />
             </Switch>
           </div>
         </>
