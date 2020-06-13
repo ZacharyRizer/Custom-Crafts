@@ -78,5 +78,3 @@
 * GitHub version control
 * Model Viewer: [ModelViewer](https://modelviewer.dev/)
 * Blender 3D Modeling: [Blender](https://www.blender.org/)
-
-*end of Readme*
