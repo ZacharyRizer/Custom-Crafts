@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 import { useAuth0 } from '../react-auth0-spa';
@@ -9,6 +9,7 @@ const NavBar = () => {
   const { numItems, setNumItems } = useContext(Context);
   const { filters, setFilters } = useContext(Context);
   const { clear, setClear } = useContext(Context);
+  const [role, setRole] = useState('customer');
   const history = useHistory();
   const node = useRef();
 
@@ -32,6 +33,7 @@ const NavBar = () => {
       setNumItems(num);
     }
     if (user) {
+      const roleKey = 'http://customcraft/roles';
       setRole(user[roleKey]);
     }
   }, [user]);
@@ -41,7 +43,6 @@ const NavBar = () => {
       node.current.value = '';
       node.current.blur();
       setClear(false);
-      console.log('this ran');
     }
   }, [clear, setClear]);
 
@@ -134,7 +135,11 @@ const NavBar = () => {
           ) : (
             <>
               {role === 'admin' ? (
-                <Button>Admin</Button>
+                <Link to="/admin">
+                  <Button animate style={{ marginRight: 25 }} layer="secondary">
+                    Admin Page
+                  </Button>
+                </Link>
               ) : (
                 <>
                   <Link to="/profile">

@@ -4,14 +4,16 @@ import { ContextProvider } from './Context';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import ShipPage from './components/ShipPage';
-import NavBar from './components/NavBar';
-import Splash from './components/Splash';
-import Shop from './components/Shop';
-import PrivateRoute from './components/PrivateRoute';
-import Profile from './components/Profile';
+import Admin from './components/Admin';
+import AdminRoute from './components/AdminRoute';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import NavBar from './components/NavBar';
+import PrivateRoute from './components/PrivateRoute';
+import Profile from './components/Profile';
+import ShipPage from './components/ShipPage';
+import Shop from './components/Shop';
+import Splash from './components/Splash';
 
 const App = () => {
   const client = new ApolloClient({ uri: 'http://localhost:5000/graphql' });
@@ -34,6 +36,7 @@ const App = () => {
               <Route path="/cart" component={Cart} />
               <PrivateRoute path="/checkout" component={Checkout} />
               <PrivateRoute path="/profile" component={Profile} />
+              <AdminRoute path="/admin" component={Admin} />
             </Switch>
           </div>
         </>
