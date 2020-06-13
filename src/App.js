@@ -38,7 +38,7 @@ const App = () => {
               />
               <Route path="/cart" component={Cart} />
               <PrivateRoute path="/testmakereview" component={Review} />
-              <Route path="/test-get-allReviews" component={AllReviews} />
+              <Route path="/testallreviews" component={AllReviews} />
               <PrivateRoute path="/checkout" component={Checkout} />
               <PrivateRoute path="/profile" component={Profile} />
               <AdminRoute path="/admin" component={Admin} />
