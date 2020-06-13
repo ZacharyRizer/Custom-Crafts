@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link as Linky } from "react-router-dom";
 import { Context } from "../Context";
 import { Frame, Heading, Button, Table, Line, Header, Content, Link } from "arwes";
-import Axios from 'axios';
-import { useAuth0 } from '../react-auth0-spa'
+import Axios from "axios";
+import { useAuth0 } from "../react-auth0-spa";
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
@@ -11,15 +11,15 @@ const Cart = () => {
   const { getTokenSilently } = useAuth0();
 
   const showModal = () => {
-    let modal = document.getElementById('modal');
-    modal.style.display = 'block';
+    let modal = document.getElementById("modal");
+    modal.style.display = "block";
   };
 
   const handleCheckout = async () => {
     if (!cartItems || cartItems.length === 0) return;
 
     const token = await getTokenSilently();
-    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
+    const user = JSON.parse(localStorage.getItem("custom_crafts_userObj"));
 
     // order creation query string
     let os = `
@@ -33,11 +33,11 @@ const Cart = () => {
 
     // post order to db
     const res = await Axios({
-      url: 'http://localhost:5000/graphql',
+      url: "http://localhost:5000/graphql",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      method: 'post',
+      method: "post",
       data: {
         query: os,
         variables: { customerId: user.id },
@@ -69,11 +69,11 @@ const Cart = () => {
 
     cartItems.forEach(async (item) => {
       const res = await Axios({
-        url: 'http://localhost:5000/graphql',
+        url: "http://localhost:5000/graphql",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        method: 'post',
+        method: "post",
         data: {
           query: is,
           variables: {
@@ -87,24 +87,23 @@ const Cart = () => {
       // Update db to reduce ship stock based on associated order-item post
 
       const stockRes = await Axios({
-        url: 'http://localhost:5000/graphql',
+        url: "http://localhost:5000/graphql",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        method: 'post',
+        method: "post",
         data: {
           query: ss,
           variables: {
             id: item.id,
-            decQuantity: item.quantity
-          }
-        }
+            decQuantity: item.quantity,
+          },
+        },
       });
-
     });
 
-    localStorage.removeItem('cart');
-    localStorage.removeItem('itemNum');
+    localStorage.removeItem("cart");
+    localStorage.removeItem("itemNum");
     setNumItems(0);
     setCartItems([]);
   };
@@ -220,10 +219,10 @@ const Cart = () => {
                   </Button>
                 </Linky>
               ) : (
-                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                    Checkout
-                  </Button>
-                )}
+                <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                  Checkout
+                </Button>
+              )}
             </div>
           </div>
         </Header>
@@ -231,42 +230,48 @@ const Cart = () => {
       {Object.keys(cartItems).length ? (
         <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
           <Table
-            style={{ padding: 20, marginBottom: 10 }}
+            style={{ padding: 20, marginBottom: 0 }}
             animate
             headers={["Product Name", "Type", "Manufacturer", "Quantity", "Price", "Modify"]}
             dataset={entries}
           />
+          <Content style={{ paddingLeft: 20 }}>
+            <h1>
+              Subtotal : <i className="mdi mdi-currency-jpy" />
+              {subtotal}
+            </h1>
+          </Content>
         </Frame>
       ) : (
-          <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
-            <Content style={{ padding: 20, textAlign: "center" }}>
-              <h1>Your Cart is Empty</h1>
-              <p
-                style={{
-                  margin: 0,
-                  textAlign: "center",
-                  fontStyle: "italic",
-                }}
-              >
-                "Every moment I wasn't shopping at Custom Crafts, was a moment I regret."
+        <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
+          <Content style={{ padding: 20, textAlign: "center" }}>
+            <h1>Your Cart is Empty</h1>
+            <p
+              style={{
+                margin: 0,
+                textAlign: "center",
+                fontStyle: "italic",
+              }}
+            >
+              "Every moment I wasn't shopping at Custom Crafts, was a moment I regret."
             </p>
-              <p
-                style={{
-                  margin: 0,
-                  textAlign: "center",
-                  fontStyle: "italic",
-                }}
-              >
-                - King Xrule of the Xrulian Empire (Dying Words)
+            <p
+              style={{
+                margin: 0,
+                textAlign: "center",
+                fontStyle: "italic",
+              }}
+            >
+              - King Xrule of the Xrulian Empire (Dying Words)
             </p>
-              {/* <Linky to="/shop">
+            {/* <Linky to="/shop">
               <Button style={{ paddingTop: 20 }} layer="secondary">
                 Return to Shop
               </Button>
             </Linky> */}
-            </Content>
-          </Frame>
-        )}
+          </Content>
+        </Frame>
+      )}
     </>
   );
 };

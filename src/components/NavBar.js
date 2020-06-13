@@ -38,7 +38,6 @@ const NavBar = () => {
       node.current.value = "";
       node.current.blur();
       setClear(false);
-      console.log("this ran");
     }
   }, [clear, setClear]);
 
