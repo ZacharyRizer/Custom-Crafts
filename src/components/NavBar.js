@@ -1,18 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Context } from "../Context";
 import { useAuth0 } from "../react-auth0-spa";
 import { Frame, Heading, Button, Appear } from "arwes";
 
-
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
   const { filters, setFilters } = useContext(Context);
+  const { clear, setClear } = useContext(Context);
   const history = useHistory();
+  const node = useRef();
 
   const keyChecker = (ev) => {
-    if (ev.key === 'Enter') {
+    if (ev.key === "Enter") {
       const searchFilters = { nameIlike: `%${ev.target.value}%` };
 
       let newFilters = { ...filters, ...searchFilters };
@@ -21,7 +22,7 @@ const NavBar = () => {
 
       // window.location.href = `/shop`;
       setFilters(newFilters);
-      history.push('/shop');
+      history.push("/shop");
     }
   };
 
@@ -31,6 +32,15 @@ const NavBar = () => {
       setNumItems(num);
     }
   }, []);
+
+  useEffect(() => {
+    if (clear) {
+      node.current.value = "";
+      node.current.blur();
+      setClear(false);
+      console.log("this ran");
+    }
+  }, [clear, setClear]);
 
   const handleLogout = () => {
     localStorage.removeItem("custom_crafts_userObj");
@@ -57,6 +67,13 @@ const NavBar = () => {
         <Frame style={{ flexGrow: 1 }} corners={0}>
           <Appear style={{ display: "flex", alignItems: "center" }}>
             <input
+              ref={node}
+              onFocus={(e) => {
+                e.currentTarget.setAttribute("onfocus", "this.placeholder = ''");
+              }}
+              onBlur={(e) => {
+                e.currentTarget.setAttribute("onblur", "this.placeholder = 'Search for Ships'");
+              }}
               style={{
                 position: "relative",
                 padding: 10,
@@ -67,6 +84,7 @@ const NavBar = () => {
                 color: "#26dafd",
                 zIndex: 1,
                 width: "100%",
+                onFocus: "this.placeholder = ''",
               }}
               type="text"
               placeholder="Search for Ships"
@@ -96,23 +114,23 @@ const NavBar = () => {
               </Link>
             </>
           ) : (
-              <>
-                <Link to="/profile">
-                  <Button animate style={{ marginRight: 25 }} layer="secondary">
-                    <i className="mdi mdi-account-circle" /> Profile
+            <>
+              <Link to="/profile">
+                <Button animate style={{ marginRight: 25 }} layer="secondary">
+                  <i className="mdi mdi-account-circle" /> Profile
                 </Button>
-                </Link>
-                <Link to="/cart">
-                  <Button animate style={{ marginRight: 25 }}>
-                    <i className="mdi mdi-cart"> </i>
-                    {numItems}
-                  </Button>
-                </Link>
-                <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
-                  <i className="mdi mdi-exit-run" /> Log-Out
+              </Link>
+              <Link to="/cart">
+                <Button animate style={{ marginRight: 25 }}>
+                  <i className="mdi mdi-cart"> </i>
+                  {numItems}
+                </Button>
+              </Link>
+              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
+                <i className="mdi mdi-exit-run" /> Log-Out
               </Button>
-              </>
-            )}
+            </>
+          )}
         </div>
       </div>
     </Frame>
