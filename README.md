@@ -6,7 +6,7 @@
 > **Custom Crafts** created by: *Zachary Rizer, Ian Magenta, William Schrader & Abdullah Wafy*
 
 ### Project Description:
-> Custom Crafts is basically a store application where you can view and purchase custom-designed spaceships/spacecrafts. The app allows users to sign-in and become return customers with profile and purchase history features. Customers may shop for different and varying styles of spacecrafts \- performance \(i.e. racing), luxury, military, etc. \- designed to suit their taste and whet their palettes.
+> Custom Crafts is basically a store application where you can view and purchase custom-designed spaceships/spacecrafts. The app allows users to sign-in and become return customers with profile and purchase history features. Customers may shop for different and varying styles of spacecrafts \- performance \(i.e. racing), luxury, military, etc. \- designed to suit their taste and whet their palates.
 
 * Screenshots of App:
 ![GitHub Logo](/documentation/ReadmeScreenShot1.png)
@@ -88,5 +88,6 @@ DATABASE_URL='postgresql://custom_crafts:password@localhost/custom_crafts_db'```
 * GitHub version control
 * Model Viewer: [ModelViewer](https://modelviewer.dev/)
 * Blender 3D Modeling: [Blender](https://www.blender.org/)
+* Heroku (app deployment for production)
 
 *end of Readme*
