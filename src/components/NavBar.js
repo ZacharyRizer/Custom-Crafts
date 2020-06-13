@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 import { useAuth0 } from '../react-auth0-spa';
 import { Frame, Heading, Button, Appear } from 'arwes';
@@ -8,19 +8,21 @@ const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
   const { filters, setFilters } = useContext(Context);
-  const [role, setRole] = useState('customer');
-
-  const roleKey = 'http://customcraft/roles';
+  const { clear, setClear } = useContext(Context);
+  const history = useHistory();
+  const node = useRef();
 
   const keyChecker = (ev) => {
     if (ev.key === 'Enter') {
-      const searchFilters = { nameIlike: ev.target.value };
+      const searchFilters = { nameIlike: `%${ev.target.value}%` };
 
-      let newFilters = { ...filters };
+      let newFilters = { ...filters, ...searchFilters };
       // newFilters[]
       // Render search term as a chip?
 
-      window.location.href = `/shop`;
+      // window.location.href = `/shop`;
+      setFilters(newFilters);
+      history.push('/shop');
     }
   };
 
@@ -33,6 +35,15 @@ const NavBar = () => {
       setRole(user[roleKey]);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (clear) {
+      node.current.value = '';
+      node.current.blur();
+      setClear(false);
+      console.log('this ran');
+    }
+  }, [clear, setClear]);
 
   const handleLogout = () => {
     localStorage.removeItem('custom_crafts_userObj');
@@ -65,6 +76,19 @@ const NavBar = () => {
         <Frame style={{ flexGrow: 1 }} corners={0}>
           <Appear style={{ display: 'flex', alignItems: 'center' }}>
             <input
+              ref={node}
+              onFocus={(e) => {
+                e.currentTarget.setAttribute(
+                  'onfocus',
+                  "this.placeholder = ''"
+                );
+              }}
+              onBlur={(e) => {
+                e.currentTarget.setAttribute(
+                  'onblur',
+                  "this.placeholder = 'Search for Ships'"
+                );
+              }}
               style={{
                 position: 'relative',
                 padding: 10,
@@ -75,6 +99,7 @@ const NavBar = () => {
                 color: '#26dafd',
                 zIndex: 1,
                 width: '100%',
+                onFocus: "this.placeholder = ''",
               }}
               type="text"
               placeholder="Search for Ships"
