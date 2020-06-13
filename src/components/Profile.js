@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import { apiBaseUrl } from '../config';
 import { useAuth0 } from '../react-auth0-spa';
 import {
   Frame,
@@ -43,7 +44,7 @@ const Profile = () => {
     const fetchOrders = async () => {
       const token = await getTokenSilently();
       const res = await Axios({
-        url: 'http://localhost:5000/graphql',
+        url: `${apiBaseUrl}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
