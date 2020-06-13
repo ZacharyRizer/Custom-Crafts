@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Col, Loading } from "arwes";
+import React, { useContext, useEffect, useState } from 'react';
+import { Col, Loading, Heading, Frame, Words } from 'arwes';
 
-import { Context } from "../Context";
-import ShipCard from "./ShipCard";
-import Axios from "axios";
+import { Context } from '../Context';
+import ShipCard from './ShipCard';
+import Axios from 'axios';
+import { apiBaseUrl } from '../config';
 
 const ShipList = () => {
   let [data, setData] = useState();
@@ -84,25 +85,31 @@ const ShipList = () => {
           ps += `${filter}: Int!`;
           queryVariables[filter] = filters[filter];
           break;
+        case `nameIlike`:
+          ps += `${filter}: String!`;
+          queryVariables[filter] = filters[filter];
+          break;
         case `priceRange`:
           ps += `priceRangeBegin: Int!, $priceRangeEnd: Int!`;
-          queryVariables["priceRangeBegin"] = filters["priceRange"].begin;
-          queryVariables["priceRangeEnd"] = filters["priceRange"].end;
+          queryVariables['priceRangeBegin'] = filters['priceRange'].begin;
+          queryVariables['priceRangeEnd'] = filters['priceRange'].end;
           break;
         case `sizeRange`:
           ps += `sizeRangeBegin: Int!, $sizeRangeEnd: Int!`;
-          queryVariables["sizeRangeBegin"] = filters["sizeRange"].begin;
-          queryVariables["sizeRangeEnd"] = filters["sizeRange"].end;
+          queryVariables['sizeRangeBegin'] = filters['sizeRange'].begin;
+          queryVariables['sizeRangeEnd'] = filters['sizeRange'].end;
           break;
         case `crewCapRange`:
           ps += `crewCapRangeBegin: Int!, $crewCapRangeEnd: Int!`;
-          queryVariables["crewCapRangeBegin"] = filters["crewCapRange"].begin;
-          queryVariables["crewCapRangeEnd"] = filters["crewCapRange"].end;
+          queryVariables['crewCapRangeBegin'] = filters['crewCapRange'].begin;
+          queryVariables['crewCapRangeEnd'] = filters['crewCapRange'].end;
           break;
         case `travelRangeRange`:
           ps += `travelRangeRangeBegin: Int!, $travelRangeRangeEnd: Int!`;
-          queryVariables["travelRangeRangeBegin"] = filters["travelRangeRange"].begin;
-          queryVariables["travelRangeRangeEnd"] = filters["travelRangeRange"].end;
+          queryVariables['travelRangeRangeBegin'] =
+            filters['travelRangeRange'].begin;
+          queryVariables['travelRangeRangeEnd'] =
+            filters['travelRangeRange'].end;
           break;
       }
       if (i !== filterKeys.length - 1) ps += `, $`;
@@ -122,6 +129,9 @@ const ShipList = () => {
           break;
         case `manufacturerId`:
           fs += `$manufacturerId`;
+          break;
+        case `nameIlike`:
+          fs += `$nameIlike`;
           break;
         case `priceRange`:
           fs += `{begin: $priceRangeBegin, end: $priceRangeEnd}`;
@@ -143,10 +153,11 @@ const ShipList = () => {
 
   useEffect(() => {
     (async () => {
-      const qs = buildQueryString();
+      const qs = buildQueryString(); //16
+      console.log('qs 154: ', qs);
       const res = await Axios({
-        url: "http://localhost:5000/graphql",
-        method: "post",
+        url: `${apiBaseUrl}`,
+        method: 'post',
         data: {
           query: qs,
           variables: queryVariables,
@@ -161,21 +172,39 @@ const ShipList = () => {
   return (
     <>
       {data ? (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          {data.ships.edges.map((shipNode) => (
-            <Col key={shipNode.node.id}>
-              <ShipCard key={shipNode.node.id} ship={shipNode.node} />
-            </Col>
-          ))}
-        </div>
+        data.ships.edges.length > 0 ? (
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}>
+            {data.ships.edges.map((shipNode) => (
+              <Col key={shipNode.node.id}>
+                <ShipCard key={shipNode.node.id} ship={shipNode.node} />
+              </Col>
+            ))}
+          </div>
+        ) : (
+          <Frame
+            layer={'secondary'}
+            animate
+            level={0}
+            corners={4}
+            style={{ margin: 20, textAlign: 'center' }}>
+            <Heading
+              style={{
+                padding: 20,
+                margin: 0,
+                fontSize: 50,
+                textShadow: 'none',
+              }}>
+              <Words layer="secondary">No Results Found</Words>
+            </Heading>
+          </Frame>
+        )
       ) : (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div style={{ width: '100%', height: '100%' }}>
           <Loading animate full />
         </div>
       )}

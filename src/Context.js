@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
 export const Context = createContext();
 
@@ -7,6 +7,7 @@ export const ContextProvider = (props) => {
   const [filterChips, setFilterChips] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [numItems, setNumItems] = useState(0);
+  const [clear, setClear] = useState(false);
 
   return (
     <Context.Provider
@@ -19,7 +20,10 @@ export const ContextProvider = (props) => {
         setCartItems,
         numItems,
         setNumItems,
-      }}>
+        clear,
+        setClear,
+      }}
+    >
       {props.children}
     </Context.Provider>
   );

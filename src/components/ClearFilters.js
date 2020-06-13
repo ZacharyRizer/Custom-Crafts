@@ -4,8 +4,10 @@ import { Context } from "../Context";
 
 const ClearFilters = () => {
   const { filters, setFilters } = useContext(Context);
+  const { clear, setClear } = useContext(Context);
   const handleClick = () => {
     setFilters({});
+    setClear(true);
   };
   return (
     <div style={{ display: "flex", flexDirection: "column", marginBottom: 10 }}>

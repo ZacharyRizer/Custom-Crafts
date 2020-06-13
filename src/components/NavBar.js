@@ -1,97 +1,124 @@
-import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Context } from "../Context";
-import { useAuth0 } from "../react-auth0-spa";
-import { Frame, Heading, Button, Appear } from "arwes";
-
-function keyChecker(e) {
-  if (e.key === "Enter") {
-    // set filter for iLike?
-    // Render search term as a chip?
-
-    window.location.href = `/shop`;
-  }
-}
+import React, { useContext, useEffect, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Context } from '../Context';
+import { useAuth0 } from '../react-auth0-spa';
+import { Frame, Heading, Button, Appear } from 'arwes';
 
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { numItems, setNumItems } = useContext(Context);
   const { filters, setFilters } = useContext(Context);
+  const { clear, setClear } = useContext(Context);
+  const history = useHistory();
+  const node = useRef();
 
   const keyChecker = (ev) => {
-    if (ev.key === "Enter") {
-      const searchFilters = { nameIlike: ev.target.value };
+    if (ev.key === 'Enter') {
+      const searchFilters = { nameIlike: `%${ev.target.value}%` };
 
-      let newFilters = { ...filters };
+      let newFilters = { ...filters, ...searchFilters };
       // newFilters[]
       // Render search term as a chip?
 
-      window.location.href = `/shop`;
+      // window.location.href = `/shop`;
+      setFilters(newFilters);
+      history.push('/shop');
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem("itemNum")) {
-      let num = parseInt(localStorage.getItem("itemNum"));
+    if (localStorage.getItem('itemNum')) {
+      let num = parseInt(localStorage.getItem('itemNum'));
       setNumItems(num);
     }
   }, []);
 
+  useEffect(() => {
+    if (clear) {
+      node.current.value = '';
+      node.current.blur();
+      setClear(false);
+    }
+  }, [clear, setClear]);
+
   const handleLogout = () => {
-    localStorage.removeItem("custom_crafts_userObj");
-    localStorage.removeItem("custom_crafts_userTWJ");
+    localStorage.removeItem('custom_crafts_userObj');
+    localStorage.removeItem('custom_crafts_userTWJ');
     logout();
   };
 
   return (
-    <Frame animate level={1} corners={6} layer="primary" style={{ marginBottom: 20 }}>
+    <Frame
+      animate
+      level={1}
+      corners={6}
+      layer="primary"
+      style={{ marginBottom: 20 }}>
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ margin: "10px", padding: "15px", flexGrow: 1 }}>
-          <Heading style={{ fontSize: "32px", margin: 0, maxWidth: "271px" }} node="h1">
-            <Link to="/" style={{ textDecoration: "none", color: "#a1ecfb" }}>
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <div style={{ margin: '10px', padding: '15px', flexGrow: 1 }}>
+          <Heading
+            style={{ fontSize: '32px', margin: 0, maxWidth: '271px' }}
+            node="h1">
+            <Link to="/" style={{ textDecoration: 'none', color: '#a1ecfb' }}>
               Custom Crafts
             </Link>
           </Heading>
         </div>
         <Frame style={{ flexGrow: 1 }} corners={0}>
-          <Appear style={{ display: "flex", alignItems: "center" }}>
+          <Appear style={{ display: 'flex', alignItems: 'center' }}>
             <input
+              ref={node}
+              onFocus={(e) => {
+                e.currentTarget.setAttribute(
+                  'onfocus',
+                  "this.placeholder = ''"
+                );
+              }}
+              onBlur={(e) => {
+                e.currentTarget.setAttribute(
+                  'onblur',
+                  "this.placeholder = 'Search for Ships'"
+                );
+              }}
               style={{
-                position: "relative",
+                position: 'relative',
                 padding: 10,
                 paddingLeft: 40,
-                backgroundColor: "transparent",
-                outline: "none",
-                border: "none",
-                color: "#26dafd",
+                backgroundColor: 'transparent',
+                outline: 'none',
+                border: 'none',
+                color: '#26dafd',
                 zIndex: 1,
-                width: "100%",
+                width: '100%',
+                onFocus: "this.placeholder = ''",
               }}
               type="text"
               placeholder="Search for Ships"
-              onKeyDown={keyChecker}
-            ></input>
+              onKeyDown={keyChecker}></input>
             <i
               style={{
-                position: "absolute",
+                position: 'absolute',
                 paddingLeft: 10,
-                cursor: "text",
+                cursor: 'text',
                 zIndex: 0,
               }}
-              className="mdi mdi-magnify"
-            ></i>
+              className="mdi mdi-magnify"></i>
           </Appear>
         </Frame>
-        <div style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
+        <div
+          style={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
           {!isAuthenticated ? (
             <>
-              <Button style={{ marginRight: 25 }} onClick={() => loginWithRedirect({})} animate layer="secondary">
+              <Button
+                style={{ marginRight: 25 }}
+                onClick={() => loginWithRedirect({})}
+                animate
+                layer="secondary">
                 Login
               </Button>
               <Link to="/cart">
@@ -113,7 +140,11 @@ const NavBar = () => {
                   {numItems}
                 </Button>
               </Link>
-              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
+              <Button
+                animate
+                layer="alert"
+                style={{ marginRight: 25 }}
+                onClick={handleLogout}>
                 <i className="mdi mdi-exit-run" /> Log-Out
               </Button>
             </>
