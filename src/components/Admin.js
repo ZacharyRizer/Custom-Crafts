@@ -31,6 +31,7 @@ const Admin = () => {
               id
               stock
               name
+              totalSold
               category {
                 name
               }
@@ -72,7 +73,7 @@ const Admin = () => {
         <span>{item.id}</span>,
         <span>{item.name}</span>,
         <span>{item.stock}</span>,
-        <span>{item.id}</span>,
+        <span>{item.totalSold}</span>,
         <span>{item.category.name}</span>,
         <span>{item.manufacturer.name}</span>,
       ];
