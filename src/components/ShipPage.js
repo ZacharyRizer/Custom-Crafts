@@ -5,11 +5,14 @@ import { Frame, Content, Heading, Header, Row, Col, Button, Line } from "arwes";
 import Axios from "axios";
 import { apiBaseUrl } from "../config";
 import AllReviews from "./AllReviews";
+import Dropdown from "./Dropdown";
 
 const ShipPage = (props) => {
   let [ship, setShip] = useState();
   let [reviews, setReviews] = useState([]);
   let [rating, setRating] = useState([]);
+  const [shipColor, setShipColor] = useState();
+  const [shipImage, setShipImage] = useState();
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   const id = props.match.params.shipId;
   const intID = parseInt(id);
@@ -74,6 +77,7 @@ const ShipPage = (props) => {
         }
         setRating(finalList);
       }
+      setShipImage(res.data.data.ship.modelLink);
     })();
     if (localStorage.getItem("cart")) {
       let cart = JSON.parse(localStorage.getItem("cart"));
@@ -253,7 +257,7 @@ const ShipPage = (props) => {
                       "--progress-bar-color": "transparent",
                       "--progress-mask": "transparent",
                     }}
-                    src={ship.modelLink}
+                    src={shipImage}
                     alt="A 3D model of a spaceship"
                     auto-rotate
                     auto-rotate-delay={1000}
@@ -268,6 +272,13 @@ const ShipPage = (props) => {
                     <p style={{ margin: 0 }}>{ship.description}</p>
                   </div>
                 </Frame>
+                <div style={{ margin: 20 }}>
+                  <Dropdown
+                    idList={["blue", "green", "orange", "red"]}
+                    options={["Blue", "Green", "Orange", "Red"]}
+                    title="Choose a Color"
+                  />
+                </div>
               </Col>
             </Row>
           </Content>

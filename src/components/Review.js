@@ -5,8 +5,7 @@ import Axios from "axios";
 
 // component to create new review
 const Review = () => {
-  const { getTokenSilently } = useAuth0();
-  const { user } = useAuth0();
+  const { getTokenSilently, user } = useAuth0();
 
   useEffect(() => {
     if (!user) return;
@@ -48,7 +47,7 @@ const Review = () => {
         },
       });
       const data = reviewRes.data.data;
-      console.log("reviewData: ", data);
+      console.log("data from reviewRes: ", data);
     })();
   }, [user]);
 

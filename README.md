@@ -58,7 +58,8 @@
      * if in shell: flask run
      * otherwise: pipenv run flask run
 3. login with github or gmail via Auth0 to use app fully.
-4. Enjoy! :rocket:
+4. Alternatively, you can log-in as a Demo User via Auth0 as user: demoadmin@demo.com, password: DemoAdmin0
+5. Enjoy! :rocket:
 
 ### Technologies used:
 * HTML5
