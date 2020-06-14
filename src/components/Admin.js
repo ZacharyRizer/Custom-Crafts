@@ -67,55 +67,52 @@ const Admin = () => {
   }, []);
   let entries;
   if (inventory) {
-    entries = inventory.map((item => {
+    entries = inventory.map((item) => {
       return [
-        <>
-          <span>{item.id}</span>,
-          <span>{item.name}</span>,
-          <span>{item.stock}</span>,
-          <span>{item.id}</span>,
-          <span>{item.category.name}</span>,
-          <span>{item.manufacturer.name}</span>
-        </>
-      ]
-    }))
+        <span>{item.id}</span>,
+        <span>{item.name}</span>,
+        <span>{item.stock}</span>,
+        <span>{item.id}</span>,
+        <span>{item.category.name}</span>,
+        <span>{item.manufacturer.name}</span>,
+      ];
+    });
   }
 
   return (
-    <>{entries ? (
-      <>
-        <Frame>Checkout all these sweet admin things!</Frame>
-        <Frame
-          layer={'primary'}
-          animate
-          level={0}
-          corners={4}
-          style={{ margin: '10px 30px 0 30px' }}>
-          <Table
-            style={{ padding: 20, marginBottom: 0 }}
+    <>
+      {entries ? (
+        <>
+          <Frame
+            layer={'primary'}
             animate
-            headers={[
-              'Stock ID',
-              'Product Name',
-              'Stock Quantity',
-              'Total Sold',
-              'Product Category',
-              'Manufacturer'
-            ]}
-            dataset={entries}
-          />
+            level={0}
+            corners={4}
+            style={{ margin: '10px 30px 0 30px' }}>
+            <Table
+              style={{ padding: 20, marginBottom: 0 }}
+              animate
+              headers={[
+                'Stock ID',
+                'Product Name',
+                'Stock Quantity',
+                'Total Sold',
+                'Product Category',
+                'Manufacturer',
+              ]}
+              dataset={entries}
+            />
 
-          {/* <Content style={{ paddingLeft: 20 }}>
+            {/* <Content style={{ paddingLeft: 20 }}>
           <h1>
             Put data here
           </h1>
         </Content> */}
-        </Frame>
-      </>
-    ) : null}
+          </Frame>
+        </>
+      ) : null}
     </>
-
-  )
+  );
 };
 
 export default Admin;
