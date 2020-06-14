@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useAuth0 } from '../react-auth0-spa';
-import { apiBaseUrl } from '../config';
-import Axios from 'axios';
+import React, { useEffect } from "react";
+import { useAuth0 } from "../react-auth0-spa";
+import { apiBaseUrl } from "../config";
+import Axios from "axios";
 
 // component to create new review
 const Review = () => {
@@ -14,7 +14,7 @@ const Review = () => {
 
     const rating = 5;
     const shipId = 9;
-    const description = 'Test review';
+    const description = "Test review";
 
     const token = getTokenSilently();
 
@@ -35,7 +35,7 @@ const Review = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        method: 'post',
+        method: "post",
         data: {
           query: rs,
           variables: {
@@ -47,7 +47,7 @@ const Review = () => {
         },
       });
       const data = reviewRes.data.data;
-      console.log('data from reviewRes: ', data);
+      console.log("data from reviewRes: ", data);
     })();
   }, [user]);
 
