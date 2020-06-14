@@ -154,7 +154,6 @@ const ShipList = () => {
   useEffect(() => {
     (async () => {
       const qs = buildQueryString(); //16
-      console.log('qs 154: ', qs);
       const res = await Axios({
         url: `${apiBaseUrl}`,
         method: 'post',
