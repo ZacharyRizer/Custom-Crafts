@@ -20,7 +20,7 @@ const OrderSummary = () => {
 
     // serialize cartItems
     const orderItemsCart = cartItems.map((item) =>
-      JSON.stringify({ shipId: parseInt(item.id), quantity: item.quantity })
+      JSON.stringify({ shipId: parseInt(item.id), quantity: item.quantity, color: item.color })
     );
 
     let jsonCart = JSON.stringify(orderItemsCart);
@@ -94,6 +94,7 @@ const OrderSummary = () => {
     return [
       item.name,
       item.quantity,
+      item.color,
       <>
         <i className="mdi mdi-currency-jpy" />
         {item.price}
