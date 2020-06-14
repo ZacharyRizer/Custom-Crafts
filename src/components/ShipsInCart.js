@@ -21,9 +21,9 @@ const ShipsInCart = (props) => {
             justifyContent: 'center',
           }}>
           {cartItems.map((cartItem) => (
-            <Col key={cartItem.id}>
+            <Col key={`${cartItem.id}_${cartItem.color}`}>
               <ShipCardInCart
-                key={cartItem.id}
+                key={`${cartItem.id}_${cartItem.color}`}
                 color={cartItems.color}
                 quantity={cartItem.quantity}
                 ship={cartItem}
