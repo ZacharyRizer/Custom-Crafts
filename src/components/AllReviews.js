@@ -6,6 +6,7 @@ import { Frame, Content, Image, Line } from "arwes";
 // component to create new review
 const AllReviews = (props) => {
   const reviews = props.reviews;
+  console.log("this is the review object:", reviews);
 
   return (
     <Frame
@@ -21,8 +22,13 @@ const AllReviews = (props) => {
           reviews.map((review) => (
             <Content>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
-                <Image resources="/android-chrome-192x192.png" style={{ width: 32, height: 32 }} />
-                <blockquote>{review.id.name}</blockquote>
+                {review ? (
+                  <Image resources={review.customer.picture} style={{ width: 32, height: 32 }} />
+                ) : (
+                  <Image resources="/android-chrome-192x192.png" style={{ width: 32, height: 32 }} />
+                )}
+
+                <blockquote>{review.customer.name}</blockquote>
               </div>
               <div>
                 <i className="mdi mdi-star" />

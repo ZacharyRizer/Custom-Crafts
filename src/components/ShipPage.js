@@ -26,7 +26,10 @@ const ShipPage = (props) => {
       }
       reviews {
         id
-        customerId
+        customer {
+          name
+          picture
+        }
         description
         rating
       }
@@ -44,18 +47,6 @@ const ShipPage = (props) => {
   }
   `;
 
-  const as = `
-    query ($shipId: Int!) {
-        ship(shipId: $shipId) {
-          reviews {
-            id
-            description
-            rating
-          }
-        }
-      }
-        `;
-
   useEffect(() => {
     (async () => {
       const res = await Axios({
@@ -66,40 +57,28 @@ const ShipPage = (props) => {
         },
       });
       setShip(res.data.data.ship);
+      const revs = res.data.data.ship.reviews; // array with id, description, rating
+      console.log("data from reviewRes: ", revs);
+      setReviews(revs);
+      if (revs.length > 0) {
+        let ratingNumber = revs.map((r) => r.rating);
+        ratingNumber = Math.round(ratingNumber.reduce((a, b) => a + b) / ratingNumber.length);
+        console.log(ratingNumber);
+        let finalList = [];
+        for (let i = 0; i < 5; i++) {
+          if (i <= ratingNumber - 1) {
+            finalList.push(<i className="mdi mdi-star" />);
+          } else {
+            finalList.push(<i className="mdi mdi-star-outline" />);
+          }
+        }
+        setRating(finalList);
+      }
     })();
     if (localStorage.getItem("cart")) {
       let cart = JSON.parse(localStorage.getItem("cart"));
       setCartItems(cart);
     }
-
-    (async () => {
-      let shipId = intID;
-      const allRevRes = await Axios({
-        url: `${apiBaseUrl}`,
-        method: "post",
-        data: {
-          query: as,
-          variables: {
-            shipId,
-          },
-        },
-      });
-      const revs = allRevRes.data.data.ship.reviews; // array with id, description, rating
-      console.log("data from reviewRes: ", revs);
-      setReviews(revs);
-      let ratingNumber = revs.map((r) => r.rating);
-      ratingNumber = Math.round(ratingNumber.reduce((a, b) => a + b) / ratingNumber.length);
-      console.log(ratingNumber);
-      let finalList = [];
-      for (let i = 0; i < 5; i++) {
-        if (i <= ratingNumber - 1) {
-          finalList.push(<i className="mdi mdi-star" />);
-        } else {
-          finalList.push(<i className="mdi mdi-star-outline" />);
-        }
-      }
-      setRating(finalList);
-    })();
   }, []);
 
   const addToCart = () => {
