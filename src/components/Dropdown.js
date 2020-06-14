@@ -43,7 +43,7 @@ const Dropdown = (props) => {
     let newState = optionState.map(() => false);
     newState[index] = !newState[index];
     setOptionState(newState);
-    node.current[index].current.innerHTML = option + '<i class="mdi mdi-square"/>';
+    node.current[index].current.innerHTML = option + '<i class="mdi mdi-checkbox-blank"/>';
 
     const category = node.current[index].current.id.split(" ");
     if (category.length === 2) {
