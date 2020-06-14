@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import createAuth0Client from '@auth0/auth0-spa-js';
-import axios from 'axios';
-import { apiBaseUrl } from './config';
+import React, { useState, useEffect, useContext } from "react";
+import createAuth0Client from "@auth0/auth0-spa-js";
+import axios from "axios";
+import { apiBaseUrl } from "./config";
 
-const DEFAULT_REDIRECT_CALLBACK = () =>
-  window.history.replaceState({}, document.title, window.location.pathname);
+const DEFAULT_REDIRECT_CALLBACK = () => window.history.replaceState({}, document.title, window.location.pathname);
 
 export const Auth0Context = React.createContext();
 export const useAuth0 = () => useContext(Auth0Context);
-export const Auth0Provider = ({
-  children,
-  onRedirectCallback = DEFAULT_REDIRECT_CALLBACK,
-  ...initOptions
-}) => {
+export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_CALLBACK, ...initOptions }) => {
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [user, setUser] = useState();
   const [auth0Client, setAuth0] = useState();
@@ -24,10 +19,7 @@ export const Auth0Provider = ({
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
 
-      if (
-        window.location.search.includes('code=') &&
-        window.location.search.includes('state=')
-      ) {
+      if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
         const { appState } = await auth0FromHook.handleRedirectCallback();
         onRedirectCallback(appState);
       }
@@ -42,11 +34,9 @@ export const Auth0Provider = ({
         const token = await auth0FromHook.getTokenSilently();
 
         // check local storage before posting to db
-        const storedUser = JSON.parse(
-          localStorage.getItem('custom_crafts_userObj')
-        );
+        const storedUser = JSON.parse(localStorage.getItem("custom_crafts_userObj"));
 
-        if (storedUser && storedUser !== 'undefined') {
+        if (storedUser && storedUser !== "undefined") {
           setUser(storedUser);
         } else {
           const res = await axios({
@@ -54,11 +44,11 @@ export const Auth0Provider = ({
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            method: 'post',
+            method: "post",
             data: {
               query: `
               mutation {
-                addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}"){
+                addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}", picture: "${user.picture}"){
                   id
                 }
               }`,
@@ -67,7 +57,7 @@ export const Auth0Provider = ({
           if (res.data.data.addCustomer) {
             const id = res.data.data.addCustomer.id;
             user.id = id;
-            localStorage.setItem('custom_crafts_userObj', JSON.stringify(user));
+            localStorage.setItem("custom_crafts_userObj", JSON.stringify(user));
           }
           setUser(user);
         }
@@ -113,7 +103,8 @@ export const Auth0Provider = ({
         getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
         logout: (...p) => auth0Client.logout(...p),
-      }}>
+      }}
+    >
       {children}
     </Auth0Context.Provider>
   );

@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Context } from '../Context';
-import { Link, Redirect } from 'react-router-dom';
-import { Frame, Content, Heading, Header, Row, Col, Button } from 'arwes';
-import Axios from 'axios';
-import { apiBaseUrl } from '../config';
-import Dropdown from './Dropdown';
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../Context";
+import { Link, Redirect } from "react-router-dom";
+import { Frame, Content, Heading, Header, Row, Col, Button, Line } from "arwes";
+import Axios from "axios";
+import { apiBaseUrl } from "../config";
+import AllReviews from "./AllReviews";
+import Dropdown from "./Dropdown";
 
 const ShipPage = (props) => {
-  const [ship, setShip] = useState();
+  let [ship, setShip] = useState();
+  let [reviews, setReviews] = useState([]);
+  let [rating, setRating] = useState([]);
   const [shipColor, setShipColor] = useState();
   const [shipImage, setShipImage] = useState();
-
-  const { cartItems, setCartItems, numItems, setNumItems } = useContext(
-    Context
-  );
+  let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   const id = props.match.params.shipId;
   const intID = parseInt(id);
   const query = `
@@ -26,6 +26,15 @@ const ShipPage = (props) => {
       }
       category {
         name
+      }
+      reviews {
+        id
+        customer {
+          name
+          picture
+        }
+        description
+        rating
       }
       price
       used
@@ -45,16 +54,33 @@ const ShipPage = (props) => {
     (async () => {
       const res = await Axios({
         url: `${apiBaseUrl}`,
-        method: 'post',
+        method: "post",
         data: {
           query,
         },
       });
       setShip(res.data.data.ship);
+      const revs = res.data.data.ship.reviews; // array with id, description, rating
+      console.log("data from reviewRes: ", revs);
+      setReviews(revs);
+      if (revs.length > 0) {
+        let ratingNumber = revs.map((r) => r.rating);
+        ratingNumber = Math.round(ratingNumber.reduce((a, b) => a + b) / ratingNumber.length);
+        console.log(ratingNumber);
+        let finalList = [];
+        for (let i = 0; i < 5; i++) {
+          if (i <= ratingNumber - 1) {
+            finalList.push(<i className="mdi mdi-star" />);
+          } else {
+            finalList.push(<i className="mdi mdi-star-outline" />);
+          }
+        }
+        setRating(finalList);
+      }
       setShipImage(res.data.data.ship.modelLink);
     })();
-    if (localStorage.getItem('cart')) {
-      let cart = JSON.parse(localStorage.getItem('cart'));
+    if (localStorage.getItem("cart")) {
+      let cart = JSON.parse(localStorage.getItem("cart"));
       setCartItems(cart);
     }
   }, []);
@@ -77,44 +103,36 @@ const ShipPage = (props) => {
     }
     setCartItems(newCart);
 
-    localStorage.setItem('cart', JSON.stringify(newCart));
-    localStorage.setItem('itemNum', JSON.stringify(numItems));
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem("itemNum", JSON.stringify(numItems));
   };
 
   return (
     <>
-      {(!Number.isInteger(intID) || intID < 1 || intID > 15) && (
-        <Redirect to="/404" />
-      )}
+      {(!Number.isInteger(intID) || intID < 1 || intID > 15) && <Redirect to="/404" />}
       {ship && (
         <div style={{ padding: 20 }}>
-          <Header animate style={{ backgroundColor: 'transparent' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Heading style={{ margin: '0 0 0 10px', fontSize: '32px' }}>
-                {ship.name}
-              </Heading>
+          <Header animate style={{ backgroundColor: "transparent" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Heading style={{ margin: "0 0 0 10px", fontSize: "32px" }}>{ship.name}</Heading>
               <div
                 style={{
-                  display: 'flex',
-                  width: '300px',
-                  justifyContent: 'space-between',
-                }}>
+                  display: "flex",
+                  width: "300px",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Link to="/shop">
                   <Button animate layer="primary">
                     Return to Shop
                   </Button>
                 </Link>
                 {ship.stock > 0 ? (
-                  <Button
-                    layer="secondary"
-                    style={{ marginRight: 10 }}
-                    onClick={addToCart}>
+                  <Button layer="secondary" style={{ marginRight: 10 }} onClick={addToCart}>
                     Add to Cart
                   </Button>
                 ) : (
-                  <Button
-                    layer="disabled"
-                    style={{ marginRight: 10, pointerEvents: 'none' }}>
+                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
                     Out of Stock
                   </Button>
                 )}
@@ -123,111 +141,121 @@ const ShipPage = (props) => {
           </Header>
           <Content>
             <Row>
-              <Col s={6}>
-                <Frame
-                  layer={'primary'}
-                  animate
-                  level={0}
-                  corners={4}
-                  style={{ margin: 20 }}>
+              <Col s={12} l={6}>
+                <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
                   <div
                     style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      margin: '20px',
-                    }}>
-                    <blockquote style={{ margin: '0 0 0 0' }}>
+                      display: "flex",
+                      justifyContent: "center",
+                      margin: "20px",
+                    }}
+                  >
+                    <blockquote style={{ margin: "0 0 0 0" }}>
                       <i className="mdi mdi-currency-jpy" />
                       {ship.price}
                     </blockquote>
                     {ship.used ? (
-                      <blockquote
-                        data-layer="alert"
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
                         Used
                       </blockquote>
                     ) : (
-                      <blockquote
-                        data-layer="success"
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
                         New
                       </blockquote>
                     )}
                     {ship.ftl ? (
-                      <blockquote
-                        data-layer="success"
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
                         FTL Drive Included
                       </blockquote>
                     ) : (
-                      <blockquote
-                        data-layer="alert"
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
                         No FTL Drive
                       </blockquote>
                     )}
                     {ship.stock > 2 ? (
-                      <blockquote
-                        data-layer=""
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
                       </blockquote>
                     ) : ship.stock > 0 ? (
-                      <blockquote
-                        data-layer="alert"
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
                       </blockquote>
                     ) : (
-                      <blockquote
-                        data-layer="disabled"
-                        style={{ margin: '0 0 0 20px' }}>
+                      <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
                       </blockquote>
                     )}
-                    <blockquote
-                      data-layer="disabled"
-                      style={{ margin: '0 0 0 20px' }}>
+                    <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
                       Designed by: {ship.designer}
                     </blockquote>
                   </div>
                 </Frame>
-                <Frame
-                  layer={'primary'}
-                  animate
-                  level={0}
-                  corners={4}
-                  style={{ margin: 20 }}>
-                  <div style={{ padding: '20px' }}>
-                    <p style={{ display: 'inline' }}>Craft Type:</p>
-                    <blockquote>{ship.category.name}</blockquote>
-                    <p style={{ display: 'inline' }}>Manufacturer:</p>
-                    <blockquote>{ship.manufacturer.name}</blockquote>
-                    <p style={{ display: 'inline' }}>Ship Size:</p>
-                    <blockquote>{ship.size} Meters</blockquote>
-                    <p style={{ display: 'inline' }}>Crew Capacity:</p>
-                    <blockquote>{ship.crewCap}</blockquote>
-                    <p style={{ display: 'inline' }}>Travel Range:</p>
-                    <blockquote>{ship.travelRange} Parsec(s)</blockquote>
-                  </div>
-                </Frame>
+                <Col s={6}>
+                  <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
+                    <div style={{ padding: "20px" }}>
+                      <p style={{ display: "inline" }}>Craft Type:</p>
+                      <blockquote>{ship.category.name}</blockquote>
+                      <p style={{ display: "inline" }}>Manufacturer:</p>
+                      <blockquote>{ship.manufacturer.name}</blockquote>
+                      <p style={{ display: "inline" }}>Ship Size:</p>
+                      <blockquote>{ship.size} Meters</blockquote>
+                      <p style={{ display: "inline" }}>Crew Capacity:</p>
+                      <blockquote>{ship.crewCap}</blockquote>
+                      <p style={{ display: "inline" }}>Travel Range:</p>
+                      <blockquote>{ship.travelRange} Parsec(s)</blockquote>
+                    </div>
+                  </Frame>
+                </Col>
+                <Col s={6}>
+                  <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "20px 20px 0 20px",
+                      }}
+                    >
+                      <Link to="/store">
+                        <Button animate layer="secondary">
+                          Write Review
+                        </Button>
+                      </Link>
+                      <Content>
+                        <blockquote style={{ margin: 0 }}>
+                          {reviews ? (
+                            <>{rating}</>
+                          ) : (
+                            <>
+                              <i className="mdi mdi-star" />
+                              <i className="mdi mdi-star" />
+                              <i className="mdi mdi-star" />
+                              <i className="mdi mdi-star" />
+                              <i className="mdi mdi-star" />
+                            </>
+                          )}
+                        </blockquote>
+                      </Content>
+                    </div>
+                    <div
+                      style={{ height: 450, maxHeight: 450, padding: "20px", display: "flex", flexDirection: "column" }}
+                    >
+                      <AllReviews reviews={reviews} />
+                    </div>
+                  </Frame>
+                </Col>
               </Col>
-              <Col s={6}>
-                <Frame
-                  layer={'primary'}
-                  animate
-                  level={0}
-                  corners={4}
-                  style={{ margin: 20 }}>
+              <Col s={12} l={6}>
+                <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
                   <model-viewer
                     style={{
-                      backgroundColor: 'transparent',
-                      height: '400px',
-                      width: '100%',
-                      margin: 'auto',
-                      '--poster-color': 'transparent',
-                      '--progress-bar-color': 'transparent',
-                      '--progress-mask': 'transparent',
+                      backgroundColor: "transparent",
+                      height: "400px",
+                      width: "100%",
+                      margin: "auto",
+                      "--poster-color": "transparent",
+                      "--progress-bar-color": "transparent",
+                      "--progress-mask": "transparent",
                     }}
                     src={shipImage}
                     alt="A 3D model of a spaceship"
@@ -236,22 +264,18 @@ const ShipPage = (props) => {
                     camera-controls
                     exposure={0.75}
                     camera-orbit="0deg 75deg 75%"
-                    interaction-prompt="none"></model-viewer>
+                    interaction-prompt="none"
+                  ></model-viewer>
                 </Frame>
-                <Frame
-                  layer={'primary'}
-                  animate
-                  level={0}
-                  corners={4}
-                  style={{ margin: 20 }}>
-                  <div style={{ padding: '20px' }}>
+                <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
+                  <div style={{ padding: "20px" }}>
                     <p style={{ margin: 0 }}>{ship.description}</p>
                   </div>
                 </Frame>
                 <div style={{ margin: 20 }}>
                   <Dropdown
-                    idList={['blue', 'green', 'orange', 'red']}
-                    options={['Blue', 'Green', 'Orange', 'Red']}
+                    idList={["blue", "green", "orange", "red"]}
+                    options={["Blue", "Green", "Orange", "Red"]}
                     title="Choose a Color"
                   />
                 </div>
