@@ -72,8 +72,6 @@ const ShipPage = (props) => {
       }
       return accum;
     }, 0);
-    console.log(cartItems);
-    console.log(totalQuantity);
 
     let newCart;
     let found = cartItems.find(
@@ -82,7 +80,6 @@ const ShipPage = (props) => {
 
     if (!found && totalQuantity < ship.stock) {
       let currentItem = { ...ship };
-      console.log(currentItem);
 
       currentItem.quantity = 1;
       currentItem.color = shipColor;

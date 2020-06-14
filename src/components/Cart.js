@@ -1,16 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link as Linky } from 'react-router-dom';
 import { Context } from '../Context';
-import {
-  Frame,
-  Heading,
-  Button,
-  Table,
-  Line,
-  Header,
-  Content,
-  Link,
-} from 'arwes';
+import { Frame, Heading, Button, Table, Header, Content, Link } from 'arwes';
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
@@ -28,10 +19,23 @@ const Cart = () => {
   }, [numItems]);
 
   const increment = (e) => {
-    let id = e.target.id;
+    const id = e.target.id.split('_')[0];
+    const color = e.target.id.split('_')[1];
+
+    const totalQuantity = cartItems.reduce((accum, item) => {
+      if (item.id === id) {
+        return accum + item.quantity;
+      }
+      return accum;
+    }, 0);
+
     let newCart = [...cartItems];
     newCart.forEach((item) => {
-      if (item.id === id && item.quantity < item.stock) {
+      if (
+        item.id === id &&
+        item.color === color &&
+        totalQuantity < item.stock
+      ) {
         item.quantity = item.quantity + 1;
         setNumItems((numItems += 1));
       }
@@ -42,10 +46,12 @@ const Cart = () => {
   };
 
   const decrement = (e) => {
-    let id = e.target.id;
+    const id = e.target.id.split('_')[0];
+    const color = e.target.id.split('_')[1];
+
     let newCart = [...cartItems];
     newCart.forEach((item) => {
-      if (item.id === id && item.quantity > 1) {
+      if (item.id === id && item.color === color && item.quantity > 1) {
         item.quantity = item.quantity - 1;
         setNumItems((numItems -= 1));
       }
@@ -56,29 +62,24 @@ const Cart = () => {
   };
 
   const removeItem = (e) => {
-    let id = e.target.id;
-    let itemToRemove = cartItems.find((item) => item.id === id);
+    const id = e.target.id.split('_')[0];
+    const color = e.target.id.split('_')[1];
+
+    const itemToRemove = cartItems.find(
+      (item) => item.id === id && item.color === color
+    );
     let numToRemove = itemToRemove.quantity;
     setNumItems((numItems -= numToRemove));
     localStorage.setItem('itemNum', JSON.stringify(numItems));
 
-    let newCart = cartItems.filter((item) => item.id !== id);
+    let newCart = cartItems.filter(
+      (item) => !(item.id === id && item.color === color)
+    );
     setCartItems(newCart);
     localStorage.setItem('cart', JSON.stringify(newCart));
   };
 
   let entries = cartItems.map((item) => {
-    // let colorCounts = {};
-    // item.color.forEach((color) => {
-    //   if (!colorCounts[color]) {
-    //     colorCounts[color] = 1;
-    //   } else {
-    //     colorCounts[color]++;
-    //   }
-    // });
-    // const colorsArray = Object.keys(colorCounts).map(
-    //   (color) => `${color} ( x ${colorCounts[color]})`
-    // );
     return [
       <Linky
         to={`/ships/${item.id}`}
@@ -95,15 +96,27 @@ const Cart = () => {
         <Button
           animate
           layer="primary"
-          buttonProps={{ style: { padding: '3px 0px' } }}>
-          <i onClick={increment} id={item.id} className="mdi mdi-plus" />
+          buttonProps={{
+            style: { padding: '3px 0px' },
+          }}>
+          <i
+            id={`${item.id}_${item.color}`}
+            className="mdi mdi-plus"
+            onClick={increment}
+          />
         </Button>
         <span style={{ padding: '10px', width: '50px' }}>{item.quantity}</span>
         <Button
           animate
           layer="alert"
-          buttonProps={{ style: { padding: '3px 0px' } }}>
-          <i onClick={decrement} id={item.id} className="mdi mdi-minus" />
+          buttonProps={{
+            style: { padding: '3px 0px' },
+          }}>
+          <i
+            id={`${item.id}_${item.color}`}
+            className="mdi mdi-minus"
+            onClick={decrement}
+          />
         </Button>
       </>,
       <>
@@ -113,7 +126,10 @@ const Cart = () => {
       <Button
         animate
         layer="alert"
-        buttonProps={{ style: { padding: 5, fontSize: 12 }, id: `${item.id}` }}
+        buttonProps={{
+          style: { padding: 5, fontSize: 12 },
+          id: `${item.id}_${item.color}`,
+        }}
         onClick={removeItem}>
         Remove
       </Button>,
