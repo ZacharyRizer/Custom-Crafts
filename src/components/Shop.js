@@ -1,7 +1,7 @@
-import React from 'react';
-import { Row, Col } from 'arwes';
-import Sidebar from './Sidebar';
-import ShipList from './ShipList';
+import React from "react";
+import { Row, Col } from "arwes";
+import Sidebar from "./Sidebar";
+import ShipList from "./ShipList";
 
 const Shop = () => {
   return (

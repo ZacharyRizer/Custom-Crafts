@@ -5,6 +5,9 @@ import { Frame, Content, Heading, Header, Row, Col, Button } from "arwes";
 import Axios from "axios";
 import { apiBaseUrl } from "../config";
 import AllReviews from "./AllReviews";
+import Review from "./Review";
+import { useAuth0 } from "../react-auth0-spa";
+import PrivateRoute from "./PrivateRoute";
 
 const ShipPage = (props) => {
   let [ship, setShip] = useState();
@@ -14,6 +17,8 @@ const ShipPage = (props) => {
   const [shipImage, setShipImage] = useState();
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   const id = props.match.params.shipId;
+  const { getTokenSilently } = useAuth0();
+  const [write, setWrite] = useState(false);
   const intID = parseInt(id);
   const query = `
   {
@@ -132,6 +137,10 @@ const ShipPage = (props) => {
     setShipColor(id);
   };
 
+  const handleWriteClick = (e) => {
+    setWrite(!write);
+  };
+
   return (
     <>
       {(!Number.isInteger(intID) || intID < 1 || intID > 15) && <Redirect to="/404" />}
@@ -215,66 +224,78 @@ const ShipPage = (props) => {
                     </blockquote>
                   </div>
                 </Frame>
-                <Col s={6}>
-                  <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
-                    <div style={{ padding: "20px" }}>
-                      <p style={{ display: "inline" }}>Craft Type:</p>
-                      <blockquote>{ship.category.name}</blockquote>
-                      <p style={{ display: "inline" }}>Manufacturer:</p>
-                      <blockquote>{ship.manufacturer.name}</blockquote>
-                      <p style={{ display: "inline" }}>Ship Size:</p>
-                      <blockquote>{ship.size} Meters</blockquote>
-                      <p style={{ display: "inline" }}>Crew Capacity:</p>
-                      <blockquote>{ship.crewCap}</blockquote>
-                      <p style={{ display: "inline" }}>Travel Range:</p>
-                      <blockquote>{ship.travelRange} Parsec(s)</blockquote>
-                    </div>
-                  </Frame>
-                </Col>
-                <Col s={6}>
-                  <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "20px 20px 0 20px",
-                      }}
-                    >
-                      <Link to="/store">
-                        <Button animate layer="secondary">
+                <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "20px 20px 0 20px" }}>
+                  <div style={{ padding: "20px" }}>
+                    <p style={{ display: "inline" }}>Craft Type:</p>
+                    <blockquote>{ship.category.name}</blockquote>
+                    <p style={{ display: "inline" }}>Manufacturer:</p>
+                    <blockquote>{ship.manufacturer.name}</blockquote>
+                    <p style={{ display: "inline" }}>Ship Size:</p>
+                    <blockquote>{ship.size} Meters</blockquote>
+                    <p style={{ display: "inline" }}>Crew Capacity:</p>
+                    <blockquote>{ship.crewCap}</blockquote>
+                    <p style={{ display: "inline" }}>Travel Range:</p>
+                    <blockquote>{ship.travelRange} Parsec(s)</blockquote>
+                  </div>
+                </Frame>
+                <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "20px 20px 0 20px",
+                    }}
+                  >
+                    <div>
+                      {write ? (
+                        <Button
+                          style={{ marginRight: 20 }}
+                          buttonProps={{ onClick: handleWriteClick }}
+                          animate
+                          layer="primary"
+                        >
+                          Cancel
+                        </Button>
+                      ) : (
+                        <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
                           Write Review
                         </Button>
-                      </Link>
-                      <Content>
-                        <blockquote style={{ margin: 0 }}>
-                          {reviews ? (
-                            <>{rating}</>
-                          ) : (
-                            <>
-                              <i className="mdi mdi-star" />
-                              <i className="mdi mdi-star" />
-                              <i className="mdi mdi-star" />
-                              <i className="mdi mdi-star" />
-                              <i className="mdi mdi-star" />
-                            </>
-                          )}
-                        </blockquote>
-                      </Content>
+                      )}
+                      {write && (
+                        <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
+                          Submit Review
+                        </Button>
+                      )}
                     </div>
-                    <div
-                      style={{
-                        height: 450,
-                        maxHeight: 450,
-                        padding: "20px",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <AllReviews reviews={reviews} />
-                    </div>
-                  </Frame>
-                </Col>
+                    <Content>
+                      <blockquote style={{ margin: 0 }}>
+                        {reviews.length > 0 ? (
+                          <>{rating}</>
+                        ) : (
+                          <>
+                            <i className="mdi mdi-star-outline" />
+                            <i className="mdi mdi-star-outline" />
+                            <i className="mdi mdi-star-outline" />
+                            <i className="mdi mdi-star-outline" />
+                            <i className="mdi mdi-star-outline" />
+                          </>
+                        )}
+                      </blockquote>
+                    </Content>
+                  </div>
+                  <div
+                    style={{
+                      height: 450,
+                      maxHeight: 450,
+                      padding: "20px",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    {write ? <Review /> : <AllReviews reviews={reviews} />}
+                  </div>
+                </Frame>
               </Col>
               <Col s={12} l={6}>
                 <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>

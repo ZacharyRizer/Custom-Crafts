@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import { Col, Loading } from 'arwes';
-import { Context } from '../Context';
-import ShipCardInCart from './ShipCardInCart';
+import React, { useContext, useEffect } from "react";
+import { Col, Loading } from "arwes";
+import { Context } from "../Context";
+import ShipCardInCart from "./ShipCardInCart";
 
 const ShipsInCart = (props) => {
   let { cartItems, setCartItems } = useContext(Context);
 
   useEffect(() => {
-    let cart = JSON.parse(localStorage.getItem('cart'));
+    let cart = JSON.parse(localStorage.getItem("cart"));
     setCartItems(cart);
   }, []);
 
@@ -16,15 +16,16 @@ const ShipsInCart = (props) => {
       {cartItems ? (
         <div
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}>
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
           {cartItems.map((cartItem) => (
             <Col key={`${cartItem.id}_${cartItem.color}`}>
               <ShipCardInCart
                 key={`${cartItem.id}_${cartItem.color}`}
-                color={cartItems.color}
+                color={cartItem.color}
                 quantity={cartItem.quantity}
                 ship={cartItem}
               />
@@ -32,7 +33,7 @@ const ShipsInCart = (props) => {
           ))}
         </div>
       ) : (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <Loading animate full />
         </div>
       )}

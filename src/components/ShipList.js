@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Col, Loading, Heading, Frame, Words } from 'arwes';
+import React, { useContext, useEffect, useState } from "react";
+import { Col, Loading, Heading, Frame, Words } from "arwes";
 
-import { Context } from '../Context';
-import ShipCard from './ShipCard';
-import Axios from 'axios';
-import { apiBaseUrl } from '../config';
+import { Context } from "../Context";
+import ShipCard from "./ShipCard";
+import Axios from "axios";
+import { apiBaseUrl } from "../config";
 
 const ShipList = () => {
   let [data, setData] = useState();
-  let { filters } = useContext(Context);
+  const { filters } = useContext(Context);
 
   let queryVariables = {};
 
@@ -91,25 +91,25 @@ const ShipList = () => {
           break;
         case `priceRange`:
           ps += `priceRangeBegin: Int!, $priceRangeEnd: Int!`;
-          queryVariables['priceRangeBegin'] = filters['priceRange'].begin;
-          queryVariables['priceRangeEnd'] = filters['priceRange'].end;
+          queryVariables["priceRangeBegin"] = filters["priceRange"].begin;
+          queryVariables["priceRangeEnd"] = filters["priceRange"].end;
           break;
         case `sizeRange`:
           ps += `sizeRangeBegin: Int!, $sizeRangeEnd: Int!`;
-          queryVariables['sizeRangeBegin'] = filters['sizeRange'].begin;
-          queryVariables['sizeRangeEnd'] = filters['sizeRange'].end;
+          queryVariables["sizeRangeBegin"] = filters["sizeRange"].begin;
+          queryVariables["sizeRangeEnd"] = filters["sizeRange"].end;
           break;
         case `crewCapRange`:
           ps += `crewCapRangeBegin: Int!, $crewCapRangeEnd: Int!`;
-          queryVariables['crewCapRangeBegin'] = filters['crewCapRange'].begin;
-          queryVariables['crewCapRangeEnd'] = filters['crewCapRange'].end;
+          queryVariables["crewCapRangeBegin"] = filters["crewCapRange"].begin;
+          queryVariables["crewCapRangeEnd"] = filters["crewCapRange"].end;
           break;
         case `travelRangeRange`:
           ps += `travelRangeRangeBegin: Int!, $travelRangeRangeEnd: Int!`;
-          queryVariables['travelRangeRangeBegin'] =
-            filters['travelRangeRange'].begin;
-          queryVariables['travelRangeRangeEnd'] =
-            filters['travelRangeRange'].end;
+          queryVariables["travelRangeRangeBegin"] = filters["travelRangeRange"].begin;
+          queryVariables["travelRangeRangeEnd"] = filters["travelRangeRange"].end;
+          break;
+        default:
           break;
       }
       if (i !== filterKeys.length - 1) ps += `, $`;
@@ -145,6 +145,8 @@ const ShipList = () => {
         case `travelRangeRange`:
           fs += `{begin: $travelRangeRangeBegin, end: $travelRangeRangeEnd}`;
           break;
+        default:
+          break;
       }
       if (i !== filterKeys.length - 1) fs += `, `;
     }
@@ -156,15 +158,15 @@ const ShipList = () => {
       const qs = buildQueryString(); //16
       const res = await Axios({
         url: `${apiBaseUrl}`,
-        method: 'post',
+        method: "post",
         data: {
           query: qs,
           variables: queryVariables,
         },
       });
 
-      data = res.data.data;
-      setData(data);
+      const newData = res.data.data;
+      setData(newData);
     })();
   }, [filters]);
 
@@ -174,10 +176,11 @@ const ShipList = () => {
         data.ships.edges.length > 0 ? (
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-            }}>
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             {data.ships.edges.map((shipNode) => (
               <Col key={shipNode.node.id}>
                 <ShipCard key={shipNode.node.id} ship={shipNode.node} />
@@ -185,25 +188,21 @@ const ShipList = () => {
             ))}
           </div>
         ) : (
-          <Frame
-            layer={'secondary'}
-            animate
-            level={0}
-            corners={4}
-            style={{ margin: 20, textAlign: 'center' }}>
+          <Frame layer={"secondary"} animate level={0} corners={4} style={{ margin: 20, textAlign: "center" }}>
             <Heading
               style={{
                 padding: 20,
                 margin: 0,
                 fontSize: 50,
-                textShadow: 'none',
-              }}>
+                textShadow: "none",
+              }}
+            >
               <Words layer="secondary">No Results Found</Words>
             </Heading>
           </Frame>
         )
       ) : (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <Loading animate full />
         </div>
       )}
