@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { apiBaseUrl } from "../config";
 import Axios from "axios";
 import { Frame, Content, Image, Line } from "arwes";
@@ -6,7 +6,23 @@ import { Frame, Content, Image, Line } from "arwes";
 // component to create new review
 const AllReviews = (props) => {
     const reviews = props.reviews;
-    console.log("this is the review object:", reviews);
+    const [stars, setStars] = useState([[]]);
+
+    useEffect(() => {
+        let finalList = [];
+        reviews.forEach((review) => {
+            let subList = [];
+            for (let i = 0; i < 5; i++) {
+                if (i <= review.rating - 1) {
+                    subList.push(<i className="mdi mdi-star" />);
+                } else {
+                    subList.push(<i className="mdi mdi-star-outline" />);
+                }
+            }
+            finalList.push(subList);
+        });
+        setStars(finalList);
+    }, [reviews]);
 
     return (
         <Frame
@@ -18,37 +34,28 @@ const AllReviews = (props) => {
             children={{ style: { color: "red" } }}
         >
             <div style={{ height: 388, maxHeight: 388, padding: 20, overflowY: "scroll" }}>
-                {reviews &&
-                    reviews.map((review) => (
+                {reviews.length > 0 ? (
+                    reviews.map((review, index) => (
                         <Content>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
-                                {(review && review.customer) ? (
-                                    <>
-                                        <Image resources={review.customer.picture} style={{ width: 32, height: 32 }} />
-                                        <blockquote>{review.customer.name}</blockquote>
-                                    </>
-                                ) : (<>
-                                    <Image resources="/android-chrome-192x192.png" style={{ width: 32, height: 32 }} />
-
-
-                                </>
+                                {review ? (
+                                    <Image resources={review.customer.picture} style={{ width: 32, height: 32 }} />
+                                ) : (
+                                        <Image resources="/android-chrome-192x192.png" style={{ width: 32, height: 32 }} />
                                     )}
+
+                                <blockquote>{review.customer.name}</blockquote>
                             </div>
-                            <div>
-                                <i className="mdi mdi-star" />
-                                <i className="mdi mdi-star" />
-                                <i className="mdi mdi-star" />
-                                <i className="mdi mdi-star" />
-                                <i className="mdi mdi-star" />
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Donec et odio pellentesque diam volutpat. Ac tincidunt vitae semper quis lectus
-                                nulla at volutpat diam.
-              </p>
+                            <div>{stars[index]}</div>
+                            <p>{review.description}</p>
                             <Line animate />
                         </Content>
-                    ))}
+                    ))
+                ) : (
+                        <Content>
+                            <h1>No Reviews Yet!</h1>
+                        </Content>
+                    )}
             </div>
         </Frame>
     );
