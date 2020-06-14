@@ -61,7 +61,7 @@ const Review = () => {
         corners={0}
         style={{ margin: 10, height: 388, maxHeight: 388, width: "75%" }}
       >
-        <div style={{ overflowY: "scroll", height: 388 }}>
+        <div style={{}}>
           <form>
             <textarea
               placeholder="Type your Galactic-Government-Approved thoughts here..."
@@ -83,7 +83,9 @@ const Review = () => {
                 resize: "none",
                 fontFamily: '"Titillium Web", "sans-serif"',
                 fontSize: 21,
-                width: 500,
+                width: "100%",
+                height: "100%",
+                overflowY: "scroll",
               }}
             ></textarea>
           </form>
