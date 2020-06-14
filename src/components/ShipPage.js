@@ -4,16 +4,13 @@ import { Link, Redirect } from 'react-router-dom';
 import { Frame, Content, Heading, Header, Row, Col, Button } from 'arwes';
 import Axios from 'axios';
 import { apiBaseUrl } from '../config';
-import Dropdown from './Dropdown';
 
 const ShipPage = (props) => {
   const [ship, setShip] = useState();
   const [shipColor, setShipColor] = useState();
   const [shipImage, setShipImage] = useState();
 
-  const { cartItems, setCartItems, numItems, setNumItems } = useContext(
-    Context
-  );
+  let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   const id = props.match.params.shipId;
   const intID = parseInt(id);
   const query = `
@@ -50,26 +47,55 @@ const ShipPage = (props) => {
           query,
         },
       });
-      setShip(res.data.data.ship);
-      setShipImage(res.data.data.ship.modelLink);
+      const ship = res.data.data.ship;
+      setShip(ship);
+      setShipImage(ship.modelLink);
+      setShipColor(ship.modelLink.split('_')[1].split('.')[0]);
     })();
     if (localStorage.getItem('cart')) {
-      let cart = JSON.parse(localStorage.getItem('cart'));
+      const cart = JSON.parse(localStorage.getItem('cart'));
       setCartItems(cart);
     }
-  }, []);
+  }, [setShip]);
+
+  useEffect(() => {
+    if (ship) {
+      const shipImgBase = ship.modelLink.split('_')[0];
+      setShipImage(`${shipImgBase}_${shipColor}.glb`);
+    }
+  }, [shipColor]);
 
   const addToCart = () => {
+    const totalQuantity = cartItems.reduce((accum, item) => {
+      if (item.name === ship.name) {
+        return accum + item.quantity;
+      }
+      return accum;
+    }, 0);
+    console.log(cartItems);
+    console.log(totalQuantity);
+
     let newCart;
-    let found = cartItems.find((item) => item.name === ship.name);
-    if (!found && ship.stock > 0) {
-      ship.quantity = 1;
+    let found = cartItems.find(
+      (item) => item.name === ship.name && item.color === shipColor
+    );
+
+    if (!found && totalQuantity < ship.stock) {
+      let currentItem = { ...ship };
+      console.log(currentItem);
+
+      currentItem.quantity = 1;
+      currentItem.color = shipColor;
       setNumItems((numItems += 1));
-      newCart = [...cartItems, ship];
+      newCart = [...cartItems, currentItem];
     } else {
       newCart = [...cartItems];
       newCart.forEach((item) => {
-        if (item.name === ship.name && item.quantity < item.stock) {
+        if (
+          item.name === ship.name &&
+          item.color === shipColor &&
+          totalQuantity < ship.stock
+        ) {
           item.quantity = item.quantity + 1;
           setNumItems((numItems += 1));
         }
@@ -79,6 +105,11 @@ const ShipPage = (props) => {
 
     localStorage.setItem('cart', JSON.stringify(newCart));
     localStorage.setItem('itemNum', JSON.stringify(numItems));
+  };
+
+  const setColor = (e) => {
+    const id = e.target.id;
+    setShipColor(id);
   };
 
   return (
@@ -238,6 +269,44 @@ const ShipPage = (props) => {
                     camera-orbit="0deg 75deg 75%"
                     interaction-prompt="none"></model-viewer>
                 </Frame>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    margin: 10,
+                    marginLeft: 80,
+                    marginRight: 80,
+                  }}>
+                  <p style={{ display: 'inline' }}>Choose Color : </p>
+                  <Button
+                    animate
+                    layer="primary"
+                    buttonProps={{ id: 'blue' }}
+                    onClick={setColor}>
+                    Blue
+                  </Button>
+                  <Button
+                    animate
+                    layer="success"
+                    buttonProps={{ id: 'green' }}
+                    onClick={setColor}>
+                    Green
+                  </Button>
+                  <Button
+                    animate
+                    layer="secondary"
+                    buttonProps={{ id: 'orange' }}
+                    onClick={setColor}>
+                    Orange
+                  </Button>
+                  <Button
+                    animate
+                    layer="alert"
+                    buttonProps={{ id: 'red' }}
+                    onClick={setColor}>
+                    Red
+                  </Button>
+                </div>
                 <Frame
                   layer={'primary'}
                   animate
@@ -248,13 +317,6 @@ const ShipPage = (props) => {
                     <p style={{ margin: 0 }}>{ship.description}</p>
                   </div>
                 </Frame>
-                <div style={{ margin: 20 }}>
-                  <Dropdown
-                    idList={['blue', 'green', 'orange', 'red']}
-                    options={['Blue', 'Green', 'Orange', 'Red']}
-                    title="Choose a Color"
-                  />
-                </div>
               </Col>
             </Row>
           </Content>

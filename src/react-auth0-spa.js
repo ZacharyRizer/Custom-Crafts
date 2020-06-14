@@ -58,7 +58,7 @@ export const Auth0Provider = ({
             data: {
               query: `
               mutation {
-                addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}"){
+                addCustomer(name: "${user.nickname}", email: "${user.email}", auth0Id: "${user.sub}", picture: "${user.picture}"){
                   id
                 }
               }`,

@@ -11,112 +11,10 @@ import {
   Content,
   Link,
 } from 'arwes';
-import Axios from 'axios';
-import { useAuth0 } from '../react-auth0-spa';
-import { apiBaseUrl } from '../config';
 
 const Cart = () => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   let [subtotal, setSubtotal] = useState(0);
-  const { getTokenSilently } = useAuth0();
-
-  const showModal = () => {
-    let modal = document.getElementById('modal');
-    modal.style.display = 'block';
-  };
-
-  const handleCheckout = async () => {
-    if (!cartItems || cartItems.length === 0) return;
-
-    const token = await getTokenSilently();
-    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
-
-    // order creation query string
-    let os = `
-      mutation addOrder($customerId: Int!) {
-        addOrder(customerId: $customerId){
-          customerId
-          id
-        }
-      }
-    `;
-
-    // post order to db
-    const res = await Axios({
-      url: `${apiBaseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: 'post',
-      data: {
-        query: os,
-        variables: { customerId: user.id },
-      },
-    });
-
-    const order = res.data.data.addOrder;
-    //   // add isAuthenticated logic ???
-
-    // create order items
-    let is = `
-        mutation addOrderItem($orderId: Int!, $shipId: Int!, $quantity: Int!){
-          addOrderItem(orderId: $orderId, shipId: $shipId, quantity: $quantity){
-            id
-          }
-        }
-      `;
-
-    // create updateShip string
-
-    let ss = `
-        mutation($id: Int!, $decQuantity: Int!){
-          decrementShipStock(id: $id, decQuantity: $decQuantity){
-            id
-            stock
-          }
-        }
-    `;
-
-    cartItems.forEach(async (item) => {
-      const res = await Axios({
-        url: `${apiBaseUrl}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        method: 'post',
-        data: {
-          query: is,
-          variables: {
-            orderId: order.id,
-            shipId: item.id,
-            quantity: item.quantity,
-          },
-        },
-      });
-
-      // Update db to reduce ship stock based on associated order-item post
-
-      const stockRes = await Axios({
-        url: `${apiBaseUrl}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        method: 'post',
-        data: {
-          query: ss,
-          variables: {
-            id: item.id,
-            decQuantity: item.quantity,
-          },
-        },
-      });
-    });
-
-    localStorage.removeItem('cart');
-    localStorage.removeItem('itemNum');
-    setNumItems(0);
-    setCartItems([]);
-  };
 
   useEffect(() => {
     if (localStorage.getItem('cart')) {
@@ -170,6 +68,17 @@ const Cart = () => {
   };
 
   let entries = cartItems.map((item) => {
+    // let colorCounts = {};
+    // item.color.forEach((color) => {
+    //   if (!colorCounts[color]) {
+    //     colorCounts[color] = 1;
+    //   } else {
+    //     colorCounts[color]++;
+    //   }
+    // });
+    // const colorsArray = Object.keys(colorCounts).map(
+    //   (color) => `${color} ( x ${colorCounts[color]})`
+    // );
     return [
       <Linky
         to={`/ships/${item.id}`}
@@ -181,6 +90,7 @@ const Cart = () => {
       </Linky>,
       item.category.name,
       item.manufacturer.name,
+      <p style={{ textTransform: 'capitalize' }}>{item.color}</p>,
       <>
         <Button
           animate
@@ -234,12 +144,12 @@ const Cart = () => {
                   </Button>
                 </Linky>
               ) : (
-                  <Button
-                    layer="disabled"
-                    style={{ marginRight: 10, pointerEvents: 'none' }}>
-                    Checkout
-                  </Button>
-                )}
+                <Button
+                  layer="disabled"
+                  style={{ marginRight: 10, pointerEvents: 'none' }}>
+                  Checkout
+                </Button>
+              )}
             </div>
           </div>
         </Header>
@@ -258,6 +168,7 @@ const Cart = () => {
               'Product Name',
               'Type',
               'Manufacturer',
+              'Color',
               'Quantity',
               'Price',
               'Modify',
@@ -272,60 +183,36 @@ const Cart = () => {
           </Content>
         </Frame>
       ) : (
-          <Frame
-            layer={'primary'}
-            animate
-            level={0}
-            corners={4}
-            style={{ margin: '10px 30px 0 30px' }}>
-            <Content style={{ padding: 20, textAlign: 'center' }}>
-              <h1>Your Cart is Empty</h1>
-              <p
-                style={{
-                  margin: 0,
-                  textAlign: 'center',
-                  fontStyle: 'italic',
-                }}>
-                "Every moment I wasn't shopping at Custom Crafts, is a moment I
-                regret."
+        <Frame
+          layer={'primary'}
+          animate
+          level={0}
+          corners={4}
+          style={{ margin: '10px 30px 0 30px' }}>
+          <Content style={{ padding: 20, textAlign: 'center' }}>
+            <h1>Your Cart is Empty</h1>
+            <p
+              style={{
+                margin: 0,
+                textAlign: 'center',
+                fontStyle: 'italic',
+              }}>
+              "Every moment I wasn't shopping at Custom Crafts, is a moment I
+              regret."
             </p>
-              <p
-                style={{
-                  margin: 0,
-                  textAlign: 'center',
-                  fontStyle: 'italic',
-                }}>
-                - King Xrule of the Xrulian Empire (Dying Words)
+            <p
+              style={{
+                margin: 0,
+                textAlign: 'center',
+                fontStyle: 'italic',
+              }}>
+              - King Xrule of the Xrulian Empire (Dying Words)
             </p>
-              {/* <Linky to="/shop">
-              <Button style={{ paddingTop: 20 }} layer="secondary">
-                Return to Shop
-              </Button>
-            </Linky> */}
-            </Content>
-          </Frame>
-        )}
+          </Content>
+        </Frame>
+      )}
     </>
   );
 };
 
 export default Cart;
-
-// <Frame style={{ padding: 20 }} animate corners={4}>
-//   <Heading>Shopping Cart</Heading>
-// <div style={{ padding: 20 }}>
-//   <Table headers={["Product Name", "Type", "Manufactuer", "Quantity", "Price", "Modify"]} dataset={entries} />
-// </div>
-// <Line animate layer="success" />
-// <Heading node="h4">Subtotal : {subtotal}</Heading>
-// <Link to="/shop">
-//   <Button animate layer="success" style={{ marginRight: 25 }}>
-//     Continue Shopping
-//   </Button>
-// </Link>
-// <Link to={numItems > 0 ? "/checkout" : "#"}>
-//   <Button animate layer={numItems > 0 ? "secondary" : "disabled"}>
-//     Checkout
-//   </Button>
-// </Link>
-// </Frame>;
