@@ -4,7 +4,7 @@ import { Frame, Content, Image, Line } from "arwes";
 // component to create new review
 const AllReviews = (props) => {
   const reviews = props.reviews;
-  const [stars, setStars] = useState([[]]);
+  const [totalStars, setTotalStars] = useState([[]]);
 
   useEffect(() => {
     let finalList = [];
@@ -12,14 +12,14 @@ const AllReviews = (props) => {
       let subList = [];
       for (let i = 0; i < 5; i++) {
         if (i <= review.rating - 1) {
-          subList.push(<i className="mdi mdi-star" />);
+          subList.push(<i key={i} className="mdi mdi-star" />);
         } else {
-          subList.push(<i className="mdi mdi-star-outline" />);
+          subList.push(<i key={i} className="mdi mdi-star-outline" />);
         }
       }
       finalList.push(subList);
     });
-    setStars(finalList);
+    setTotalStars(finalList);
   }, [reviews]);
 
   return (
@@ -28,7 +28,7 @@ const AllReviews = (props) => {
         <div style={{ height: 395, maxHeight: 395, padding: 20, overflowY: "scroll" }}>
           {reviews.length > 0 ? (
             reviews.map((review, index) => (
-              <Content>
+              <Content key={index}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
                   {review ? (
                     <Image resources={review.customer.picture} style={{ width: 32, height: 32 }} />
@@ -38,7 +38,7 @@ const AllReviews = (props) => {
 
                   <blockquote>{review.customer.name}</blockquote>
                 </div>
-                <div>{stars[index]}</div>
+                <div>{totalStars[index]}</div>
                 <p>{review.description}</p>
                 <Line animate />
               </Content>
