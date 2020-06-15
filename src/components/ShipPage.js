@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Frame, Content, Heading, Header, Row, Col, Button } from "arwes";
 import Axios from "axios";
 import { apiBaseUrl } from "../config";
-import AllReviews from "./AllReviews";
+
 import Review from "./Review";
 import { useAuth0 } from "../react-auth0-spa";
 import PrivateRoute from "./PrivateRoute";
@@ -18,8 +18,8 @@ const ShipPage = (props) => {
   let { cartItems, setCartItems, numItems, setNumItems } = useContext(Context);
   const id = props.match.params.shipId;
   const { getTokenSilently } = useAuth0();
-  const [write, setWrite] = useState(false);
   const intID = parseInt(id);
+
   const query = `
   {
     ship(shipId: ${id}) {
@@ -54,10 +54,40 @@ const ShipPage = (props) => {
   }
   `;
 
+  // const handleReviewSubmit = async () => {
+  //   const rs = `
+  //     mutation ($customerId: Int!, $rating:Int!, $shipId:Int!, $description:String!){
+  //         addReview(customerId:$customerId,rating:$rating,shipId:$shipId,description:$description){
+  //         description
+  //         rating
+  //         id
+  //         customerId
+  //         }
+  //     }
+  //   `;
+
+  //   const reviewRes = await Axios({
+  //     url: `${apiBaseUrl}`,
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     method: "post",
+  //     data: {
+  //       query: rs,
+  //       variables: {
+  //         customerId: user.id,
+  //         rating,
+  //         shipId,
+  //         description,
+  //       },
+  //     },
+  //   });
+  // };
+
   useEffect(() => {
     (async () => {
       const res = await Axios({
-        url: `${apiBaseUrl}`,
+        url: apiBaseUrl,
         method: "post",
         data: {
           query,
@@ -77,9 +107,9 @@ const ShipPage = (props) => {
         let finalList = [];
         for (let i = 0; i < 5; i++) {
           if (i <= ratingNumber - 1) {
-            finalList.push(<i className="mdi mdi-star" />);
+            finalList.push(<i key={i} className="mdi mdi-star" />);
           } else {
-            finalList.push(<i className="mdi mdi-star-outline" />);
+            finalList.push(<i key={i} className="mdi mdi-star-outline" />);
           }
         }
         setRating(finalList);
@@ -135,10 +165,6 @@ const ShipPage = (props) => {
   const setColor = (e) => {
     const id = e.currentTarget.id;
     setShipColor(id);
-  };
-
-  const handleWriteClick = (e) => {
-    setWrite(!write);
   };
 
   return (
@@ -239,62 +265,7 @@ const ShipPage = (props) => {
                   </div>
                 </Frame>
                 <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: 20 }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "20px 20px 0 20px",
-                    }}
-                  >
-                    <div>
-                      {write ? (
-                        <Button
-                          style={{ marginRight: 20 }}
-                          buttonProps={{ onClick: handleWriteClick }}
-                          animate
-                          layer="primary"
-                        >
-                          Cancel
-                        </Button>
-                      ) : (
-                        <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
-                          Write Review
-                        </Button>
-                      )}
-                      {write && (
-                        <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
-                          Submit Review
-                        </Button>
-                      )}
-                    </div>
-                    <Content>
-                      <blockquote style={{ margin: 0 }}>
-                        {reviews.length > 0 ? (
-                          <>{rating}</>
-                        ) : (
-                          <>
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                          </>
-                        )}
-                      </blockquote>
-                    </Content>
-                  </div>
-                  <div
-                    style={{
-                      height: 450,
-                      maxHeight: 450,
-                      padding: "20px",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    {write ? <Review /> : <AllReviews reviews={reviews} />}
-                  </div>
+                  <Review reviews={reviews} rating={rating} shipId={id} />
                 </Frame>
               </Col>
               <Col s={12} l={6}>
