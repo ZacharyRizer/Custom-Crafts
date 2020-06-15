@@ -33,7 +33,10 @@ const ShipPage = (props) => {
       }
       reviews {
         id
-        customerId
+        customer{
+          name
+          picture
+        }
         description
         rating
       }
