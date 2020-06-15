@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Context } from '../Context';
-import { Frame, Heading, Button, Table, Line, Content } from 'arwes';
-import Axios from 'axios';
-import { useAuth0 } from '../react-auth0-spa';
-import { apiBaseUrl } from '../config';
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Context } from "../Context";
+import { Frame, Heading, Button, Table, Line, Content } from "arwes";
+import Axios from "axios";
+import { useAuth0 } from "../react-auth0-spa";
+import { apiBaseUrl } from "../config";
 
 const OrderSummary = () => {
   let { cartItems, setCartItems, setNumItems } = useContext(Context);
@@ -15,7 +15,7 @@ const OrderSummary = () => {
   const handleCheckout = async (e) => {
     if (!cartItems || cartItems.length === 0) return;
 
-    const user = JSON.parse(localStorage.getItem('custom_crafts_userObj'));
+    const user = JSON.parse(localStorage.getItem("custom_crafts_userObj"));
     const token = await getTokenSilently();
 
     // serialize cartItems
@@ -24,8 +24,8 @@ const OrderSummary = () => {
     );
 
     let jsonCart = JSON.stringify(orderItemsCart);
-    jsonCart = jsonCart.replace(/"{/g, '{');
-    jsonCart = jsonCart.replace(/}"/g, '}');
+    jsonCart = jsonCart.replace(/"{/g, "{");
+    jsonCart = jsonCart.replace(/}"/g, "}");
     console.log(jsonCart);
 
     // order creation query string
@@ -37,7 +37,7 @@ const OrderSummary = () => {
       }
     `;
 
-    console.log('os', os);
+    console.log("os", os);
 
     // post order to db
     const res = await Axios({
@@ -45,7 +45,7 @@ const OrderSummary = () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      method: 'post',
+      method: "post",
       data: {
         query: os,
         variables: { customerId: user.id },
@@ -73,16 +73,16 @@ const OrderSummary = () => {
         }
     `;
 
-    localStorage.removeItem('cart');
-    localStorage.removeItem('itemNum');
+    localStorage.removeItem("cart");
+    localStorage.removeItem("itemNum");
     setNumItems(0);
     setCartItems([]);
     // use history to wait to redirect until post is complete
-    history.push('/profile');
+    history.push("/profile");
   };
 
   useEffect(() => {
-    let cart = JSON.parse(localStorage.getItem('cart'));
+    let cart = JSON.parse(localStorage.getItem("cart"));
     setCartItems(cart);
     let total = cart.reduce((accum, item) => {
       return accum + item.quantity * item.price;
@@ -103,22 +103,18 @@ const OrderSummary = () => {
   });
 
   return (
-    <Frame
-      layer={'primary'}
-      animate
-      level={0}
-      corners={0}
-      style={{ margin: 20 }}>
+    <Frame layer={"primary"} animate level={0} corners={0} style={{ margin: 20 }}>
       <Content style={{ padding: 40 }}>
         <h1>Order Summary</h1>
         <Line animate />
-        <Table animate headers={['ITEM', 'QTY', 'PRICE']} dataset={entries} />
+        <Table animate headers={["ITEM", "QTY", "COLOR", "PRICE"]} dataset={entries} />
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '20px 0',
-          }}>
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "20px 0",
+          }}
+        >
           <Link to="/cart">
             <Button animate layer="secondary">
               Back to Cart
@@ -136,11 +132,12 @@ const OrderSummary = () => {
           {subtotal}
         </h2>
         <Button
-          style={{ width: '100%' }}
-          buttonProps={{ style: { width: '100%' } }}
+          style={{ width: "100%" }}
+          buttonProps={{ style: { width: "100%" } }}
           animate
           layer="success"
-          onClick={handleCheckout}>
+          onClick={handleCheckout}
+        >
           Confirm Order
         </Button>
       </Content>
