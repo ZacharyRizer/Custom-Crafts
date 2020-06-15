@@ -119,7 +119,7 @@ const Cart = () => {
         }}
         onClick={removeItem}
       >
-        Remove
+        <i className="mdi mdi-trash-can" /> Remove
       </Button>,
     ];
   });
