@@ -169,7 +169,7 @@ const ShipPage = (props) => {
 
   return (
     <>
-      {(!Number.isInteger(intID) || intID < 1 || intID > 15) && <Redirect to="/404" />}
+      {(!Number.isInteger(intID) || intID < 1 || intID > 20) && <Redirect to="/404" />}
       {ship && (
         <div style={{ padding: 20 }}>
           <Header animate style={{ backgroundColor: "transparent" }}>
@@ -286,7 +286,7 @@ const ShipPage = (props) => {
                     auto-rotate-delay={1000}
                     camera-controls
                     exposure={0.75}
-                    camera-orbit="0deg 75deg 75%"
+                    // camera-orbit="0deg 75deg 75%"
                     interaction-prompt="none"
                   ></model-viewer>
                 </Frame>

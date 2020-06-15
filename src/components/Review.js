@@ -13,7 +13,9 @@ const Review = (props) => {
   const [write, setWrite] = useState(false);
   const [stars, setStars] = useState(0);
   const [totalStars, setTotalStars] = useState([[]]);
-  const { getTokenSilently, user } = useAuth0();
+  const [text, setText] = useState("");
+  const [required, setRequired] = useState(false);
+  const { isAuthenticated, loginWithRedirect, getTokenSilently, logout, user } = useAuth0();
   const reviewText = useRef();
   const shipId = props.shipId;
 
@@ -24,12 +26,17 @@ const Review = (props) => {
   }, [user]);
 
   const handleWriteClick = (e) => {
+    setStars(0);
     setWrite(!write);
   };
 
   const handleReviewSubmit = async () => {
-    if (!stars) return;
-    if (!user) return; //add pop-up message???
+    if (!stars) {
+      return setRequired(true);
+    }
+    if (!user) {
+      return loginWithRedirect({});
+    } //add pop-up message???
     const description = reviewText.current.value;
     const token = getTokenSilently();
 
@@ -88,6 +95,7 @@ const Review = (props) => {
   }, [reviews]);
 
   useEffect(() => {
+    if (!reviewText.current) return;
     for (let i = 1; i <= 5; i++) {
       const element = document.getElementById(i);
       if (!element) return;
@@ -97,10 +105,12 @@ const Review = (props) => {
         element.innerHTML = '<i class="mdi mdi-star" />';
       }
     }
-  }, [stars]);
+    reviewText.current.value = text;
+  }, [stars, text]);
 
   const handleStars = (e) => {
     e.preventDefault();
+    setText(reviewText.current.value);
     const starChoice = Number.parseInt(e.currentTarget.id, 10);
     setStars(starChoice);
   };
@@ -130,9 +140,11 @@ const Review = (props) => {
           ref={reviewText}
           placeholder="Type your Galactic-Government-Approved thoughts here..."
           onFocus={(e) => {
+            e.preventDefault();
             e.currentTarget.setAttribute("onfocus", "this.placeholder = ''");
           }}
           onBlur={(e) => {
+            e.preventDefault();
             e.currentTarget.setAttribute(
               "onblur",
               "this.placeholder = 'Type your Galactic-Government-Approved thoughts here...'"
@@ -175,11 +187,22 @@ const Review = (props) => {
               Write Review
             </Button>
           )}
-          {write && (
-            <Button buttonProps={{ onClick: handleReviewSubmit }} animate layer="secondary">
-              Submit Review
-            </Button>
-          )}
+          {write &&
+            (stars > 0 ? (
+              <Button buttonProps={{ onClick: handleReviewSubmit }} animate layer="secondary">
+                Submit Review
+              </Button>
+            ) : (
+              <Button
+                style={{ pointerEvents: "none" }}
+                disabled
+                buttonProps={{ onClick: handleReviewSubmit }}
+                animate
+                layer="secondary"
+              >
+                Submit Review
+              </Button>
+            ))}
         </div>
         <Content>
           <blockquote style={{ margin: 0 }}>
