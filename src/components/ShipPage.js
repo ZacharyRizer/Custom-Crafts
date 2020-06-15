@@ -33,7 +33,7 @@ const ShipPage = (props) => {
       }
       reviews {
         id
-        customer {
+        customer{
           name
           picture
         }
@@ -192,10 +192,10 @@ const ShipPage = (props) => {
                     Add to Cart
                   </Button>
                 ) : (
-                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                    Out of Stock
-                  </Button>
-                )}
+                    <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                      Out of Stock
+                    </Button>
+                  )}
               </div>
             </div>
           </Header>
@@ -219,19 +219,19 @@ const ShipPage = (props) => {
                         Used
                       </blockquote>
                     ) : (
-                      <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
-                        New
-                      </blockquote>
-                    )}
+                        <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
+                          New
+                        </blockquote>
+                      )}
                     {ship.ftl ? (
                       <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
                         FTL Drive Included
                       </blockquote>
                     ) : (
-                      <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
-                        No FTL Drive
-                      </blockquote>
-                    )}
+                        <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
+                          No FTL Drive
+                        </blockquote>
+                      )}
                     {ship.stock > 2 ? (
                       <blockquote data-layer="" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
@@ -241,10 +241,10 @@ const ShipPage = (props) => {
                         Stock: {ship.stock}
                       </blockquote>
                     ) : (
-                      <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
-                        Stock: {ship.stock}
-                      </blockquote>
-                    )}
+                          <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
+                            Stock: {ship.stock}
+                          </blockquote>
+                        )}
                     <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
                       Designed by: {ship.designer}
                     </blockquote>
@@ -306,8 +306,8 @@ const ShipPage = (props) => {
                       {shipColor === "blue" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                     <Button animate layer="success" buttonProps={{ id: "green", onClick: setColor }}>
                       Green
@@ -315,8 +315,8 @@ const ShipPage = (props) => {
                       {shipColor === "green" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                     <Button animate layer="secondary" buttonProps={{ id: "orange", onClick: setColor }}>
                       Orange
@@ -324,8 +324,8 @@ const ShipPage = (props) => {
                       {shipColor === "orange" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                     <Button animate layer="alert" buttonProps={{ id: "red", onClick: setColor }}>
                       Red
@@ -333,8 +333,8 @@ const ShipPage = (props) => {
                       {shipColor === "red" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                   </Content>
                 </Frame>
