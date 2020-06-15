@@ -39,10 +39,7 @@ const Review = (props) => {
         description
         rating
         id
-        customer{
-          name
-          picture
-        }
+        customerId
         }
     }
 `;
@@ -171,10 +168,10 @@ const Review = (props) => {
               Cancel
             </Button>
           ) : (
-            <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
-              Write Review
-            </Button>
-          )}
+              <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
+                Write Review
+              </Button>
+            )}
           {write && (
             <Button buttonProps={{ onClick: handleReviewSubmit }} animate layer="secondary">
               Submit Review
@@ -186,14 +183,14 @@ const Review = (props) => {
             {reviews.length > 0 ? (
               <>{rating}</>
             ) : (
-              <>
-                <i className="mdi mdi-star-outline" />
-                <i className="mdi mdi-star-outline" />
-                <i className="mdi mdi-star-outline" />
-                <i className="mdi mdi-star-outline" />
-                <i className="mdi mdi-star-outline" />
-              </>
-            )}
+                <>
+                  <i className="mdi mdi-star-outline" />
+                  <i className="mdi mdi-star-outline" />
+                  <i className="mdi mdi-star-outline" />
+                  <i className="mdi mdi-star-outline" />
+                  <i className="mdi mdi-star-outline" />
+                </>
+              )}
           </blockquote>
         </Content>
       </div>
@@ -209,45 +206,45 @@ const Review = (props) => {
         {write ? (
           <InnerReview />
         ) : (
-          <>
-            <Frame layer={"primary"} animate level={0} corners={0} style={{ height: "100%", marginBottom: 20 }}>
-              <div style={{ height: 395, maxHeight: 395, padding: 20, overflowY: "scroll" }}>
-                {reviews.length > 0 ? (
-                  reviews.map((review, index) => (
-                    <Content key={index}>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
-                        {review ? (
-                          <Image resources={review.customer.picture} style={{ width: 32, height: 32 }} />
-                        ) : (
-                          <Image resources="/android-chrome-192x192.png" style={{ width: 32, height: 32 }} />
-                        )}
+            <>
+              <Frame layer={"primary"} animate level={0} corners={0} style={{ height: "100%", marginBottom: 20 }}>
+                <div style={{ height: 395, maxHeight: 395, padding: 20, overflowY: "scroll" }}>
+                  {reviews.length > 0 ? (
+                    reviews.map((review, index) => (
+                      <Content key={index}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+                          {review ? (
+                            <Image resources={review.customer.picture} style={{ width: 32, height: 32 }} />
+                          ) : (
+                              <Image resources="/android-chrome-192x192.png" style={{ width: 32, height: 32 }} />
+                            )}
 
-                        <blockquote>{review.customer.name}</blockquote>
-                      </div>
-                      <div>{totalStars[index]}</div>
-                      <p>{review.description}</p>
-                      <Line animate />
-                    </Content>
-                  ))
-                ) : (
-                  <Content style={{ textAlign: "center" }}>
-                    <h1 style={{ margin: 0 }}>No Reviews Yet</h1>
-                    <p
-                      style={{
-                        margin: 0,
-                        textAlign: "center",
-                        fontStyle: "italic",
-                      }}
-                    >
-                      Be the first!
+                          <blockquote>{review.customer.name}</blockquote>
+                        </div>
+                        <div>{totalStars[index]}</div>
+                        <p>{review.description}</p>
+                        <Line animate />
+                      </Content>
+                    ))
+                  ) : (
+                      <Content style={{ textAlign: "center" }}>
+                        <h1 style={{ margin: 0 }}>No Reviews Yet</h1>
+                        <p
+                          style={{
+                            margin: 0,
+                            textAlign: "center",
+                            fontStyle: "italic",
+                          }}
+                        >
+                          Be the first!
                     </p>
-                    <Line animate />
-                  </Content>
-                )}
-              </div>
-            </Frame>
-          </>
-        )}
+                        <Line animate />
+                      </Content>
+                    )}
+                </div>
+              </Frame>
+            </>
+          )}
       </div>
     </>
   );
