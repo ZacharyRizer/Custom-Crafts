@@ -169,7 +169,7 @@ const ShipPage = (props) => {
 
   return (
     <>
-      {(!Number.isInteger(intID) || intID < 1 || intID > 15) && <Redirect to="/404" />}
+      {(!Number.isInteger(intID) || intID < 1 || intID > 20) && <Redirect to="/404" />}
       {ship && (
         <div style={{ padding: 20 }}>
           <Header animate style={{ backgroundColor: "transparent" }}>
