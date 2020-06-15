@@ -143,7 +143,7 @@ const ShipPage = (props) => {
 
   return (
     <>
-      {(!Number.isInteger(intID) || intID < 1 || intID > 15) && <Redirect to="/404" />}
+      {(!Number.isInteger(intID) || intID < 1 || intID > 20) && <Redirect to="/404" />}
       {ship && (
         <div style={{ padding: 20 }}>
           <Header animate style={{ backgroundColor: "transparent" }}>
@@ -152,24 +152,24 @@ const ShipPage = (props) => {
               <div
                 style={{
                   display: "flex",
-                  width: "300px",
+                  width: "325px",
                   justifyContent: "space-between",
                 }}
               >
                 <Link to="/shop">
                   <Button animate layer="primary">
-                    Return to Shop
+                    <i className="mdi mdi-store-outline" /> Return to Shop
                   </Button>
                 </Link>
                 {ship.stock > 0 ? (
                   <Button layer="secondary" style={{ marginRight: 10 }} onClick={addToCart}>
-                    Add to Cart
+                    <i className="mdi mdi-cart-plus" /> Add to Cart
                   </Button>
                 ) : (
-                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                    Out of Stock
-                  </Button>
-                )}
+                    <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                      <i className="mdi mdi-tray" /> Out of Stock
+                    </Button>
+                  )}
               </div>
             </div>
           </Header>
@@ -193,19 +193,19 @@ const ShipPage = (props) => {
                         Used
                       </blockquote>
                     ) : (
-                      <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
-                        New
-                      </blockquote>
-                    )}
+                        <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
+                          New
+                        </blockquote>
+                      )}
                     {ship.ftl ? (
                       <blockquote data-layer="success" style={{ margin: "0 0 0 20px" }}>
                         FTL Drive Included
                       </blockquote>
                     ) : (
-                      <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
-                        No FTL Drive
-                      </blockquote>
-                    )}
+                        <blockquote data-layer="alert" style={{ margin: "0 0 0 20px" }}>
+                          No FTL Drive
+                        </blockquote>
+                      )}
                     {ship.stock > 2 ? (
                       <blockquote data-layer="" style={{ margin: "0 0 0 20px" }}>
                         Stock: {ship.stock}
@@ -215,10 +215,10 @@ const ShipPage = (props) => {
                         Stock: {ship.stock}
                       </blockquote>
                     ) : (
-                      <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
-                        Stock: {ship.stock}
-                      </blockquote>
-                    )}
+                          <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
+                            Stock: {ship.stock}
+                          </blockquote>
+                        )}
                     <blockquote data-layer="disabled" style={{ margin: "0 0 0 20px" }}>
                       Designed by: {ship.designer}
                     </blockquote>
@@ -258,10 +258,10 @@ const ShipPage = (props) => {
                           Cancel
                         </Button>
                       ) : (
-                        <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
-                          Write Review
-                        </Button>
-                      )}
+                          <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
+                            <i className="mdi mdi-comment-quote" /> Write Review
+                          </Button>
+                        )}
                       {write && (
                         <Button buttonProps={{ onClick: handleWriteClick }} animate layer="secondary">
                           Submit Review
@@ -273,14 +273,14 @@ const ShipPage = (props) => {
                         {reviews.length > 0 ? (
                           <>{rating}</>
                         ) : (
-                          <>
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                            <i className="mdi mdi-star-outline" />
-                          </>
-                        )}
+                            <>
+                              <i className="mdi mdi-star-outline" />
+                              <i className="mdi mdi-star-outline" />
+                              <i className="mdi mdi-star-outline" />
+                              <i className="mdi mdi-star-outline" />
+                              <i className="mdi mdi-star-outline" />
+                            </>
+                          )}
                       </blockquote>
                     </Content>
                   </div>
@@ -335,8 +335,8 @@ const ShipPage = (props) => {
                       {shipColor === "blue" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                     <Button animate layer="success" buttonProps={{ id: "green", onClick: setColor }}>
                       Green
@@ -344,8 +344,8 @@ const ShipPage = (props) => {
                       {shipColor === "green" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                     <Button animate layer="secondary" buttonProps={{ id: "orange", onClick: setColor }}>
                       Orange
@@ -353,8 +353,8 @@ const ShipPage = (props) => {
                       {shipColor === "orange" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                     <Button animate layer="alert" buttonProps={{ id: "red", onClick: setColor }}>
                       Red
@@ -362,8 +362,8 @@ const ShipPage = (props) => {
                       {shipColor === "red" ? (
                         <i className="mdi mdi-checkbox-blank" />
                       ) : (
-                        <i className="mdi mdi-checkbox-blank-outline" />
-                      )}
+                          <i className="mdi mdi-checkbox-blank-outline" />
+                        )}
                     </Button>
                   </Content>
                 </Frame>

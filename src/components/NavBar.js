@@ -108,7 +108,7 @@ const NavBar = () => {
           {!isAuthenticated ? (
             <>
               <Button style={{ marginRight: 25 }} onClick={() => loginWithRedirect({})} animate layer="secondary">
-                Login
+                <i className="mdi mdi-door-open" /> Login
               </Button>
               <Link to="/cart">
                 <Button style={{ marginRight: 25 }} animate>
@@ -117,33 +117,33 @@ const NavBar = () => {
               </Link>
             </>
           ) : (
-            <>
-              {role === "admin" ? (
-                <Link to="/admin">
-                  <Button animate style={{ marginRight: 25 }} layer="secondary">
-                    Admin Page
-                  </Button>
-                </Link>
-              ) : (
-                <>
-                  <Link to="/profile">
+              <>
+                {role === "admin" ? (
+                  <Link to="/admin">
                     <Button animate style={{ marginRight: 25 }} layer="secondary">
-                      <i className="mdi mdi-account-circle" /> Profile
-                    </Button>
+                      Admin Page
+                  </Button>
                   </Link>
-                  <Link to="/cart">
-                    <Button animate style={{ marginRight: 25 }}>
-                      <i className="mdi mdi-cart"> </i>
-                      {numItems}
+                ) : (
+                    <>
+                      <Link to="/profile">
+                        <Button animate style={{ marginRight: 25 }} layer="secondary">
+                          <i className="mdi mdi-account-circle" /> Profile
                     </Button>
-                  </Link>
-                </>
-              )}
-              <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
-                <i className="mdi mdi-exit-run" /> Log-Out
+                      </Link>
+                      <Link to="/cart">
+                        <Button animate style={{ marginRight: 25 }}>
+                          <i className="mdi mdi-cart"> </i>
+                          {numItems}
+                        </Button>
+                      </Link>
+                    </>
+                  )}
+                <Button animate layer="alert" style={{ marginRight: 25 }} onClick={handleLogout}>
+                  <i className="mdi mdi-exit-run" /> Log-Out
               </Button>
-            </>
-          )}
+              </>
+            )}
         </div>
       </div>
     </Frame>

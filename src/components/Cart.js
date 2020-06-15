@@ -119,7 +119,7 @@ const Cart = () => {
         }}
         onClick={removeItem}
       >
-        Remove
+        <i className="mdi mdi-trash-can" /> Remove
       </Button>,
     ];
   });
@@ -133,24 +133,24 @@ const Cart = () => {
             <div
               style={{
                 display: "flex",
-                width: "285px",
+                width: "295px",
                 justifyContent: "space-between",
               }}
             >
               <Linky to="/shop">
-                <Button layer="primary">Return to Shop</Button>
+                <Button layer="primary"><i className="mdi mdi-store-outline" /> Return to Shop</Button>
               </Linky>
               {numItems > 0 ? (
                 <Linky to={numItems > 0 ? "/checkout" : "#"}>
                   <Button layer="secondary" style={{ marginRight: 10 }}>
-                    Checkout
+                    <i className="mdi mdi-cash-register" /> Checkout
                   </Button>
                 </Linky>
               ) : (
-                <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
-                  Checkout
-                </Button>
-              )}
+                  <Button layer="disabled" style={{ marginRight: 10, pointerEvents: "none" }}>
+                    <i className="mdi mdi-cash-register" /> Checkout
+                  </Button>
+                )}
             </div>
           </div>
         </Header>
@@ -171,30 +171,30 @@ const Cart = () => {
           </Content>
         </Frame>
       ) : (
-        <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
-          <Content style={{ padding: 20, textAlign: "center" }}>
-            <h1>Your Cart is Empty</h1>
-            <p
-              style={{
-                margin: 0,
-                textAlign: "center",
-                fontStyle: "italic",
-              }}
-            >
-              "Every moment I wasn't shopping at Custom Crafts, is a moment I regret."
+          <Frame layer={"primary"} animate level={0} corners={4} style={{ margin: "10px 30px 0 30px" }}>
+            <Content style={{ padding: 20, textAlign: "center" }}>
+              <h1>Your Cart is Empty</h1>
+              <p
+                style={{
+                  margin: 0,
+                  textAlign: "center",
+                  fontStyle: "italic",
+                }}
+              >
+                "Every moment I wasn't shopping at Custom Crafts, is a moment I regret."
             </p>
-            <p
-              style={{
-                margin: 0,
-                textAlign: "center",
-                fontStyle: "italic",
-              }}
-            >
-              - King Xrule of the Xrulian Empire (Dying Words)
+              <p
+                style={{
+                  margin: 0,
+                  textAlign: "center",
+                  fontStyle: "italic",
+                }}
+              >
+                - King Xrule of the Xrulian Empire (Dying Words)
             </p>
-          </Content>
-        </Frame>
-      )}
+            </Content>
+          </Frame>
+        )}
     </>
   );
 };

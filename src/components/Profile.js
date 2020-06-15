@@ -85,7 +85,7 @@ const Profile = () => {
               >
                 <Link to="/shop">
                   <Button animate layer="primary">
-                    Return to Shop
+                    <i className="mdi mdi-store-outline" /> Return to Shop
                   </Button>
                 </Link>
               </div>

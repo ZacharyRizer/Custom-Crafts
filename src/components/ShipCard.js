@@ -57,19 +57,19 @@ const ShipCard = ({ ship }) => {
         </Button>
         {stock > 2 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="success">
-            In Stock
+            <i className="mdi mdi-tray-full" /> In Stock
           </Button>
         ) : stock > 0 ? (
           <Button corners={0} style={{ pointerEvents: "none" }} layer="alert">
-            Limited Stock
+            <i className="mdi mdi-tray-minus" /> Limited Stock
           </Button>
         ) : (
-          <Button corners={0} style={{ pointerEvents: "none" }} layer="disabled">
-            Out of Stock
-          </Button>
-        )}
+              <Button corners={0} style={{ pointerEvents: "none" }} layer="disabled">
+                <i className="mdi mdi-tray" /> Out of Stock
+              </Button>
+            )}
         <Link to={`/ships/${id}`}>
-          <Button layer="secondary">View Details</Button>
+          <Button layer="secondary">Details</Button>
         </Link>
       </div>
     </Frame>

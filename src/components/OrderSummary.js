@@ -121,12 +121,12 @@ const OrderSummary = () => {
           }}>
           <Link to="/cart">
             <Button animate layer="secondary">
-              Back to Cart
+              <i className="mdi mdi-cart" /> Back to Cart
             </Button>
           </Link>
           <Link to="/shop">
             <Button animate layer="secondary">
-              Return to Shop
+              <i className="mdi mdi-store-outline" /> Return to Shop
             </Button>
           </Link>
         </div>
@@ -141,7 +141,7 @@ const OrderSummary = () => {
           animate
           layer="success"
           onClick={handleCheckout}>
-          Confirm Order
+          <i className="mdi mdi-credit-card-check-outline" />Confirm Order
         </Button>
       </Content>
     </Frame>
