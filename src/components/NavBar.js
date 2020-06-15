@@ -108,7 +108,7 @@ const NavBar = () => {
           {!isAuthenticated ? (
             <>
               <Button style={{ marginRight: 25 }} onClick={() => loginWithRedirect({})} animate layer="secondary">
-                Login
+                <i className="mdi mdi-door-open" /> Login
               </Button>
               <Link to="/cart">
                 <Button style={{ marginRight: 25 }} animate>

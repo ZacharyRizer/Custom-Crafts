@@ -283,7 +283,7 @@ const ShipPage = (props) => {
                     auto-rotate-delay={1000}
                     camera-controls
                     exposure={0.75}
-                    camera-orbit="0deg 75deg 75%"
+                    // camera-orbit="0deg 75deg 75%"
                     interaction-prompt="none"
                   ></model-viewer>
                 </Frame>
