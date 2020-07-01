@@ -7,15 +7,7 @@ import Button from 'arwes/lib/Button';
 
 // component to create new review
 const Review = (props) => {
-<<<<<<< HEAD
-  // let revData = props.reviews;
-  // console.log('revData', revData);
-  // console.log('props', props)
-  const [reviews, setReviews] = useState(props.reviews);
-  const rating = props.rating;
-=======
   const [reviews, setReviews] = useState([]);
->>>>>>> master
   const [write, setWrite] = useState(false);
   const [stars, setStars] = useState(0);
   const [totalStars, setTotalStars] = useState([[]]);
@@ -106,10 +98,7 @@ const Review = (props) => {
     })();
   };
 
-
-
   useEffect(() => {
-
     (async () => {
       const revString = `
         {
@@ -127,24 +116,19 @@ const Review = (props) => {
       const allReviewRes = await Axios({
         url: apiBaseUrl,
 
-        method: "post",
+        method: 'post',
         data: {
-          query: revString
+          query: revString,
         },
       });
-      const newData = allReviewRes.data.data.reviews
-      console.log('review res :', newData)
-      setReviews(newData)
+      const newData = allReviewRes.data.data.reviews;
+      console.log('review res :', newData);
+      setReviews(newData);
       setWrite(false);
     })();
-
-
-  }, [])
+  }, []);
 
   useEffect(() => {
-<<<<<<< HEAD
-
-=======
     (async () => {
       const revString = `
         {
@@ -188,7 +172,6 @@ const Review = (props) => {
       }
       setRating(finalList);
     }
->>>>>>> master
 
     let finalList = [];
     reviews.forEach((review) => {
