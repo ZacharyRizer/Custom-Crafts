@@ -2,6 +2,8 @@ import React from "react";
 import { Frame, Heading, Header, Button } from "arwes";
 import { Link } from "react-router-dom";
 
+//render custom 404 component
+
 const FourOhFour = () => {
   return (
     <>

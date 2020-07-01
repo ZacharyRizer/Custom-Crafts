@@ -4,8 +4,8 @@ import { useAuth0 } from '../react-auth0-spa';
 
 export const AdminRoute = ({ component: Component, path, ...rest }) => {
   const [role, setRole] = useState();
-  const { user } = useAuth0();
   const roleKey = 'http://customcraft/roles';
+  const { user } = useAuth0();
 
   useEffect(() => {
     if (user) {

@@ -9,6 +9,7 @@ const ClearFilters = () => {
     setFilters({});
     setClear(true);
   };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", marginBottom: 10 }}>
       <Button
