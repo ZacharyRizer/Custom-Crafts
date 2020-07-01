@@ -1,4 +1,4 @@
-# Custom Crafts
+# [Custom Crafts](https://customcrafts.herokuapp.com/)
 
 ### *Need to planet hop? Interested in interstellar exploration? We have your vehicle needs covered!*
 
@@ -6,7 +6,7 @@
 > *Zachary Rizer, Ian Magenta, William Schrader & Abdullah Wafy*
 
 ### Project Description:
-> Custom Crafts is a store application where you can view and purchase custom-designed spaceships/spacecrafts. The app allows users to sign-in and become return customers with profile and purchase history features. Customers may shop for different and varying styles of spacecrafts \- performance \(i.e. racing), luxury, military, etc. \- designed to suit their taste and wet their palettes.
+> Custom Crafts is a store application where you can view and purchase custom-designed spaceships/spacecrafts. The app allows users to sign-in and become return customers with profile and purchase history features. Customers may shop for different and varying styles of spacecrafts \- performance \(i.e. racing), luxury, military, etc. \- designed to suit their taste and whet their palates.
 
 * Screenshots of App:
 ![GitHub Logo](/documentation/ReadmeScreenShot2.png)
