@@ -8,7 +8,10 @@ import AllReviews from "./AllReviews";
 
 // component to create new review
 const Review = (props) => {
-  const [reviews, setReviews] = useState(props.reviews)
+  // let revData = props.reviews;
+  // console.log('revData', revData);
+  // console.log('props', props)
+  const [reviews, setReviews] = useState(props.reviews);
   const rating = props.rating;
   const [write, setWrite] = useState(false);
   const [stars, setStars] = useState(0);
@@ -99,7 +102,44 @@ const Review = (props) => {
     })();
   };
 
+
+
   useEffect(() => {
+
+    (async () => {
+      const revString = `
+        {
+          reviews(shipId:${shipId}){
+            customer{
+              name
+              picture
+            }
+            description
+            rating
+          }
+        }
+      `;
+
+      const allReviewRes = await Axios({
+        url: apiBaseUrl,
+
+        method: "post",
+        data: {
+          query: revString
+        },
+      });
+      const newData = allReviewRes.data.data.reviews
+      console.log('review res :', newData)
+      setReviews(newData)
+      setWrite(false);
+    })();
+
+
+  }, [])
+
+  useEffect(() => {
+
+
     let finalList = [];
     reviews.forEach((review) => {
       let subList = [];
