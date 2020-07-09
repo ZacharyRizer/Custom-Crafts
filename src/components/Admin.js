@@ -107,26 +107,54 @@ const Admin = () => {
     window.location.href = '/admin';
   };
 
+  const selectShip = (id) => {
+    let previous = document.querySelectorAll(`.admin_selected_ship`);
+    previous.forEach((node) => node.classList.remove('admin_selected_ship'));
+    let selected = document.querySelectorAll(`.ship_${id}`);
+    selected.forEach((node) => node.classList.add('admin_selected_ship'));
+  };
+
   let entries;
   if (inventory) {
     entries = inventory.map((item) => {
       return [
-        <div onClick={() => setSelectedShip([item.id, item.name])}>
+        <div
+          className={`ship_${item.id}`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setSelectedShip([item.id, item.name])}>
           <span>{item.id}</span>
         </div>,
-        <div onClick={() => setSelectedShip([item.id, item.name])}>
+        <div
+          className={`ship_${item.id}`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            setSelectedShip([item.id, item.name]);
+            selectShip(item.id);
+          }}>
           <span>{item.name}</span>
         </div>,
-        <div onClick={() => setSelectedShip([item.id, item.name])}>
+        <div
+          className={`ship_${item.id}`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setSelectedShip([item.id, item.name])}>
           <span>{item.stock}</span>
         </div>,
-        <div onClick={() => setSelectedShip([item.id, item.name])}>
+        <div
+          className={`ship_${item.id}`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setSelectedShip([item.id, item.name])}>
           <span>{item.totalSold}</span>
         </div>,
-        <div onClick={() => setSelectedShip([item.id, item.name])}>
+        <div
+          className={`ship_${item.id}`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setSelectedShip([item.id, item.name])}>
           <span>{item.category.name}</span>
         </div>,
-        <div onClick={() => setSelectedShip([item.id, item.name])}>
+        <div
+          className={`ship_${item.id}`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setSelectedShip([item.id, item.name])}>
           <span>{item.manufacturer.name}</span>
         </div>,
       ];

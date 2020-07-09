@@ -1,13 +1,3 @@
-/* .shop-grid-container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
+.admin_selected_ship {
+  color: red;
 }
-
-.sidebar {
-  width: 100%;
-  height: 100%;
-}
-
-.sidebar-buttons {
-  width: 100%;
-} */
