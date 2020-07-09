@@ -121,7 +121,10 @@ const Admin = () => {
         <div
           className={`ship_${item.id}`}
           style={{ cursor: 'pointer' }}
-          onClick={() => setSelectedShip([item.id, item.name])}>
+          onClick={() => {
+            setSelectedShip([item.id, item.name]);
+            selectShip(item.id);
+          }}>
           <span>{item.id}</span>
         </div>,
         <div
@@ -136,25 +139,37 @@ const Admin = () => {
         <div
           className={`ship_${item.id}`}
           style={{ cursor: 'pointer' }}
-          onClick={() => setSelectedShip([item.id, item.name])}>
+          onClick={() => {
+            setSelectedShip([item.id, item.name]);
+            selectShip(item.id);
+          }}>
           <span>{item.stock}</span>
         </div>,
         <div
           className={`ship_${item.id}`}
           style={{ cursor: 'pointer' }}
-          onClick={() => setSelectedShip([item.id, item.name])}>
+          onClick={() => {
+            setSelectedShip([item.id, item.name]);
+            selectShip(item.id);
+          }}>
           <span>{item.totalSold}</span>
         </div>,
         <div
           className={`ship_${item.id}`}
           style={{ cursor: 'pointer' }}
-          onClick={() => setSelectedShip([item.id, item.name])}>
+          onClick={() => {
+            setSelectedShip([item.id, item.name]);
+            selectShip(item.id);
+          }}>
           <span>{item.category.name}</span>
         </div>,
         <div
           className={`ship_${item.id}`}
           style={{ cursor: 'pointer' }}
-          onClick={() => setSelectedShip([item.id, item.name])}>
+          onClick={() => {
+            setSelectedShip([item.id, item.name]);
+            selectShip(item.id);
+          }}>
           <span>{item.manufacturer.name}</span>
         </div>,
       ];
