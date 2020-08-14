@@ -11,7 +11,6 @@
 * Screenshots of App:
 ![GitHub Logo](/documentation/ReadmeScreenShot2.png)
 ![GitHub Logo](/documentation/ReadmeScreenShot4.png)
-![GitHub Logo](/documentation/ReadmeScreenShot5.png)
 ![GitHub Logo](/documentation/ReadmeScreenShot6.png)
 ![GitHub Logo](/documentation/ReadmeScreenShot7.png)
 ![GitHub Logo](/documentation/ReadmeScreenShot8.png)
