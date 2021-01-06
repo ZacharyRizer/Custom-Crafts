@@ -13,7 +13,7 @@
     "apollo-boost": "^0.4.9",
     "apollo-fetch": "^0.7.0",
     "arwes": "github:ianmagenta/arwes#master",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
