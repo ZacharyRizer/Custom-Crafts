@@ -1,4 +1,4 @@
-# [Custom Crafts](https://customcrafts.herokuapp.com/)
+# Custom Crafts
 
 ### *Need to planet hop? Interested in interstellar exploration? We have your vehicle needs covered!*
 
@@ -17,9 +17,6 @@
 
 * Backend Repo Link:
 [GitHub](https://github.com/ZacharyRizer/Custom-Crafts-api)
-
-* Link to App - Heroku Deployed:
-[Heroku](https://customcrafts.herokuapp.com)
 
 * FeatureList Documentation link:
 [GitHub](https://github.com/ZacharyRizer/Custom-Crafts/blob/master/documentation/featureList.md)
